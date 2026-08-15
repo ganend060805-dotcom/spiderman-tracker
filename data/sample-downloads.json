@@ -1,0 +1,5 @@
+[
+  { "id": "download-001", "category": "wallpapers", "title": "Spider-Verse 01", "meta": "SVG · 1440×2560", "preview_image": "../assets/downloads/wallpaper-signal-01.svg", "file_url": "../assets/downloads/wallpaper-signal-01.svg", "status": "published" },
+  { "id": "download-002", "category": "stickers", "title": "Web Grid Pixel", "meta": "SVG · Transparent", "preview_image": "../assets/downloads/sticker-web-grid.svg", "file_url": "../assets/downloads/sticker-web-grid.svg", "status": "published" },
+  { "id": "download-003", "category": "emojis", "title": "Spidey Eyes", "meta": "SVG · 512×512", "preview_image": "../assets/downloads/emoji-spider-eye.svg", "file_url": "../assets/downloads/emoji-spider-eye.svg", "status": "published" }
+]

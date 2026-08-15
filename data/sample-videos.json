@@ -1,0 +1,5 @@
+[
+  { "id": "video-001", "title": "Spider-Man: Brand New Day Official Trailer", "subtitle": "Official trailer", "duration": "02:18", "poster": "../assets/placeholders/intro-poster.svg", "embed_url": "https://www.youtube.com/embed/cqGjhVJWtEg?autoplay=1&rel=0", "status": "published" },
+  { "id": "video-002", "title": "Field Briefing 01", "subtitle": "Grid note", "duration": "00:42", "poster": "../assets/placeholders/intro-poster.svg", "embed_url": "https://www.youtube.com/embed/cqGjhVJWtEg?autoplay=1&rel=0", "status": "published" },
+  { "id": "video-003", "title": "Global Trace Replay", "subtitle": "Map capture", "duration": "01:09", "poster": "../assets/placeholders/intro-poster.svg", "embed_url": "https://www.youtube.com/embed/cqGjhVJWtEg?autoplay=1&rel=0", "status": "published" }
+]

@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600;700&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -83,17 +84,10 @@
           <section class="map-viewport" id="mapStage" aria-labelledby="mapTitle">
             <h1 id="mapTitle" class="sr-only">Spidey Tracker Global Network</h1>
 
-            <!-- Google Maps Embed -->
+            <!-- Real-world Leaflet map with configurable tile provider -->
             <div class="map-frame-box" id="mapContainer">
-              <iframe
-                id="googleMap"
-                class="google-map-embed"
-                title="Spidey Tracker World Map"
-                src="https://maps.google.com/maps?q=10,20&z=2&output=embed&t=m&hl=id&maptype=roadmap"
-                allowfullscreen=""
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
+              <div id="leafletMap" class="leaflet-map-canvas" role="application" aria-label="Spidey Tracker World Map"></div>
+              <iframe id="googleMap" class="google-map-embed" title="Map fallback" src="https://maps.google.com/maps?q=10,20&z=2&output=embed&t=m&hl=id&maptype=roadmap" hidden loading="lazy"></iframe>
               <!-- Teal/Navy Pixel Grid Scanline Tint -->
               <div class="map-navy-overlay" aria-hidden="true"></div>
             </div>
@@ -296,11 +290,11 @@ What I saw: Spider-Man berayun cepat ke arah utara!
         <!-- Videos -->
         <section class="panel-view" data-view="videos" hidden>
           <div class="panel-intro"><p>Cuplikan lapangan, briefing, dan rekaman radar.</p></div>
-          <button class="video-card featured-video" type="button" data-video-title="Spider-Man: Brand New Day Official Trailer">
+          <button class="video-card featured-video" id="featuredVideo" type="button" data-video-title="Spider-Man: Brand New Day Official Trailer">
             <img src="../assets/placeholders/intro-poster.svg" alt="Video poster" />
             <span class="video-overlay"><span class="play-button">▶</span><span><strong>BRAND NEW DAY // TEASER</strong><small>02:18 · HD</small></span></span>
           </button>
-          <div class="video-list">
+          <div class="video-list" id="videoList">
             <button class="video-row" type="button" data-video-title="Spider-Man: Field Briefing 01"><span class="mini-thumb blue">01</span><span><strong>Field Briefing 01</strong><small>Grid Note · 00:42</small></span><span aria-hidden="true">▶</span></button>
             <button class="video-row" type="button" data-video-title="Spider-Man: Global Trace Replay"><span class="mini-thumb red">02</span><span><strong>Global Trace Replay</strong><small>Map Capture · 01:09</small></span><span aria-hidden="true">▶</span></button>
           </div>
@@ -404,6 +398,9 @@ What I saw: Spider-Man berayun cepat ke arah utara!
       </div>
     </div>
 
+    <script src="./config.js"></script>
+    <script src="./cms.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="./app.js"></script>
   </body>
 </html>

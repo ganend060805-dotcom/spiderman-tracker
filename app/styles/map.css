@@ -16,11 +16,91 @@
 }
 
 .google-map-embed {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   border: 0;
   display: block;
   filter: saturate(0.55) brightness(0.68) hue-rotate(195deg) contrast(1.15);
+}
+
+.google-map-embed[hidden] {
+  display: none !important;
+}
+
+.leaflet-map-canvas {
+  width: 100%;
+  height: 100%;
+  background: #071222;
+  filter: saturate(0.7) brightness(0.72) hue-rotate(185deg) contrast(1.08);
+}
+
+.leaflet-container {
+  font-family: var(--font-ui);
+  background: #071222;
+}
+
+.leaflet-control-attribution {
+  margin: 0 4px 4px 0 !important;
+  padding: 2px 5px !important;
+  color: #b9d1e4 !important;
+  background: rgba(5, 13, 26, .86) !important;
+  font-size: 10px !important;
+}
+
+.leaflet-control-attribution a {
+  color: #58c4d8 !important;
+}
+
+.spidey-leaflet-marker {
+  background: transparent;
+  border: 0;
+}
+
+.spidey-leaflet-marker img {
+  width: 48px;
+  height: 58px;
+  object-fit: contain;
+  transition: transform .16s, filter .16s;
+}
+
+.spidey-leaflet-marker:hover img,
+.spidey-leaflet-marker.selected img {
+  transform: scale(1.3);
+  filter: drop-shadow(0 0 9px rgba(230, 57, 70, .9));
+}
+
+.spidey-leaflet-tooltip {
+  padding: 6px 8px !important;
+  border: 2px solid #000 !important;
+  border-left: 3px solid #e63946 !important;
+  border-radius: 0 !important;
+  color: #fff !important;
+  background: #113645 !important;
+  box-shadow: 2px 2px 0 #000 !important;
+}
+
+.spidey-leaflet-tooltip::before {
+  border-top-color: #113645 !important;
+}
+
+.spidey-leaflet-tooltip strong,
+.spidey-leaflet-tooltip small {
+  display: block;
+}
+
+.spidey-leaflet-tooltip strong {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  text-transform: uppercase;
+}
+
+.spidey-leaflet-tooltip small {
+  margin-top: 4px;
+  color: #58c4d8;
+  font-family: var(--font-pixel);
+  font-size: 7px;
 }
 
 /* Deep Navy overlay for pixel scanline effect */
@@ -90,14 +170,34 @@
   opacity: 0.5;
   pointer-events: none;
 }
-.map-marker.confirmed .marker-pulse { border-color: #e63946; }
-.map-marker.event .marker-pulse { border-color: #58c4d8; }
-.map-marker.rumored .marker-pulse { border-color: #ffffff; }
+
+.map-marker.confirmed .marker-pulse {
+  border-color: #e63946;
+}
+
+.map-marker.event .marker-pulse {
+  border-color: #58c4d8;
+}
+
+.map-marker.rumored .marker-pulse {
+  border-color: #ffffff;
+}
 
 @keyframes pixel-pulse {
-  0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.8; }
-  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.3; }
-  100% { transform: translate(-50%, -50%) scale(1.8); opacity: 0; }
+  0% {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
 }
 
 /* ============================================
@@ -116,10 +216,12 @@
   box-shadow: 2px 2px 0 #000;
   border-left: 3px solid #e63946;
 }
+
 .pixel-tooltip strong,
 .pixel-tooltip small {
   display: block;
 }
+
 .pixel-tooltip strong {
   font-family: var(--font-pixel);
   font-size: 8px;
@@ -129,6 +231,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .pixel-tooltip small {
   font-family: var(--font-pixel);
   font-size: 7px;
@@ -148,6 +251,7 @@
   flex-direction: column;
   gap: 4px;
 }
+
 .map-ctrl-pixel {
   width: 26px;
   height: 26px;
@@ -162,11 +266,13 @@
   box-shadow: 2px 2px 0 #000;
   transition: transform 0.1s, background 0.1s;
 }
+
 .map-ctrl-pixel:hover {
   background: #1b5368;
   color: #58c4d8;
   transform: translate(-1px, -1px);
 }
+
 .map-ctrl-pixel:active {
   transform: translate(1px, 1px);
   box-shadow: 1px 1px 0 #000;
@@ -202,19 +308,22 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    rgba(88, 196, 216, 0.25) 30deg,
-    transparent 60deg
-  );
+  background: conic-gradient(from 0deg,
+      transparent 0deg,
+      rgba(88, 196, 216, 0.25) 30deg,
+      transparent 60deg);
   animation: radar-sweep-spin 3s linear infinite;
   pointer-events: none;
 }
 
 @keyframes radar-sweep-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .radar-center-btn {
@@ -232,6 +341,7 @@
   font-size: 11px;
   transition: transform 0.1s, background 0.1s;
 }
+
 .radar-center-btn:hover {
   background: #1b5368;
   transform: scale(1.1);

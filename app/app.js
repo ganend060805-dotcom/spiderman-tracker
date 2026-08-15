@@ -343,7 +343,8 @@
   /* ---------- 4. APPLICATION STATE & DATA ---------- */
   const customSightings = StorageManager.getCustomSightings();
 
-  const fallbackSightings = [
+  // Legacy bootstrap data keeps the shell visible while CMS data is loading.
+  const legacyBootstrapSightings = [
     ...customSightings,
     { id: "sight-us-west-1", type: "confirmed", markerStyle: "spider-red", title: "West Coast Signal", summary: "Siluet merah terdeteksi berayun melintasi jembatan San Francisco.", city: "San Francisco", country: "United States", location: { lat: 37.7749, lng: -122.4194 }, coordinates: { left: "39.5%", top: "31.5%" }, date: "14 AUG 2026", time: "18:30", source: { label: "Web Net Alpha" }, image: "../assets/placeholders/sighting-card.svg" },
     { id: "sight-us-west-star", type: "event", markerStyle: "star", title: "Los Angeles Pop-up Grid", summary: "Pusat aktivitas sinyal utama area pantai barat.", city: "Los Angeles", country: "United States", location: { lat: 34.0522, lng: -118.2437 }, coordinates: { left: "40.2%", top: "34.5%" }, date: "14 AUG 2026", time: "12:00", source: { label: "Official Beacon" }, image: "../assets/placeholders/event-card.svg" },
@@ -376,7 +377,7 @@
 
   const appState = {
     data: {
-      sightings: fallbackSightings,
+      sightings: legacyBootstrapSightings,
       events: [
         { id: "event-001", title: "Jakarta Spider-Verse Premiere Pop-up", description: "Experience interaktif dengan photo spot, spider suit replica, dan mini screening.", venue: "Grand Hall", city: "Jakarta", country: "Indonesia", date: "12 SEP 2026 · 16:00–22:00", image: "../assets/placeholders/event-card.svg", coordinates: { left: "72.8%", top: "43.5%" }, location: { lat: -6.2088, lng: 106.8456 } },
         { id: "event-002", title: "London Signal Lab Weekend", description: "Workshop kreatif untuk memecahkan kode transmisi multi-dimensi.", venue: "Creative Block 09", city: "London", country: "United Kingdom", date: "03–04 OCT 2026 · 10:00", image: "../assets/placeholders/event-card.svg", coordinates: { left: "56.8%", top: "24.5%" }, location: { lat: 51.5074, lng: -0.1278 } }
@@ -385,7 +386,9 @@
         { id: "villain-001", name: "The Spot", threatLevel: "high", firstSeen: "04 JUL 2026", summary: "Entitas penjelajah portal multi-dimensi.", image: "../assets/placeholders/villain-card.svg" },
         { id: "villain-002", name: "Green Goblin", threatLevel: "high", firstSeen: "19 JUL 2026", summary: "Ancaman glider udara berteknologi tinggi.", image: "../assets/placeholders/villain-card.svg" },
         { id: "villain-003", name: "The Prowler", threatLevel: "medium", firstSeen: "01 AUG 2026", summary: "Pejuang bayangan dengan sarung tangan bertenaga sonik.", image: "../assets/placeholders/villain-card.svg" }
-      ]
+      ],
+      videos: [],
+      downloads: { wallpapers: [], stickers: [], emojis: [] }
     },
     downloadData: {
       wallpapers: [{ title: "Spider-Verse 01", meta: "PNG · 1440×2560", image: "../assets/downloads/wallpaper-signal-01.svg" }],
@@ -397,7 +400,10 @@
     activeLogFilter: "all",
     activeDownloadTab: "wallpapers",
     activeMapFilter: "all",
-    mapZoom: 2
+    mapZoom: 2,
+    map: null,
+    leafletMarkers: new Map(),
+    dataSource: "legacy-bootstrap"
   };
 
   const panelMeta = {
@@ -440,32 +446,91 @@
   }
 
   /* ---------- 6. MAP & MARKER RENDERING ---------- */
+  function initLeafletMap() {
+    const host = $("#leafletMap");
+    const mapConfig = window.SPIDEY_CONFIG?.map || {};
+    if (!host || !window.L) {
+      if (!window.L) showToast("Leaflet tidak termuat. Map fallback digunakan.");
+      return false;
+    }
+
+    appState.map = window.L.map(host, {
+      worldCopyJump: true,
+      minZoom: mapConfig.minZoom || 1,
+      maxZoom: mapConfig.maxZoom || 18,
+      zoomControl: false
+    }).setView(mapConfig.defaultCenter || [20, 10], mapConfig.defaultZoom || 2);
+
+    window.L.tileLayer(mapConfig.tileUrl || "https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: mapConfig.maxZoom || 18,
+      attribution: mapConfig.attribution || "&copy; OpenStreetMap contributors"
+    }).addTo(appState.map);
+
+    appState.map.on("zoomend", () => { appState.mapZoom = appState.map.getZoom(); });
+    return true;
+  }
+
+  function filteredSightings(filter) {
+    return appState.data.sightings.filter((item) =>
+      filter === "all" ||
+      item.type === filter ||
+      (filter === "confirmed" && item.markerStyle?.includes("green")) ||
+      (filter === "rumored" && item.markerStyle?.includes("red"))
+    );
+  }
+
   function renderMarkers(filter = "all") {
     appState.activeMapFilter = filter;
     const wrapper = $("#mapMarkers");
-    if (!wrapper) return;
+    const items = filteredSightings(filter);
 
-    wrapper.innerHTML = appState.data.sightings
-      .filter((item) => filter === "all" || item.type === filter ||
-        (filter === "confirmed" && item.markerStyle?.includes("green")) ||
-        (filter === "rumored" && item.markerStyle?.includes("red")))
-      .map((item) => `
-        <button class="map-marker ${item.type} ${item.markerStyle || ''}" type="button"
-          data-marker-id="${item.id}"
-          data-title="${item.title}"
-          data-type="${statusLabel(item.type)}"
-          data-location="${item.city || item.location?.city || "Unknown"}"
-          data-lat="${item.location?.lat || 0}"
-          data-lng="${item.location?.lng || 0}"
-          style="left:${item.coordinates.left};top:${item.coordinates.top}"
-          aria-label="${statusLabel(item.type)}: ${item.title}">
-          <span class="marker-pulse" aria-hidden="true"></span>
-          <img src="${markerAsset(item.markerStyle, item.type)}" alt="" />
-        </button>
-      `).join("");
+    if (appState.map && window.L) {
+      appState.leafletMarkers.forEach((marker) => marker.remove());
+      appState.leafletMarkers.clear();
+      if (wrapper) wrapper.innerHTML = "";
+
+      items.forEach((item) => {
+        const lat = Number(item.location?.lat);
+        const lng = Number(item.location?.lng);
+        if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+        const icon = window.L.divIcon({
+          className: "spidey-leaflet-marker " + item.type,
+          html: '<img src="' + markerAsset(item.markerStyle, item.type) + '" alt="" />',
+          iconSize: [48, 58],
+          iconAnchor: [24, 50],
+          tooltipAnchor: [0, -46]
+        });
+        const marker = window.L.marker([lat, lng], { icon }).addTo(appState.map);
+        marker.bindTooltip("<strong>" + item.title + "</strong><small>" + statusLabel(item.type) + " // " + item.city + "</small>", { direction: "top", offset: [0, -6], className: "spidey-leaflet-tooltip" });
+        marker.on("click", () => {
+          appState.leafletMarkers.forEach((entry) => entry.getElement()?.classList.remove("selected"));
+          marker.getElement()?.classList.add("selected");
+          openSightingDetail(item.id);
+        });
+        appState.leafletMarkers.set(item.id, marker);
+      });
+      return;
+    }
+
+    if (!wrapper) return;
+    wrapper.innerHTML = items.map((item) => [
+      '<button class="map-marker ', item.type, ' ', item.markerStyle || "", '" type="button" data-marker-id="', item.id,
+      '" data-title="', item.title, '" data-type="', statusLabel(item.type), '" data-location="', item.city || "Unknown",
+      '" data-lat="', item.location?.lat || 0, '" data-lng="', item.location?.lng || 0,
+      '" style="left:', item.coordinates?.left || "50%", ";top:", item.coordinates?.top || "50%",
+      '" aria-label="', statusLabel(item.type), ': ', item.title, '"><span class="marker-pulse" aria-hidden="true"></span><img src="',
+      markerAsset(item.markerStyle, item.type), '" alt="" /></button>'
+    ].join("")).join("");
   }
 
+
+
   function updateMapFrame(lat, lng, zoom = appState.mapZoom) {
+    if (appState.map) {
+      appState.mapZoom = Math.max(1, Math.min(18, zoom));
+      appState.map.setView([lat, lng], appState.mapZoom, { animate: true });
+      return;
+    }
     const frame = $("#googleMap");
     if (!frame) return;
     appState.mapZoom = Math.max(1, Math.min(9, zoom));
@@ -489,6 +554,7 @@
     document.querySelectorAll(".map-marker").forEach((marker) => {
       marker.classList.toggle("selected", marker.dataset.markerId === id);
     });
+    appState.leafletMarkers.forEach((marker, markerId) => marker.getElement()?.classList.toggle("selected", markerId === id));
     sound.playAlert();
     showToast(`Sinyal terpilih: ${item?.title || "selected signal"} (${item?.city || ""}).`);
   }
@@ -529,7 +595,7 @@
             updateMapFrame(node.location.lat, node.location.lng, 5);
           }
           sound.playAlert();
-          showToast(`GPS tidak aktif. Memusatkan pada Sinyal: ${node.title}`);
+          showToast(`GPS tidak aktif. Memusatkan pada Sinyal: ${node?.title || "global grid"}`);
         },
         { timeout: 6000 }
       );
@@ -538,7 +604,7 @@
       if (node?.location?.lat) {
         updateMapFrame(node.location.lat, node.location.lng, 5);
       }
-      showToast(`Memusatkan pada Sinyal: ${node.title}`);
+      showToast(`Memusatkan pada Sinyal: ${node?.title || "global grid"}`);
     }
   }
 
@@ -579,6 +645,7 @@
 
     if (name === "activity-log") renderActivity(appState.activeLogFilter, $("#activitySearch")?.value || "");
     if (name === "web-watch") renderWebWatch();
+    if (name === "videos") renderVideos();
     if (name === "events") renderEvents();
     if (name === "downloads") renderDownloads(appState.activeDownloadTab);
   }
@@ -671,9 +738,36 @@
     }
   }
 
+  function renderVideos() {
+    const videos = appState.data.videos || [];
+    const featured = $("#featuredVideo");
+    const list = $("#videoList");
+    if (!videos.length) return;
+    const first = videos[0];
+    if (featured) {
+      featured.dataset.videoTitle = first.title;
+      featured.dataset.videoUrl = first.embedUrl || "";
+      featured.querySelector("img")?.setAttribute("src", first.poster);
+      const title = featured.querySelector("strong");
+      const meta = featured.querySelector("small");
+      if (title) title.textContent = first.title;
+      if (meta) meta.textContent = `${first.duration} · CMS VIDEO`;
+    }
+    if (list) {
+      list.innerHTML = videos.slice(1).map((video, index) => `
+        <button class="video-row" type="button" data-video-title="${video.title}" data-video-url="${video.embedUrl || ""}">
+          <span class="mini-thumb ${index % 2 ? "red" : "blue"}">${String(index + 1).padStart(2, "0")}</span>
+          <span><strong>${video.title}</strong><small>${video.subtitle} · ${video.duration}</small></span><span aria-hidden="true">▶</span>
+        </button>
+      `).join("");
+    }
+    const count = $("#panelCount");
+    if (count) count.textContent = `${String(videos.length).padStart(2, "0")} VIDEOS`;
+  }
+
   function renderDownloads(category) {
     appState.activeDownloadTab = category;
-    const items = appState.downloadData[category] || [];
+    const items = appState.data.downloads?.[category] || appState.downloadData?.[category] || [];
     const count = $("#panelCount");
     if (count) count.textContent = `${String(items.length).padStart(2, "0")} FILE`;
     const grid = $("#downloadGrid");
@@ -684,11 +778,12 @@
             data-asset-preview="${item.image}"
             data-asset-title="${item.title}"
             data-asset-meta="${item.meta}"
+            data-asset-file="${item.fileUrl || item.image}"
             aria-label="Preview ${item.title}">
             <img src="${item.image}" alt="${item.title}" />
           </button>
           <div class="download-card-info"><strong>${item.title}</strong><small>${item.meta}</small></div>
-          <button class="button button-primary" type="button" data-download-asset="${item.title}">Download ↓</button>
+          <button class="button button-primary" type="button" data-download-asset="${item.title}" data-download-url="${item.fileUrl || item.image}">Download ↓</button>
         </article>
       `).join("");
     }
@@ -765,7 +860,7 @@
     openPanel("detail");
   }
 
-  function handleReportSubmission(e) {
+  async function handleReportSubmission(e) {
     if (e) e.preventDefault();
     const cityInput = $("#reportCity");
     const descInput = $("#reportText");
@@ -775,7 +870,7 @@
     const desc = descInput?.value.trim() || "Penampakan Spider-Man di area perkotaan.";
     const type = typeSelect?.value || "confirmed";
 
-    const newReport = {
+    let newReport = {
       id: `sight-user-${Date.now()}`,
       type: type,
       markerStyle: type === "confirmed" ? "spider-red" : type === "rumored" ? "spider-white" : "star",
@@ -790,12 +885,34 @@
       image: "../assets/placeholders/sighting-card.svg"
     };
 
-    StorageManager.saveCustomSighting(newReport);
+    let persisted = false;
+    try {
+      const result = await window.SpideyCMS?.createSighting?.({
+        type,
+        marker_style: newReport.markerStyle,
+        title: newReport.title,
+        summary: newReport.summary,
+        city,
+        country: "Reported Area",
+        latitude: newReport.location.lat,
+        longitude: newReport.location.lng,
+        occurred_at: newReport.occurredAt,
+        source_label: "Verified Community Watch",
+        status: "draft"
+      });
+      if (result?.persisted && result.item) {
+        newReport = result.item;
+        persisted = true;
+      }
+    } catch (error) {
+      console.warn("CMS report persistence failed; keeping local report", error);
+    }
+    if (!persisted) StorageManager.saveCustomSighting(newReport);
     appState.data.sightings.unshift(newReport);
     renderMarkers(appState.activeMapFilter);
 
     sound.playSuccess();
-    showToast(`Sinyal baru dilaporkan di ${city}! Marker ditambahkan.`);
+    showToast(`Sinyal baru dilaporkan di ${city}! ${persisted ? "Tersimpan di CMS untuk moderasi." : "Disimpan lokal sementara."}`);
 
     if (cityInput) cityInput.value = "";
     if (descInput) descInput.value = "";
@@ -814,13 +931,14 @@
       if (!videoBtn) return;
       sound.playClick();
       const vidTitle = videoBtn.dataset.videoTitle || "Spider-Man: Brand New Day";
+      const vidUrl = videoBtn.dataset.videoUrl || "https://www.youtube.com/embed/cqGjhVJWtEg?autoplay=1&rel=0";
       if (title) title.textContent = vidTitle;
 
       if (container) {
         container.innerHTML = `
           <iframe
             class="pixel-video-embed"
-            src="https://www.youtube.com/embed/cqGjhVJWtEg?autoplay=1&rel=0"
+            src="${vidUrl}"
             title="${vidTitle}"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen
@@ -843,7 +961,7 @@
     });
   }
 
-  function openAssetPreview(image, title, meta) {
+  function openAssetPreview(image, title, meta, fileUrl = image) {
     const modal = $("#assetModal");
     if (!modal) return;
     sound.playClick();
@@ -859,7 +977,7 @@
       downloadBtn.onclick = (e) => {
         e.preventDefault();
         sound.playSuccess();
-        AssetDownloader.downloadWallpaper(title);
+        AssetDownloader.triggerDownload(fileUrl, title.toLowerCase().replace(/[^a-z0-9]+/g, "-") + ".svg");
         showToast(`Mengunduh asset: ${title}...`);
       };
     }
@@ -1173,7 +1291,9 @@
     if (dlAssetBtn) {
       sound.playSuccess();
       const assetTitle = dlAssetBtn.dataset.downloadAsset;
-      AssetDownloader.downloadWallpaper(assetTitle);
+      const assetUrl = dlAssetBtn.dataset.downloadUrl;
+      if (assetUrl) AssetDownloader.triggerDownload(assetUrl, assetTitle.toLowerCase().replace(/[^a-z0-9]+/g, "-") + ".svg");
+      else AssetDownloader.downloadWallpaper(assetTitle);
       showToast(`Mengunduh paket wallpaper: ${assetTitle}...`);
       return;
     }
@@ -1212,7 +1332,7 @@
     // Asset preview trigger
     const assetPreview = event.target.closest("[data-asset-preview]");
     if (assetPreview) {
-      openAssetPreview(assetPreview.dataset.assetPreview, assetPreview.dataset.assetTitle, assetPreview.dataset.assetMeta);
+      openAssetPreview(assetPreview.dataset.assetPreview, assetPreview.dataset.assetTitle, assetPreview.dataset.assetMeta, assetPreview.dataset.assetFile);
       return;
     }
 
@@ -1248,6 +1368,34 @@
   function updateSoundButtonUI(enabled) {
     const icon = $(".pixel-speaker-icon");
     if (icon) icon.textContent = enabled ? "🔊" : "🔇";
+  }
+
+  async function hydrateFromCMS(silent = false) {
+    if (!window.SpideyCMS?.load) return;
+    try {
+      const payload = await window.SpideyCMS.load();
+      const custom = StorageManager.getCustomSightings();
+      appState.data.sightings = [...custom, ...(payload.sightings || [])];
+      appState.data.events = payload.events || [];
+      appState.data.villains = payload.villains || [];
+      appState.data.videos = payload.videos || [];
+      appState.data.downloads = payload.downloads || { wallpapers: [], stickers: [], emojis: [] };
+      appState.dataSource = payload.source || "cms";
+      renderMarkers(appState.activeMapFilter);
+      renderActivity(appState.activeLogFilter, $("#activitySearch")?.value || "");
+      renderVideos();
+      if (appState.currentPanel === "events") renderEvents();
+      if (appState.currentPanel === "web-watch") renderWebWatch();
+      if (appState.currentPanel === "downloads") renderDownloads(appState.activeDownloadTab);
+      if (!silent) showToast(`Data loaded: ${appState.dataSource.toUpperCase()} // ${appState.data.sightings.length} signals`);
+    } catch (error) {
+      appState.dataSource = "legacy-bootstrap";
+      console.error("Spidey CMS load failed", error);
+      renderMarkers(appState.activeMapFilter);
+      renderActivity(appState.activeLogFilter, $("#activitySearch")?.value || "");
+      const cmsConfigured = Boolean(window.SPIDEY_CONFIG?.api?.baseUrl);
+      if (!silent) showToast(cmsConfigured ? "CMS tidak merespons. Menampilkan bootstrap lokal." : "Mode preview lokal aktif. Jalankan lewat HTTP untuk membaca JSON/CMS.");
+    }
   }
 
   /* ---------- 11. INITIALIZATION ON DOM READY ---------- */
@@ -1308,7 +1456,6 @@
 
     // Report form
     $("#reportForm")?.addEventListener("submit", handleReportSubmission);
-    $("#submitReportBtn")?.addEventListener("click", handleReportSubmission);
 
     $("#reportText")?.addEventListener("input", (event) => {
       const link = $("#reportLink");
@@ -1378,7 +1525,12 @@
       }
     });
 
-    // Initial render
+    // Initialize the real-world map renderer, then render bootstrap data.
+    const mapReady = initLeafletMap();
+    if (!mapReady) {
+      $("#leafletMap")?.setAttribute("hidden", "true");
+      $("#googleMap")?.removeAttribute("hidden");
+    }
     renderMarkers();
     $$(".rail-pill-btn, .sidebar-marker-btn").forEach((btn) => btn.classList.toggle("active", btn.dataset.filterMap === "all"));
     renderActivity();
@@ -1386,6 +1538,15 @@
     // Deep-link from hash
     const hashPanel = window.location.hash.replace("#", "");
     if (panelMeta[hashPanel]) openPanel(hashPanel, false);
+
+    // CMS/API is the primary source. Local bootstrap data remains only for startup/offline resilience.
+    hydrateFromCMS();
+    const refreshMs = Number(window.SPIDEY_CONFIG?.api?.refreshMs || 0);
+    if (refreshMs > 0) {
+      window.setInterval(() => {
+        if (document.visibilityState === "visible") hydrateFromCMS(true);
+      }, refreshMs);
+    }
   }
 
   // Run on DOM ready

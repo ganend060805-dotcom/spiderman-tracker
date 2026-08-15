@@ -1,6 +1,6 @@
 # App Shell Prototype
 
-Shell aplikasi statis untuk Spidey Tracker Replica.
+Shell aplikasi statis untuk Spidey Tracker Replica dengan adapter API/CMS.
 
 ## Cara menjalankan
 
@@ -12,11 +12,17 @@ python -m http.server 4173
 
 Kemudian buka `http://localhost:4173/app/`.
 
-Shell juga memiliki fallback data inline, sehingga struktur UI tetap dapat dipreview saat file JSON belum bisa diambil oleh browser.
+Penting: jalankan server dari `E:/pemrograman/spidey`, bukan dari folder `app`. Jika dibuka di `http://localhost:4173/`, asset seperti logo dan marker akan tampil sebagai ikon rusak karena folder `assets/` dan `data/` berada satu tingkat di atas `app/`.
+
+Jangan membuka `app/index.html` dengan double-click (`file://`). Browser akan memblokir `fetch()` ke JSON lokal dan request CMS karena aturan CORS. Gunakan static server, VS Code Live Server, atau host web development lain.
+
+Jika sebelumnya server terlanjur berjalan dari folder `app`, hentikan server itu, pindah ke `E:/pemrograman/spidey`, jalankan ulang server pada port yang sama, lalu buka `http://localhost:4173/app/`.
+
+`app/config.js` mengatur endpoint Directus, collection, tile URL, dan attribution. `app/cms.js` memuat data dari Directus REST atau JSON development jika CMS belum diisi.
 
 ## Yang sudah tersedia
 
-- Map-first shell dengan fallback map SVG.
+- Map-first shell dengan Leaflet + OpenStreetMap dan fallback Google embed.
 - Intro briefing yang bisa di-skip dan disimpan per sesi browser.
 - Responsive navigation rail / bottom navigation.
 - Hash navigation untuk setiap panel.
@@ -25,15 +31,18 @@ Shell juga memiliki fallback data inline, sehingga struktur UI tetap dapat dipre
 - Report Sightings dengan caption builder dan external share intent.
 - Web Watch cards dan detail dossier.
 - Video modal placeholder.
+- Video cards dapat dirender dari collection CMS.
 - Events list dan detail event.
 - Help/legend panel.
 - Downloads tabs, preview modal, dan link download ke SVG placeholder.
+- Downloads dapat dirender dari collection CMS dengan `file_url` dan `preview_image`.
 - Tooltip marker, marker selection state, live map center, dan zoom controls.
+- Attribution OpenStreetMap tampil di map.
 - Keyboard Escape, focus-visible, reduced-motion, loading fallback data.
 
 ## Jalur pengembangan berikutnya
 
-1. Ganti `fallbackData` dengan API/CMS.
-2. Tambahkan map adapter untuk provider berlisensi.
-3. Pecah `app.js` menjadi modul data, map, panel, dan analytics.
+1. Isi `api.baseUrl` di `app/config.js` dengan URL Directus.
+2. Buat collections sesuai [docs/api-cms.md](../docs/api-cms.md).
+3. Ganti tile URL OSM default dengan provider berlisensi jika traffic production besar.
 4. Ganti asset placeholder dengan aset final yang sudah melalui review lisensi.

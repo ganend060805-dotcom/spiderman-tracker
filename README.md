@@ -9,6 +9,7 @@ Blueprint produk untuk membuat pengalaman web tracker interaktif yang terinspira
 - `docs/design.md` — arahan visual, layout, komponen, interaksi, dan spesifikasi aset.
 - `assets/` — aset SVG placeholder yang bisa diganti dengan artwork final.
 - `data/` — data contoh untuk sightings, events, dan villain/web-watch cards.
+- `app/` — shell aplikasi interaktif, Leaflet map, dan adapter Directus REST.
 
 ## Sumber observasi
 
@@ -23,3 +24,7 @@ Analisis dilakukan pada 15 Agustus 2026. Struktur dokumen ini adalah rancangan i
 3. Masukkan data contoh dari `data/`, lalu sambungkan ke CMS/API.
 4. Ganti aset placeholder di `assets/` dengan aset final.
 5. Uji pengalaman desktop, tablet, mobile, keyboard, dan reduced motion.
+
+## API/CMS
+
+Konfigurasi Directus dan provider tile berada di [app/config.js](E:/pemrograman/spidey/app/config.js). Detail collection, permission, dan payload ada di [docs/api-cms.md](E:/pemrograman/spidey/docs/api-cms.md).
