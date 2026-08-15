@@ -226,12 +226,71 @@
 }
 .intro-card {
   position: relative;
-  width: min(480px, 100%);
-  padding: 30px 24px;
+  width: min(560px, 100%);
+  padding: 28px 30px 22px;
   border: 3px solid #000;
-  background: #113645;
+  background: linear-gradient(145deg, #12485e, #082433 72%);
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.9), 4px 4px 0 #000;
 }
+.intro-card-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: #58c4d8;
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  letter-spacing: .06em;
+}
+.intro-hero {
+  display: grid;
+  grid-template-columns: 94px 1fr;
+  align-items: center;
+  gap: 22px;
+  margin: 26px 0 24px;
+}
+.intro-radar-orb {
+  position: relative;
+  width: 94px;
+  height: 94px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #58c4d8;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(88, 196, 216, .22), rgba(2, 17, 36, .82) 68%);
+  box-shadow: 0 0 0 6px rgba(88, 196, 216, .08), 0 0 18px rgba(88, 196, 216, .35);
+  overflow: hidden;
+}
+.intro-radar-orb::before,
+.intro-radar-orb::after {
+  content: "";
+  position: absolute;
+  border: 1px dashed rgba(88, 196, 216, .55);
+  border-radius: 50%;
+}
+.intro-radar-orb::before { inset: 17px; }
+.intro-radar-orb::after { inset: 34px; }
+.intro-radar-orb span {
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 1px;
+  background: rgba(88, 196, 216, .7);
+}
+.intro-radar-orb i {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent, rgba(88, 196, 216, .65), transparent 28%);
+  animation: intro-radar-spin 3s linear infinite;
+}
+.intro-radar-orb b {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  font-family: var(--font-pixel);
+  font-size: 18px;
+}
+@keyframes intro-radar-spin { to { transform: rotate(360deg); } }
 .intro-card h2 {
   margin: 0;
   font-size: clamp(16px, 4vw, 24px);
@@ -240,20 +299,64 @@
   color: #fff;
   text-shadow: 2px 2px 0 #000;
 }
-.intro-card > p:not(.eyebrow) {
-  max-width: 380px;
-  margin: 12px 0 0;
+.intro-lead {
+  max-width: 360px;
+  margin: 14px 0 0;
   color: #a4c8e8;
   font-size: 8px;
-  line-height: 1.6;
+  line-height: 1.8;
+}
+.intro-step-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.intro-step {
+  display: grid;
+  gap: 7px;
+  padding: 11px 10px;
+  border: 2px solid rgba(88, 196, 216, .35);
+  background: rgba(3, 16, 32, .55);
+  color: #7da5c2;
+  text-align: left;
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  cursor: pointer;
+}
+.intro-step strong { color: #58c4d8; font-size: 9px; }
+.intro-step.is-active,
+.intro-step:hover {
+  border-color: #58c4d8;
+  background: rgba(88, 196, 216, .16);
+  color: #fff;
+}
+.intro-detail {
+  min-height: 62px;
+  padding: 16px 2px 0;
+}
+.intro-detail strong {
+  color: #fff;
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  text-transform: uppercase;
+}
+.intro-detail p {
+  margin-top: 8px;
+  color: #9fc4dc;
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  line-height: 1.8;
 }
 .intro-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
 }
 .intro-skip {
+  display: block;
+  margin: 14px auto 0;
   border: 0;
   color: #7da5c2;
   background: transparent;
@@ -266,7 +369,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-top: 24px;
+  margin-top: 20px;
   color: #58b572;
   font-size: 7px;
 }

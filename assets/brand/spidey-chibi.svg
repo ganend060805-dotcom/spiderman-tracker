@@ -38,6 +38,13 @@
   <rect x="24" y="13" width="7" height="4" fill="#ffffff"/>
   <rect x="25" y="13" width="3" height="3" fill="#e2f3f8"/>
 
+  <!-- Soft pixel blink overlay -->
+  <g id="blink-lids">
+    <rect x="8" y="11" width="24" height="9" fill="#d90429"/>
+    <rect x="8" y="15" width="24" height="2" fill="#000"/>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.90;0.94;0.97;1" dur="4.8s" repeatCount="indefinite"/>
+  </g>
+
   <!-- Body / Torso -->
   <!-- Torso Outline -->
   <rect x="10" y="28" width="20" height="2" fill="#000"/>

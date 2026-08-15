@@ -170,7 +170,7 @@
   const STORAGE_KEYS = {
     CUSTOM_SIGHTINGS: "spidey_custom_sightings",
     SOUND_ENABLED: "spidey_sound_enabled",
-    INTRO_SEEN: "spidey_intro_seen",
+    INTRO_SEEN: "spidey_intro_seen_v2",
     TERMINAL_HISTORY: "spidey_terminal_history"
   };
 
@@ -474,7 +474,8 @@
 
     window.L.tileLayer(mapConfig.tileUrl || "https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: mapConfig.maxZoom || 18,
-      attribution: mapConfig.attribution || "&copy; OpenStreetMap contributors"
+      attribution: mapConfig.attribution || "&copy; OpenStreetMap contributors",
+      className: "spidey-blue-tiles"
     }).addTo(appState.map);
 
     appState.map.on("zoomend", () => { appState.mapZoom = appState.map.getZoom(); });
@@ -1163,6 +1164,39 @@
 
     $("#startTracking")?.addEventListener("click", dismiss);
     $("#skipIntro")?.addEventListener("click", dismiss);
+    $("#introGps")?.addEventListener("click", () => {
+      dismiss();
+      startGpsTracking();
+    });
+
+    const introSteps = {
+      scan: {
+        title: "Scan the global grid",
+        copy: "Gunakan peta untuk membaca marker, zoom, dan area radar secara langsung."
+      },
+      filter: {
+        title: "Filter the signal",
+        copy: "Pilih marker terkonfirmasi, rumor, atau semua aktivitas dari rail di kiri."
+      },
+      report: {
+        title: "Report what you see",
+        copy: "Kirim laporan lapangan agar sinyal baru masuk ke jaringan tracker."
+      }
+    };
+    $$("[data-intro-step]").forEach((step) => {
+      step.addEventListener("click", () => {
+        const detail = introSteps[step.dataset.introStep];
+        if (!detail) return;
+        $$("[data-intro-step]").forEach((item) => {
+          const active = item === step;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-selected", String(active));
+        });
+        $("#introDetailTitle").textContent = detail.title;
+        $("#introDetailCopy").textContent = detail.copy;
+        sound.playClick();
+      });
+    });
   }
 
   /* ---------- 9. TERMINAL CONSOLE ---------- */

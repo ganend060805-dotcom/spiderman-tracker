@@ -18,10 +18,10 @@
    ============================================ */
 .chibi-spidey-anchor {
   position: absolute;
-  left: 6px;
-  bottom: 12px;
-  width: 44px;
-  height: 56px;
+  left: 4px;
+  bottom: 5px;
+  width: 62px;
+  height: 82px;
   z-index: 30;
   pointer-events: none;
   filter: drop-shadow(2px 2px 0 #000);
@@ -37,37 +37,6 @@
 @keyframes chibi-bob {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-3px); }
-}
-
-/* ============================================
-   WATCH TRAILER BADGE BUTTON (Bottom Left)
-   ============================================ */
-.pixel-btn-trailer {
-  position: absolute;
-  left: 8px;
-  bottom: -4px;
-  z-index: 35;
-  padding: 4px 10px;
-  background: var(--trailer-orange);
-  border: 2px solid #000;
-  border-radius: 4px;
-  box-shadow: 2px 2px 0 #000;
-  color: #000;
-  font-family: var(--font-pixel);
-  font-size: 7px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  transition: transform 0.1s, background 0.1s;
-}
-.pixel-btn-trailer:hover {
-  background: #ffcc55;
-  transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0 #000;
-}
-.pixel-btn-trailer:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0 #000;
 }
 
 /* ============================================

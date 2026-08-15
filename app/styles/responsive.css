@@ -55,12 +55,8 @@
     padding: 4px 8px;
   }
   .chibi-spidey-anchor {
-    width: 34px;
-    height: 44px;
-  }
-  .pixel-btn-trailer {
-    font-size: 6px;
-    padding: 3px 6px;
+    width: 48px;
+    height: 64px;
   }
   .ticker-box-pill {
     width: calc(100% - 100px);
@@ -84,6 +80,28 @@
 }
 
 @media (max-width: 480px) {
+  .intro-card {
+    padding: 22px 18px 18px;
+  }
+  .intro-hero {
+    grid-template-columns: 64px 1fr;
+    gap: 14px;
+    margin: 20px 0 18px;
+  }
+  .intro-radar-orb {
+    width: 64px;
+    height: 64px;
+  }
+  .intro-radar-orb b {
+    font-size: 13px;
+  }
+  .intro-step {
+    padding: 9px 7px;
+    font-size: 6px;
+  }
+  .intro-detail {
+    min-height: 72px;
+  }
   .center-title-badge {
     padding: 4px 8px;
     gap: 4px;
@@ -94,9 +112,6 @@
   .title-mini-mask {
     width: 16px;
     height: 16px;
-  }
-  .pixel-btn-trailer {
-    display: none;
   }
   .ticker-box-pill {
     width: 100%;
