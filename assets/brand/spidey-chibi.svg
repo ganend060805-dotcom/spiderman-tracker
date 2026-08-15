@@ -1,94 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 52" width="40" height="52" shape-rendering="crispEdges">
-  <!-- Black outline around character -->
-  <!-- Head outline -->
-  <rect x="12" y="2" width="16" height="2" fill="#000"/>
-  <rect x="8" y="4" width="4" height="2" fill="#000"/>
-  <rect x="28" y="4" width="4" height="2" fill="#000"/>
-  <rect x="6" y="6" width="2" height="4" fill="#000"/>
-  <rect x="32" y="6" width="2" height="4" fill="#000"/>
-  <rect x="4" y="10" width="2" height="12" fill="#000"/>
-  <rect x="34" y="10" width="2" height="12" fill="#000"/>
-  <rect x="6" y="22" width="2" height="4" fill="#000"/>
-  <rect x="32" y="22" width="2" height="4" fill="#000"/>
-  <rect x="8" y="26" width="6" height="2" fill="#000"/>
-  <rect x="26" y="26" width="6" height="2" fill="#000"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 96" width="88" height="96" shape-rendering="crispEdges">
+  <g id="spidey-head">
+    <!-- small hanging web -->
+    <path d="M70 0v9M66 3h8M67 6h6M68 9h4" stroke="#d8f5ff" stroke-width="2" fill="none"/>
+    <path d="M70 9v10" stroke="#58c4d8" stroke-width="1" stroke-dasharray="2 2"><animate attributeName="d" values="M70 9v10;M69 9l3 10;M70 9v10" dur="2s" repeatCount="indefinite"/></path>
 
-  <!-- Head red fill -->
-  <rect x="12" y="4" width="16" height="2" fill="#e63946"/>
-  <rect x="8" y="6" width="24" height="4" fill="#e63946"/>
-  <rect x="6" y="10" width="28" height="12" fill="#d90429"/>
-  <rect x="8" y="22" width="24" height="4" fill="#bd0020"/>
+    <!-- large stepped Spider-Man mask -->
+    <path d="M29 6h30v3h9v5h6v8h4v29h-4v8h-6v6h-9v4H29v-4h-9v-6h-6v-8h-4V22h4v-8h6V9h9Z" fill="#080b14"/>
+    <path d="M30 9h28v3h8v6h6v7h3v25h-4v8h-6v6h-9v3H30v-3h-8v-6h-6v-8h-4V25h4v-7h6v-6h8Z" fill="#e63946"/>
+    <path d="M30 9h28v3h8v6H22v-4h6v-3h2Z" fill="#ff6971"/>
 
-  <!-- Head web lines -->
-  <rect x="19" y="4" width="2" height="22" fill="#000" opacity="0.4"/>
-  <rect x="8" y="14" width="24" height="2" fill="#000" opacity="0.3"/>
+    <!-- pixel web pattern -->
+    <path d="M44 9v52M13 34h62M18 19l52 41M70 19 18 60M23 13c3 14 11 23 21 28M65 13c-3 14-11 23-21 28M19 51c9-6 17-9 25-9M69 51c-9-6-17-9-25-9" stroke="#711b31" stroke-width="2" fill="none" opacity=".85"/>
+    <path d="M26 16h36M20 24h48M17 33h54M17 43h54M20 52h48M26 60h36" stroke="#90263d" stroke-width="1" opacity=".65"/>
 
-  <!-- Spidey Eyes (Angled white lenses with black rims) -->
-  <!-- Left Eye Rim -->
-  <rect x="8" y="11" width="10" height="9" fill="#000"/>
-  <!-- Left Eye White -->
-  <rect x="10" y="12" width="6" height="6" fill="#ffffff"/>
-  <rect x="9" y="13" width="7" height="4" fill="#ffffff"/>
-  <rect x="12" y="13" width="3" height="3" fill="#e2f3f8"/>
+    <!-- large white pixel eyes -->
+    <path d="M16 32h5v-4h15v4h4v17h-5v4H22v-3h-6Z" fill="#05070e"/>
+    <path d="M21 33h12v3h3v11h-4v3h-8v-3h-3Z" fill="#fff"/>
+    <path d="M48 32h4v-4h15v4h5v18h-5v3H53v-4h-5Z" fill="#05070e"/>
+    <path d="M53 33h12v3h3v11h-4v3h-8v-3h-3Z" fill="#fff"/>
+    <path d="M23 35h7v2h-7M55 35h7v2h-7" fill="#dcecff"/>
 
-  <!-- Right Eye Rim -->
-  <rect x="22" y="11" width="10" height="9" fill="#000"/>
-  <!-- Right Eye White -->
-  <rect x="24" y="12" width="6" height="6" fill="#ffffff"/>
-  <rect x="24" y="13" width="7" height="4" fill="#ffffff"/>
-  <rect x="25" y="13" width="3" height="3" fill="#e2f3f8"/>
+    <!-- eye blink -->
+    <g id="blink-lids">
+      <path d="M16 37h24v12h-5v4H22v-3h-6Z" fill="#e63946"/>
+      <path d="M48 37h24v13h-5v3H53v-4h-5Z" fill="#e63946"/>
+      <path d="M17 46h22M49 46h22" stroke="#080b14" stroke-width="2"/>
+      <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.9;.935;.97;1" dur="4.7s" repeatCount="indefinite"/>
+    </g>
 
-  <!-- Soft pixel blink overlay -->
-  <g id="blink-lids">
-    <rect x="8" y="11" width="24" height="9" fill="#d90429"/>
-    <rect x="8" y="15" width="24" height="2" fill="#000"/>
-    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.90;0.94;0.97;1" dur="4.8s" repeatCount="indefinite"/>
+    <!-- mask shine and chin accent -->
+    <path d="M24 18h8v3h-5v4h-4v-4h1Z" fill="#ff9a9e" opacity=".8"/>
+    <path d="M31 62h26v4H31Z" fill="#b92137"/>
+
+    <!-- gentle floating animation -->
+    <animateTransform attributeName="transform" type="translate" values="0 0;0 -2;0 0;0 1;0 0" dur="3s" repeatCount="indefinite"/>
   </g>
-
-  <!-- Body / Torso -->
-  <!-- Torso Outline -->
-  <rect x="10" y="28" width="20" height="2" fill="#000"/>
-  <rect x="8" y="30" width="2" height="10" fill="#000"/>
-  <rect x="30" y="30" width="2" height="10" fill="#000"/>
-
-  <!-- Torso Red Center -->
-  <rect x="14" y="28" width="12" height="10" fill="#d90429"/>
-  <!-- Torso Blue Sides -->
-  <rect x="10" y="30" width="4" height="8" fill="#1d3557"/>
-  <rect x="26" y="30" width="4" height="8" fill="#1d3557"/>
-
-  <!-- Chest Spider Logo -->
-  <rect x="19" y="32" width="2" height="3" fill="#000"/>
-  <rect x="18" y="33" width="4" height="1" fill="#000"/>
-
-  <!-- Arms / Hands -->
-  <!-- Left Arm -->
-  <rect x="4" y="28" width="4" height="2" fill="#000"/>
-  <rect x="2" y="30" width="2" height="8" fill="#000"/>
-  <rect x="4" y="38" width="4" height="2" fill="#000"/>
-  <rect x="4" y="30" width="4" height="4" fill="#d90429"/>
-  <rect x="4" y="34" width="4" height="4" fill="#1d3557"/>
-
-  <!-- Right Arm -->
-  <rect x="32" y="28" width="4" height="2" fill="#000"/>
-  <rect x="36" y="30" width="2" height="8" fill="#000"/>
-  <rect x="32" y="38" width="4" height="2" fill="#000"/>
-  <rect x="32" y="30" width="4" height="4" fill="#d90429"/>
-  <rect x="32" y="34" width="4" height="4" fill="#1d3557"/>
-
-  <!-- Legs & Boots -->
-  <!-- Blue pants -->
-  <rect x="12" y="38" width="7" height="6" fill="#1d3557"/>
-  <rect x="21" y="38" width="7" height="6" fill="#1d3557"/>
-  <rect x="19" y="38" width="2" height="4" fill="#000"/>
-
-  <!-- Red Boots -->
-  <rect x="10" y="44" width="8" height="6" fill="#d90429"/>
-  <rect x="22" y="44" width="8" height="6" fill="#d90429"/>
-
-  <!-- Bottom Outline -->
-  <rect x="8" y="50" width="11" height="2" fill="#000"/>
-  <rect x="21" y="50" width="11" height="2" fill="#000"/>
-  <rect x="8" y="44" width="2" height="6" fill="#000"/>
-  <rect x="30" y="44" width="2" height="6" fill="#000"/>
 </svg>
