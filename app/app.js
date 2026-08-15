@@ -403,6 +403,14 @@
     mapZoom: 2,
     map: null,
     leafletMarkers: new Map(),
+    gpsWatchId: null,
+    gpsTracking: false,
+    gpsPosition: null,
+    gpsAccuracy: null,
+    gpsRadiusKm: 25,
+    gpsCircle: null,
+    gpsMarker: null,
+    gpsHasCentered: false,
     dataSource: "legacy-bootstrap"
   };
 
@@ -471,18 +479,169 @@
   }
 
   function filteredSightings(filter) {
-    return appState.data.sightings.filter((item) =>
+    return appState.data.sightings.filter((item) => {
+      const matchesFilter =
       filter === "all" ||
       item.type === filter ||
       (filter === "confirmed" && item.markerStyle?.includes("green")) ||
-      (filter === "rumored" && item.markerStyle?.includes("red"))
+      (filter === "rumored" && item.markerStyle?.includes("red"));
+      return matchesFilter;
+    });
+  }
+
+  function distanceKm(lat1, lng1, lat2, lng2) {
+    const earthRadiusKm = 6371;
+    const toRadians = (value) => value * Math.PI / 180;
+    const deltaLat = toRadians(lat2 - lat1);
+    const deltaLng = toRadians(lng2 - lng1);
+    const a = Math.sin(deltaLat / 2) ** 2 +
+      Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.sin(deltaLng / 2) ** 2;
+    return earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  function isInsideGpsRadius(item) {
+    if (!appState.gpsTracking || !appState.gpsPosition) return true;
+    const itemLat = Number(item.location?.lat);
+    const itemLng = Number(item.location?.lng);
+    if (!Number.isFinite(itemLat) || !Number.isFinite(itemLng)) return false;
+    return distanceKm(appState.gpsPosition.lat, appState.gpsPosition.lng, itemLat, itemLng) <= appState.gpsRadiusKm;
+  }
+
+  function getRadiusScopedSightings(filter) {
+    const allItems = filteredSightings(filter);
+    if (!appState.gpsTracking || !appState.gpsPosition) {
+      return { items: allItems, nearbyCount: allItems.length, fallback: false };
+    }
+    const nearbyItems = allItems.filter(isInsideGpsRadius);
+    // Keep the global markers visible if the selected radius has no signal yet.
+    return {
+      items: nearbyItems.length > 0 ? nearbyItems : allItems,
+      nearbyCount: nearbyItems.length,
+      fallback: nearbyItems.length === 0 && allItems.length > 0
+    };
+  }
+
+  function updateGpsRadiusUI() {
+    const value = $("#gpsRadiusValue");
+    const input = $("#gpsRadiusInput");
+    const toggle = $("#gpsRadiusToggle");
+    const status = $("#gpsRadiusStatus");
+    if (value) value.textContent = `${appState.gpsRadiusKm} KM`;
+    if (input) input.value = String(appState.gpsRadiusKm);
+    if (toggle) {
+      toggle.textContent = appState.gpsTracking ? "STOP GPS SCAN" : "START GPS SCAN";
+      toggle.classList.toggle("is-active", appState.gpsTracking);
+    }
+    if (status) {
+      if (!appState.gpsTracking) status.textContent = "GPS belum aktif";
+      else if (!appState.gpsPosition) status.textContent = "Menunggu izin lokasi...";
+      else {
+        const scoped = getRadiusScopedSightings(appState.activeMapFilter);
+        status.textContent = scoped.fallback
+          ? `0 dalam radius · ${scoped.items.length} global ditampilkan`
+          : `${scoped.nearbyCount} sinyal dalam radius`;
+      }
+    }
+  }
+
+  function drawGpsArea(shouldCenter = false) {
+    if (!appState.map || !window.L || !appState.gpsPosition) return;
+    const point = [appState.gpsPosition.lat, appState.gpsPosition.lng];
+    if (!appState.gpsCircle) {
+      appState.gpsCircle = window.L.circle(point, {
+        radius: appState.gpsRadiusKm * 1000,
+        color: "#58c4d8",
+        weight: 2,
+        opacity: 0.95,
+        fillColor: "#58c4d8",
+        fillOpacity: 0.12,
+        dashArray: "6 6"
+      }).addTo(appState.map);
+    } else {
+      appState.gpsCircle.setLatLng(point);
+      appState.gpsCircle.setRadius(appState.gpsRadiusKm * 1000);
+    }
+    if (!appState.gpsMarker) {
+      appState.gpsMarker = window.L.circleMarker(point, {
+        radius: 8,
+        color: "#fff",
+        weight: 2,
+        fillColor: "#e63946",
+        fillOpacity: 1
+      }).addTo(appState.map);
+      appState.gpsMarker.bindTooltip("POSISI GPS AKTIF", { direction: "top", offset: [0, -8], className: "spidey-leaflet-tooltip" });
+    } else {
+      appState.gpsMarker.setLatLng(point);
+    }
+    if (shouldCenter) {
+      appState.map.fitBounds(appState.gpsCircle.getBounds(), { padding: [32, 32], maxZoom: 11, animate: true });
+    }
+  }
+
+  function handleGpsPosition(position, firstFix = false) {
+    const isFirstGpsFix = firstFix || !appState.gpsHasCentered;
+    appState.gpsPosition = { lat: position.coords.latitude, lng: position.coords.longitude };
+    appState.gpsAccuracy = Number(position.coords.accuracy) || null;
+    drawGpsArea(isFirstGpsFix);
+    appState.gpsHasCentered = true;
+    renderMarkers(appState.activeMapFilter);
+    updateGpsRadiusUI();
+    if (isFirstGpsFix) {
+      sound.playSuccess();
+      const accuracy = appState.gpsAccuracy ? ` ±${Math.round(appState.gpsAccuracy)}m` : "";
+      showToast(`GPS aktif: radius ${appState.gpsRadiusKm} km${accuracy}`);
+    }
+  }
+
+  function stopGpsTracking(silent = false) {
+    if (appState.gpsWatchId !== null && "geolocation" in navigator) {
+      navigator.geolocation.clearWatch(appState.gpsWatchId);
+    }
+    appState.gpsWatchId = null;
+    appState.gpsTracking = false;
+    appState.gpsHasCentered = false;
+    if (appState.gpsCircle) { appState.gpsCircle.remove(); appState.gpsCircle = null; }
+    if (appState.gpsMarker) { appState.gpsMarker.remove(); appState.gpsMarker = null; }
+    renderMarkers(appState.activeMapFilter);
+    updateGpsRadiusUI();
+    if (!silent) showToast("GPS scan dihentikan. Menampilkan jaringan global.");
+  }
+
+  function startGpsTracking() {
+    if (!("geolocation" in navigator)) {
+      showToast("Browser ini tidak mendukung GPS.");
+      return;
+    }
+    stopGpsTracking(true);
+    appState.gpsTracking = true;
+    appState.gpsHasCentered = false;
+    updateGpsRadiusUI();
+    sound.playRadarPing();
+    showToast("Meminta akses GPS untuk scan radius...");
+    appState.gpsWatchId = navigator.geolocation.watchPosition(
+      (position) => handleGpsPosition(position, false),
+      (error) => {
+        stopGpsTracking(true);
+        sound.playAlert();
+        const reason = error?.code === 1 ? "izin lokasi ditolak" : "lokasi belum tersedia";
+        showToast(`GPS gagal: ${reason}.`);
+      },
+      { enableHighAccuracy: true, maximumAge: 10000, timeout: 15000 }
     );
+  }
+
+  function setGpsRadius(value) {
+    appState.gpsRadiusKm = Math.max(10, Math.min(100, Number(value) || 25));
+    if (appState.gpsCircle) appState.gpsCircle.setRadius(appState.gpsRadiusKm * 1000);
+    renderMarkers(appState.activeMapFilter);
+    updateGpsRadiusUI();
   }
 
   function renderMarkers(filter = "all") {
     appState.activeMapFilter = filter;
     const wrapper = $("#mapMarkers");
-    const items = filteredSightings(filter);
+    const scoped = getRadiusScopedSightings(filter);
+    const items = scoped.items;
 
     if (appState.map && window.L) {
       appState.leafletMarkers.forEach((marker) => marker.remove());
@@ -494,7 +653,7 @@
         const lng = Number(item.location?.lng);
         if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
         const icon = window.L.divIcon({
-          className: "spidey-leaflet-marker " + item.type,
+          className: "spidey-leaflet-marker " + item.type + (scoped.fallback && !isInsideGpsRadius(item) ? " gps-outside-radius" : ""),
           html: '<img src="' + markerAsset(item.markerStyle, item.type) + '" alt="" />',
           iconSize: [48, 58],
           iconAnchor: [24, 50],
@@ -514,7 +673,7 @@
 
     if (!wrapper) return;
     wrapper.innerHTML = items.map((item) => [
-      '<button class="map-marker ', item.type, ' ', item.markerStyle || "", '" type="button" data-marker-id="', item.id,
+      '<button class="map-marker ', item.type, ' ', item.markerStyle || "", (scoped.fallback && !isInsideGpsRadius(item) ? " gps-outside-radius" : ""), '" type="button" data-marker-id="', item.id,
       '" data-title="', item.title, '" data-type="', statusLabel(item.type), '" data-location="', item.city || "Unknown",
       '" data-lat="', item.location?.lat || 0, '" data-lng="', item.location?.lng || 0,
       '" style="left:', item.coordinates?.left || "50%", ";top:", item.coordinates?.top || "50%",
@@ -577,35 +736,8 @@
   }
 
   function locateUserPosition() {
-    sound.playRadarPing();
-    showToast("Mencari koordinat lokasimu...");
-
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const lat = pos.coords.latitude;
-          const lng = pos.coords.longitude;
-          updateMapFrame(lat, lng, 6);
-          sound.playSuccess();
-          showToast(`Lokasi GPS terdeteksi: [${lat.toFixed(2)}, ${lng.toFixed(2)}]`);
-        },
-        () => {
-          const node = appState.data.sightings[0];
-          if (node?.location?.lat) {
-            updateMapFrame(node.location.lat, node.location.lng, 5);
-          }
-          sound.playAlert();
-          showToast(`GPS tidak aktif. Memusatkan pada Sinyal: ${node?.title || "global grid"}`);
-        },
-        { timeout: 6000 }
-      );
-    } else {
-      const node = appState.data.sightings[0];
-      if (node?.location?.lat) {
-        updateMapFrame(node.location.lat, node.location.lng, 5);
-      }
-      showToast(`Memusatkan pada Sinyal: ${node?.title || "global grid"}`);
-    }
+    if (appState.gpsTracking) stopGpsTracking();
+    else startGpsTracking();
   }
 
   /* ---------- 7. SIDE PANEL VIEWS & CONTROLLERS ---------- */
@@ -1503,6 +1635,12 @@
       centerMap("global");
     });
     $("#mapLocate")?.addEventListener("click", () => locateUserPosition());
+    $("#gpsRadiusInput")?.addEventListener("input", (event) => {
+      sound.playClick();
+      setGpsRadius(event.target.value);
+    });
+    $("#gpsRadiusToggle")?.addEventListener("click", () => locateUserPosition());
+    updateGpsRadiusUI();
 
     // Modals
     setupVideoModal();

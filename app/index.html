@@ -106,6 +106,17 @@
               <button class="map-ctrl-pixel" type="button" id="mapReset" aria-label="Reset Map" title="Reset Global Map">⌖</button>
             </div>
 
+            <div class="gps-radius-panel" id="gpsRadiusPanel" aria-label="GPS radius tracking">
+              <div class="gps-radius-heading">
+                <span>GPS RADAR</span>
+                <strong id="gpsRadiusValue">25 KM</strong>
+              </div>
+              <input id="gpsRadiusInput" type="range" min="10" max="100" step="5" value="25" aria-label="GPS tracking radius in kilometers" />
+              <div class="gps-radius-scale"><span>10 KM</span><span>100 KM</span></div>
+              <button class="gps-track-button" id="gpsRadiusToggle" type="button">START GPS SCAN</button>
+              <small id="gpsRadiusStatus">GPS belum aktif</small>
+            </div>
+
             <!-- Spider Web Radar Widget (Bottom Right of Map) -->
             <div class="spider-web-radar" id="webRadar" aria-label="Spider Web Navigation Radar">
               <svg class="radar-web-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">

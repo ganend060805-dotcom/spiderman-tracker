@@ -20,6 +20,17 @@ Jika sebelumnya server terlanjur berjalan dari folder `app`, hentikan server itu
 
 `app/config.js` mengatur endpoint Directus, collection, tile URL, dan attribution. `app/cms.js` memuat data dari Directus REST atau JSON development jika CMS belum diisi.
 
+### GPS radius scan
+
+Pada peta, panel `GPS RADAR` dapat digunakan untuk memilih radius 10–100 km. Tekan `START GPS SCAN`, izinkan akses lokasi browser, lalu aplikasi akan:
+
+- mengikuti perubahan posisi perangkat dengan `watchPosition`;
+- menggambar lingkaran radius pada peta Leaflet;
+- hanya menampilkan sinyal yang berada di dalam radius aktif;
+- memperbarui jumlah sinyal saat radius digeser atau posisi berubah.
+
+GPS browser membutuhkan izin lokasi dan biasanya hanya berjalan pada `localhost` atau HTTPS. Tombol GPS di kontrol peta juga menjalankan dan menghentikan scan yang sama.
+
 ## Yang sudah tersedia
 
 - Map-first shell dengan Leaflet + OpenStreetMap dan fallback Google embed.
