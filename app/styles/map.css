@@ -32,13 +32,13 @@
 .leaflet-map-canvas {
   width: 100%;
   height: 100%;
-  background: #071222;
+  background: #626b76;
   filter: saturate(0.7) brightness(0.72) hue-rotate(185deg) contrast(1.08);
 }
 
 .leaflet-container {
   font-family: var(--font-ui);
-  background: #071222;
+  background: #626b76;
 }
 
 .leaflet-control-attribution {
@@ -59,15 +59,15 @@
 }
 
 .spidey-leaflet-marker img {
-  width: 48px;
-  height: 58px;
+  width: 34px;
+  height: 42px;
   object-fit: contain;
   transition: transform .16s, filter .16s;
 }
 
 .spidey-leaflet-marker:hover img,
 .spidey-leaflet-marker.selected img {
-  transform: scale(1.3);
+  transform: scale(1.16);
   filter: drop-shadow(0 0 9px rgba(230, 57, 70, .9));
 }
 

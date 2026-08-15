@@ -462,12 +462,15 @@
       return false;
     }
 
+    const minimumMapZoom = Math.max(2, Number(mapConfig.minZoom) || 1);
     appState.map = window.L.map(host, {
       worldCopyJump: true,
-      minZoom: mapConfig.minZoom || 1,
+      minZoom: minimumMapZoom,
       maxZoom: mapConfig.maxZoom || 18,
+      maxBounds: [[-85.0511, -360], [85.0511, 360]],
+      maxBoundsViscosity: 0.9,
       zoomControl: false
-    }).setView(mapConfig.defaultCenter || [20, 10], mapConfig.defaultZoom || 2);
+    }).setView(mapConfig.defaultCenter || [20, 10], Math.max(minimumMapZoom, Number(mapConfig.defaultZoom) || 2));
 
     window.L.tileLayer(mapConfig.tileUrl || "https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: mapConfig.maxZoom || 18,
@@ -475,6 +478,13 @@
     }).addTo(appState.map);
 
     appState.map.on("zoomend", () => { appState.mapZoom = appState.map.getZoom(); });
+    const refreshMapSize = () => appState.map?.invalidateSize({ pan: false, animate: false });
+    window.addEventListener("resize", refreshMapSize, { passive: true });
+    window.requestAnimationFrame(refreshMapSize);
+    window.setTimeout(refreshMapSize, 180);
+    if (window.ResizeObserver) {
+      new ResizeObserver(refreshMapSize).observe(host);
+    }
     return true;
   }
 
@@ -655,9 +665,9 @@
         const icon = window.L.divIcon({
           className: "spidey-leaflet-marker " + item.type + (scoped.fallback && !isInsideGpsRadius(item) ? " gps-outside-radius" : ""),
           html: '<img src="' + markerAsset(item.markerStyle, item.type) + '" alt="" />',
-          iconSize: [48, 58],
-          iconAnchor: [24, 50],
-          tooltipAnchor: [0, -46]
+          iconSize: [34, 42],
+          iconAnchor: [17, 36],
+          tooltipAnchor: [0, -34]
         });
         const marker = window.L.marker([lat, lng], { icon }).addTo(appState.map);
         marker.bindTooltip("<strong>" + item.title + "</strong><small>" + statusLabel(item.type) + " // " + item.city + "</small>", { direction: "top", offset: [0, -6], className: "spidey-leaflet-tooltip" });
@@ -686,7 +696,8 @@
 
   function updateMapFrame(lat, lng, zoom = appState.mapZoom) {
     if (appState.map) {
-      appState.mapZoom = Math.max(1, Math.min(18, zoom));
+      const minimumMapZoom = Math.max(2, Number(window.SPIDEY_CONFIG?.map?.minZoom) || 1);
+      appState.mapZoom = Math.max(minimumMapZoom, Math.min(18, zoom));
       appState.map.setView([lat, lng], appState.mapZoom, { animate: true });
       return;
     }
