@@ -14,7 +14,7 @@
   </head>
   <body>
     <!-- Top-Right Floating Terminal Tag -->
-    <button class="top-terminal-tag" type="button" id="terminalBtn" aria-label="Open Terminal Console">
+    <button class="top-terminal-tag" type="button" id="terminalBtn" aria-label="Open Terminal Console" title="Open Console (Shortcut: ~)">
       <span>&gt;_</span>
     </button>
 
@@ -25,7 +25,7 @@
         <!-- ===== TOP BEZEL BAR ===== -->
         <header class="top-bezel" id="topbar">
           <!-- Top Left Orange Spidey Eye Button -->
-          <button class="bezel-btn btn-mask-eye" type="button" id="menuToggle" aria-label="Open Menu / Sightings Log">
+          <button class="bezel-btn btn-mask-eye" type="button" id="menuToggle" aria-label="Open Menu / Sightings Log" title="Activity Log">
             <img src="../assets/brand/spidey-mask-icon.svg" alt="Spidey Mask Menu" />
           </button>
 
@@ -38,11 +38,11 @@
           </div>
 
           <!-- Top Center Title Badge [ SPIDEY (mask) TRACKER ] -->
-          <div class="center-title-badge">
+          <button class="center-title-badge" type="button" aria-label="Sync Radar Network" title="Click to Sync Network">
             <span class="pixel-text title-spidey">SPIDEY</span>
             <img class="title-mini-mask" src="../assets/brand/spidey-mask-mini.svg" alt="" aria-hidden="true" />
             <span class="pixel-text title-tracker">TRACKER</span>
-          </div>
+          </button>
 
           <!-- Top Ruler Right -->
           <div class="bezel-ruler top-ruler right-ruler" aria-hidden="true">
@@ -53,7 +53,7 @@
           </div>
 
           <!-- Top Right White Spider Button -->
-          <button class="bezel-btn btn-spider-white" type="button" id="helpToggle" aria-label="Help & Information">
+          <button class="bezel-btn btn-spider-white" type="button" id="helpToggle" aria-label="Help & Information" title="Help">
             <img src="../assets/brand/spider-icon-white.svg" alt="Spider Info" />
           </button>
         </header>
@@ -106,10 +106,10 @@
 
             <!-- Zoom & View Controls -->
             <div class="pixel-map-controls" aria-label="Map Zoom & Position">
-              <button class="map-ctrl-pixel" type="button" id="zoomIn" aria-label="Zoom In">+</button>
-              <button class="map-ctrl-pixel" type="button" id="zoomOut" aria-label="Zoom Out">−</button>
-              <button class="map-ctrl-pixel" type="button" id="mapLocate" aria-label="Locate Latest Signal">◎</button>
-              <button class="map-ctrl-pixel" type="button" id="mapReset" aria-label="Reset Map">⌖</button>
+              <button class="map-ctrl-pixel" type="button" id="zoomIn" aria-label="Zoom In" title="Zoom In">+</button>
+              <button class="map-ctrl-pixel" type="button" id="zoomOut" aria-label="Zoom Out" title="Zoom Out">−</button>
+              <button class="map-ctrl-pixel" type="button" id="mapLocate" aria-label="Locate User Position" title="My Location (GPS)">◎</button>
+              <button class="map-ctrl-pixel" type="button" id="mapReset" aria-label="Reset Map" title="Reset Global Map">⌖</button>
             </div>
 
             <!-- Spider Web Radar Widget (Bottom Right of Map) -->
@@ -164,19 +164,19 @@
           </div>
 
           <!-- Watch Trailer Pixel Badge Button -->
-          <button class="pixel-btn-trailer" type="button" id="watchTrailerBtn">
+          <button class="pixel-btn-trailer" type="button" id="watchTrailerBtn" data-video-title="Spider-Man: Brand New Day">
             WATCH TRAILER
           </button>
 
           <!-- Centered Ticker Marquee Box -->
           <div class="ticker-box-pill" id="tickerBar">
-            <div class="ticker-marquee-track">
+            <button class="ticker-marquee-track" type="button" aria-label="Bagikan Sinyal ke Media Sosial" title="Klik untuk Salin Link / Share">
               <span class="pixel-ticker-text">
                 SPIDEY SIGHTINGS ON X &nbsp;=&nbsp; SHARE YOUR SPIDEY SIGHTINGS ON X &nbsp;=&nbsp; SPIDEY SIGHTINGS ON X &nbsp;=&nbsp; SHARE YOUR SPIDEY SIGHTINGS ON X &nbsp;=&nbsp;
               </span>
-            </div>
-            <!-- Green Speaker / Share Pill Button -->
-            <button class="ticker-action-pill" type="button" id="tickerAudioBtn" aria-label="Toggle Sound / Feed">
+            </button>
+            <!-- Green Speaker / Sound Toggle Button -->
+            <button class="ticker-action-pill" type="button" id="tickerAudioBtn" aria-label="Toggle 8-Bit Audio" title="Nyalakan/Matikan Suara 8-Bit">
               <span class="pixel-speaker-icon">🔊</span>
             </button>
           </div>
@@ -207,13 +207,13 @@
 
         <!-- Legal Links & Copyright -->
         <div class="footer-legal-row">
-          <a href="#" class="legal-link">PRIVACY POLICY</a>
+          <a href="#" class="legal-link" data-panel="help">PRIVACY POLICY</a>
           <span class="legal-bullet">•</span>
-          <a href="#" class="legal-link">TERMS OF USE</a>
+          <a href="#" class="legal-link" data-panel="help">TERMS OF USE</a>
           <span class="legal-bullet">•</span>
-          <a href="#" class="legal-link">COOKIE CONSENT TOOL</a>
+          <a href="#" class="legal-link" data-panel="help">COOKIE CONSENT TOOL</a>
           <span class="legal-bullet">•</span>
-          <a href="#" class="legal-link">CREDITS</a>
+          <a href="#" class="legal-link" data-panel="help">CREDITS</a>
           <span class="legal-bullet">•</span>
           <span class="copyright-notice">© & ™ 2026 MARVEL. ©2026 CPII AND TSG ENTERTAINMENT LLC</span>
         </div>
@@ -244,32 +244,52 @@
               <input id="activitySearch" type="search" placeholder="Cari sinyal, kota, atau negara..." autocomplete="off" />
             </label>
             <div class="filter-row" role="group" aria-label="Filter activity log">
-              <button class="filter-chip active" type="button" data-log-filter="all">All <span>26</span></button>
-              <button class="filter-chip" type="button" data-log-filter="confirmed">Confirmed <span>14</span></button>
-              <button class="filter-chip" type="button" data-log-filter="rumored">Rumored <span>02</span></button>
-              <button class="filter-chip" type="button" data-log-filter="event">Event <span>10</span></button>
+              <button class="filter-chip active" type="button" data-log-filter="all">All</button>
+              <button class="filter-chip" type="button" data-log-filter="confirmed">Confirmed</button>
+              <button class="filter-chip" type="button" data-log-filter="rumored">Rumored</button>
+              <button class="filter-chip" type="button" data-log-filter="event">Event</button>
             </div>
           </div>
           <div class="log-list" id="logList"></div>
         </section>
 
-        <!-- Report Sightings -->
+        <!-- Report Sightings Form -->
         <section class="panel-view" data-view="report" hidden>
           <div class="panel-intro callout-intro">
             <span class="callout-number">01</span>
-            <div><p>Melihat Spider-Man? Kirim laporan singkat agar tim tracker dapat memverifikasinya.</p></div>
+            <div><p>Melihat Spider-Man? Kirim laporan live agar marker ditambahkan ke peta global secara real-time.</p></div>
           </div>
-          <label class="field-label" for="reportText">Template Laporan</label>
-          <textarea class="report-textarea" id="reportText" rows="6">Signal spotted: [lokasi] — [waktu]
-What I saw: [deskripsi visual]
+          <form id="reportForm" style="display:grid;gap:10px;">
+            <div>
+              <label class="field-label" for="reportCity">Kota / Lokasi Sinyal</label>
+              <input class="report-textarea" id="reportCity" type="text" placeholder="Contoh: Jakarta, Tokyo, London..." required style="height:32px;resize:none;" />
+            </div>
+            <div>
+              <label class="field-label" for="reportType">Kategori Sinyal</label>
+              <select class="report-textarea" id="reportType" style="height:32px;resize:none;color:#fff;background:#081a22;">
+                <option value="confirmed">Confirmed Sighting (Merah)</option>
+                <option value="rumored">Rumored Signal (Putih/Silver)</option>
+                <option value="event">Special Event / Node (Bintang Cyan)</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label" for="reportText">Deskripsi Kejadian</label>
+              <textarea class="report-textarea" id="reportText" rows="4" placeholder="Jelaskan apa yang kamu lihat..." required>Signal spotted: Gedung Pencakar Langit — baru saja
+What I saw: Spider-Man berayun cepat ke arah utara!
 #SpideyTracker #SpiderMan</textarea>
-          <div class="report-tips"><span>TIP</span><p>Sebutkan kota, landmark terdekat, dan arah gerakan.</p></div>
-          <a class="button button-primary button-full" id="reportLink" href="https://twitter.com/intent/tweet?text=Signal%20spotted%3A%20%5Blokasi%5D%20%E2%80%94%20%5Bwaktu%5D%20%23SpideyTracker" target="_blank" rel="noopener noreferrer">Post on X <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="report-tips">
+              <span>TIP</span>
+              <p>Laporan langsung tersimpan di database lokal dan muncul sebagai marker baru di peta.</p>
+            </div>
+            <button class="button button-primary button-full" type="submit" id="submitReportBtn">Kirim Laporan Sinyal 🕷️</button>
+            <a class="button button-ghost button-full" id="reportLink" href="https://twitter.com/intent/tweet?text=Signal%20spotted%3A%20%23SpideyTracker" target="_blank" rel="noopener noreferrer">Post on X (Twitter) <span aria-hidden="true">↗</span></a>
+          </form>
         </section>
 
         <!-- Web Watch -->
         <section class="panel-view" data-view="web-watch" hidden>
-          <div class="panel-intro"><p>Arsip pihak-pihak berkekuatan super yang sedang dipantau.</p></div>
+          <div class="panel-intro"><p>Arsip pihak-pihak berkekuatan super yang sedang dipantau di database spider.</p></div>
           <div class="web-watch-grid" id="webWatchGrid"></div>
         </section>
 
@@ -281,14 +301,14 @@ What I saw: [deskripsi visual]
             <span class="video-overlay"><span class="play-button">▶</span><span><strong>BRAND NEW DAY // TEASER</strong><small>02:18 · HD</small></span></span>
           </button>
           <div class="video-list">
-            <button class="video-row" type="button" data-video-title="Field Briefing 01"><span class="mini-thumb blue">01</span><span><strong>Field Briefing 01</strong><small>Grid Note · 00:42</small></span><span aria-hidden="true">▶</span></button>
-            <button class="video-row" type="button" data-video-title="Global Trace Replay"><span class="mini-thumb red">02</span><span><strong>Global Trace Replay</strong><small>Map Capture · 01:09</small></span><span aria-hidden="true">▶</span></button>
+            <button class="video-row" type="button" data-video-title="Spider-Man: Field Briefing 01"><span class="mini-thumb blue">01</span><span><strong>Field Briefing 01</strong><small>Grid Note · 00:42</small></span><span aria-hidden="true">▶</span></button>
+            <button class="video-row" type="button" data-video-title="Spider-Man: Global Trace Replay"><span class="mini-thumb red">02</span><span><strong>Global Trace Replay</strong><small>Map Capture · 01:09</small></span><span aria-hidden="true">▶</span></button>
           </div>
         </section>
 
         <!-- Events -->
         <section class="panel-view" data-view="events" hidden>
-          <div class="panel-intro"><p>Acara publik dan pop-up interaktif yang akan datang.</p></div>
+          <div class="panel-intro"><p>Acara publik dan pop-up interaktif. Simpan ke kalender (.ics) dengan satu klik.</p></div>
           <div class="event-list" id="eventList"></div>
         </section>
 
@@ -306,7 +326,7 @@ What I saw: [deskripsi visual]
 
         <!-- Downloads -->
         <section class="panel-view" data-view="downloads" hidden>
-          <div class="panel-intro"><p>Paket wallpaper pixel, stiker, dan ikon untuk gawaimu.</p></div>
+          <div class="panel-intro"><p>Paket wallpaper pixel, stiker, dan ikon dinamis siap diunduh.</p></div>
           <div class="download-tabs" role="tablist">
             <button class="download-tab active" type="button" data-download-tab="wallpapers" role="tab" aria-selected="true">Wallpapers</button>
             <button class="download-tab" type="button" data-download-tab="stickers" role="tab" aria-selected="false">Stickers</button>
@@ -322,6 +342,22 @@ What I saw: [deskripsi visual]
         </section>
       </div>
     </aside>
+
+    <!-- ===== RETRO TERMINAL CONSOLE MODAL ===== -->
+    <div class="terminal-modal" id="terminalModal" hidden>
+      <div class="terminal-modal-card" role="dialog" aria-modal="true" aria-labelledby="termTitle">
+        <div class="terminal-header">
+          <div class="term-dots"><span></span><span></span><span></span></div>
+          <h2 id="termTitle" class="term-title">SPIDEY-NET // CONSOLE v2.6.15</h2>
+          <button class="close-button" id="closeTerminal" type="button" aria-label="Tutup Terminal">×</button>
+        </div>
+        <div class="terminal-body" id="terminalOutput"></div>
+        <div class="terminal-input-row">
+          <span class="term-prompt">&gt;</span>
+          <input type="text" id="terminalInput" class="term-input" placeholder="Type a command (e.g. 'help', 'scan', 'list', 'locate London')..." autocomplete="off" />
+        </div>
+      </div>
+    </div>
 
     <!-- ===== INTRO BRIEFING OVERLAY ===== -->
     <div class="intro-overlay" id="introOverlay" hidden>
@@ -341,17 +377,16 @@ What I saw: [deskripsi visual]
     <!-- ===== TOAST ===== -->
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <!-- ===== VIDEO MODAL ===== -->
+    <!-- ===== VIDEO MODAL (Trailer Player) ===== -->
     <div class="video-modal" id="videoModal" hidden>
       <div class="video-modal-card" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle">
         <button class="close-button" id="closeVideo" type="button" aria-label="Tutup video">×</button>
-        <img src="../assets/placeholders/intro-poster.svg" alt="Poster video" />
+        <div id="videoFrameContainer" style="width:100%;aspect-ratio:16/9;background:#000;border:2px solid #000;"></div>
         <div>
-          <p class="eyebrow">VIDEO CHANNEL</p>
+          <p class="eyebrow">OFFICIAL TRAILER</p>
           <h2 id="videoModalTitle">Spider-Man: Brand New Day</h2>
-          <p class="muted">Official trailer preview footage.</p>
+          <p class="muted">Marvel Studios & Sony Pictures — Now Playing in Theaters.</p>
         </div>
-        <button class="button button-primary button-full" type="button" id="fakePlay">Play video <span aria-hidden="true">▶</span></button>
       </div>
     </div>
 
@@ -365,10 +400,10 @@ What I saw: [deskripsi visual]
           <h2 id="assetModalTitle">Signal asset</h2>
           <p class="muted" id="assetModalMeta"></p>
         </div>
-        <a class="button button-primary button-full" id="assetModalDownload" href="" download>Download asset <span aria-hidden="true">-></span></a>
+        <button class="button button-primary button-full" id="assetModalDownload" type="button">Unduh Wallpaper Resolusi Tinggi <span aria-hidden="true">↓</span></button>
       </div>
     </div>
 
-    <script type="module" src="./app.js"></script>
+    <script src="./app.js"></script>
   </body>
 </html>

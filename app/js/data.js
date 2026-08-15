@@ -1,9 +1,10 @@
-/* =============================================
-   SPIDEY TRACKER — Data Module
-   ============================================= */
+import { StorageManager } from "./storage.js";
+
+const customSightings = StorageManager.getCustomSightings();
 
 export const fallbackData = {
   sightings: [
+    ...customSightings,
     {
       id: "sight-us-west-1",
       type: "confirmed",

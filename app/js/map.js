@@ -4,6 +4,7 @@
 
 import { appState } from "./data.js";
 import { $, statusLabel, markerAsset, showToast } from "./ui.js";
+import { sound } from "./audio.js";
 
 export function renderMarkers(filter = "all") {
   appState.activeMapFilter = filter;
@@ -11,7 +12,9 @@ export function renderMarkers(filter = "all") {
   if (!wrapper) return;
 
   wrapper.innerHTML = appState.data.sightings
-    .filter((item) => filter === "all" || item.type === filter || (filter === "confirmed" && item.markerStyle?.includes("green")) || (filter === "rumored" && item.markerStyle?.includes("red")))
+    .filter((item) => filter === "all" || item.type === filter ||
+      (filter === "confirmed" && item.markerStyle?.includes("green")) ||
+      (filter === "rumored" && item.markerStyle?.includes("red")))
     .map((item) => `
       <button class="map-marker ${item.type} ${item.markerStyle || ''}" type="button"
         data-marker-id="${item.id}"
@@ -36,8 +39,9 @@ export function updateMapFrame(lat, lng, zoom = appState.mapZoom) {
 }
 
 export function centerMap(position = "global signal grid") {
-  if (position === "global") updateMapFrame(0, 0, 2);
-  showToast(`Map centered on ${position}.`);
+  sound.playRadarPing();
+  if (position === "global") updateMapFrame(10, 20, 2);
+  showToast(`Peta dipusatkan pada ${position}.`);
 }
 
 export function centerOnRecord(id) {
@@ -50,7 +54,8 @@ export function centerOnRecord(id) {
   document.querySelectorAll(".map-marker").forEach((marker) => {
     marker.classList.toggle("selected", marker.dataset.markerId === id);
   });
-  showToast(`Map centered on ${item?.title || "selected signal"}.`);
+  sound.playAlert();
+  showToast(`Sinyal terpilih: ${item?.title || "selected signal"} (${item?.city || ""}).`);
 }
 
 export function showMarkerTooltip(marker) {
@@ -70,11 +75,47 @@ export function hideMarkerTooltip() {
   if (tooltip) tooltip.hidden = true;
 }
 
+export function locateUserPosition() {
+  sound.playRadarPing();
+  showToast("Mencari koordinat lokasimu...");
+
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        updateMapFrame(lat, lng, 6);
+        sound.playSuccess();
+        showToast(`Lokasi GPS terdeteksi: [${lat.toFixed(2)}, ${lng.toFixed(2)}]`);
+      },
+      () => {
+        // Fallback to nearest major node (Jakarta/London/NYC)
+        const node = appState.data.sightings[0];
+        if (node?.location?.lat) {
+          updateMapFrame(node.location.lat, node.location.lng, 5);
+        }
+        sound.playAlert();
+        showToast(`GPS tidak aktif. Memusatkan pada Sinyal Utama: ${node.title}`);
+      },
+      { timeout: 6000 }
+    );
+  } else {
+    const node = appState.data.sightings[0];
+    if (node?.location?.lat) {
+      updateMapFrame(node.location.lat, node.location.lng, 5);
+    }
+    showToast(`Memusatkan pada Sinyal Utama: ${node.title}`);
+  }
+}
+
 export function setupMapEvents() {
   const markers = $("#mapMarkers");
   markers?.addEventListener("pointerover", (event) => {
     const marker = event.target.closest(".map-marker");
-    if (marker) showMarkerTooltip(marker);
+    if (marker) {
+      sound.playClick();
+      showMarkerTooltip(marker);
+    }
   });
   markers?.addEventListener("pointerout", (event) => {
     if (event.target.closest(".map-marker")) hideMarkerTooltip();
@@ -87,24 +128,26 @@ export function setupMapEvents() {
 
   // Zoom controls
   $("#zoomIn")?.addEventListener("click", () => {
+    sound.playClick();
     appState.mapZoom += 1;
-    updateMapFrame(0, 0, appState.mapZoom);
-    showToast(`Map zoom ${appState.mapZoom}x.`);
+    updateMapFrame(10, 20, appState.mapZoom);
+    showToast(`Map zoom: ${appState.mapZoom}x.`);
   });
   $("#zoomOut")?.addEventListener("click", () => {
+    sound.playClick();
     appState.mapZoom -= 1;
-    updateMapFrame(0, 0, appState.mapZoom);
-    showToast(`Map zoom ${appState.mapZoom}x.`);
+    updateMapFrame(10, 20, appState.mapZoom);
+    showToast(`Map zoom: ${appState.mapZoom}x.`);
   });
   $("#mapReset")?.addEventListener("click", () => {
+    sound.playClick();
     renderMarkers("all");
-    document.querySelectorAll(".sidebar-marker-btn").forEach((btn) => {
+    document.querySelectorAll(".rail-pill-btn, .sidebar-marker-btn").forEach((btn) => {
       btn.classList.toggle("active", btn.dataset.filterMap === "all");
     });
     centerMap("global");
   });
   $("#mapLocate")?.addEventListener("click", () => {
-    const latest = appState.data.sightings[0];
-    if (latest) centerOnRecord(latest.id);
+    locateUserPosition();
   });
 }
