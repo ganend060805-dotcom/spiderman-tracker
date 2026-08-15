@@ -3,230 +3,224 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0a1628" />
-    <meta name="description" content="Spidey Tracker — Track Spider-Man sightings across the globe in real time." />
+    <meta name="theme-color" content="#0a2e6e" />
+    <meta name="description" content="Spidey Tracker — Track Spider-Man sightings across the globe in retro pixel tech style." />
     <title>Spidey Tracker — Field Network</title>
+    <!-- Pixel Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Condensed:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600;700&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="app-shell" id="appShell">
+    <!-- Top-Right Floating Terminal Tag -->
+    <button class="top-terminal-tag" type="button" id="terminalBtn" aria-label="Open Terminal Console">
+      <span>&gt;_</span>
+    </button>
 
-      <!-- ===== TOP HEADER BAR ===== -->
-      <header class="topbar" id="topbar">
-        <button class="hamburger-btn" type="button" id="menuToggle" aria-label="Open menu">
-          <span></span><span></span><span></span>
-        </button>
+    <!-- Main Screen Container on Deep Blue Background -->
+    <div class="screen-wrapper">
+      <div class="arcade-chassis" id="appShell">
 
-        <div class="topbar-title-box">
-          <span class="title-spider-icon" aria-hidden="true">🕷️</span>
-          <span class="topbar-title">SPIDEY</span>
-          <span class="title-dots" aria-hidden="true">••</span>
-          <span class="topbar-title">TRACKER</span>
-        </div>
-
-        <button class="spider-icon-btn" type="button" id="helpToggle" aria-label="Help / Info">
-          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"/>
-            <circle cx="16" cy="12" r="5" fill="currentColor"/>
-            <path d="M4 20 Q8 14 16 22 Q24 14 28 20" stroke="currentColor" stroke-width="2" fill="none"/>
-            <path d="M8 26 Q12 20 16 24 Q20 20 24 26" stroke="currentColor" stroke-width="2" fill="none"/>
-            <line x1="16" y1="7" x2="3" y2="16" stroke="currentColor" stroke-width="1.5"/>
-            <line x1="16" y1="7" x2="29" y2="16" stroke="currentColor" stroke-width="1.5"/>
-            <line x1="16" y1="17" x2="2" y2="22" stroke="currentColor" stroke-width="1.5"/>
-            <line x1="16" y1="17" x2="30" y2="22" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
-        </button>
-      </header>
-
-      <!-- ===== MAIN LAYOUT ===== -->
-      <div class="main-layout">
-
-        <!-- ===== LEFT SIDEBAR ===== -->
-        <aside class="left-sidebar" id="leftSidebar" aria-label="Filter dan navigasi">
-          <button class="sidebar-marker-btn confirmed active" type="button" data-filter-map="confirmed" aria-label="Show confirmed sightings" title="Confirmed">
-            <img src="../assets/markers/marker-confirmed.svg" alt="Confirmed marker" />
-          </button>
-          <button class="sidebar-marker-btn rumored" type="button" data-filter-map="rumored" aria-label="Show rumored sightings" title="Rumored">
-            <img src="../assets/markers/marker-rumored.svg" alt="Rumored marker" />
-          </button>
-          <button class="sidebar-marker-btn event" type="button" data-filter-map="event" aria-label="Show events" title="Events">
-            <img src="../assets/markers/marker-event.svg" alt="Event marker" />
-          </button>
-          <button class="sidebar-marker-btn all-btn" type="button" data-filter-map="all" aria-label="Show all" title="All">
-            <span class="all-icon">★</span>
+        <!-- ===== TOP BEZEL BAR ===== -->
+        <header class="top-bezel" id="topbar">
+          <!-- Top Left Orange Spidey Eye Button -->
+          <button class="bezel-btn btn-mask-eye" type="button" id="menuToggle" aria-label="Open Menu / Sightings Log">
+            <img src="../assets/brand/spidey-mask-icon.svg" alt="Spidey Mask Menu" />
           </button>
 
-          <div class="sidebar-divider"></div>
-
-          <button class="sidebar-nav-btn" type="button" data-panel="activity-log" aria-label="Activity Log">
-            <span>⌁</span>
-          </button>
-          <button class="sidebar-nav-btn" type="button" data-panel="web-watch" aria-label="Web Watch">
-            <span>◉</span>
-          </button>
-          <button class="sidebar-nav-btn" type="button" data-panel="videos" aria-label="Videos">
-            <span>▶</span>
-          </button>
-          <button class="sidebar-nav-btn" type="button" data-panel="events" aria-label="Events">
-            <span>✦</span>
-          </button>
-        </aside>
-
-        <!-- ===== MAP STAGE ===== -->
-        <section class="map-stage" id="mapStage" aria-labelledby="mapTitle">
-          <h1 id="mapTitle" class="sr-only">Spidey Tracker World Map</h1>
-
-          <!-- Google Maps iframe -->
-          <div class="map-container" id="mapContainer">
-            <iframe
-              id="googleMap"
-              class="google-map-frame"
-              title="Spidey Tracker Global Map"
-              src="https://maps.google.com/maps?q=0,0&z=2&output=embed&t=m&hl=id&maptype=roadmap"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-            ></iframe>
-            <div class="map-tint" aria-hidden="true"></div>
+          <!-- Top Ruler / Grid Ticks Pattern -->
+          <div class="bezel-ruler top-ruler" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
           </div>
 
-          <!-- Map Markers overlay -->
-          <div class="map-markers" id="mapMarkers" aria-label="Marker penampakan dan event"></div>
-
-          <!-- Map Controls (zoom) -->
-          <div class="map-controls" aria-label="Kontrol peta">
-            <button class="map-ctrl-btn" type="button" id="zoomIn" aria-label="Zoom in">+</button>
-            <button class="map-ctrl-btn" type="button" id="zoomOut" aria-label="Zoom out">−</button>
+          <!-- Top Center Title Badge [ SPIDEY (mask) TRACKER ] -->
+          <div class="center-title-badge">
+            <span class="pixel-text title-spidey">SPIDEY</span>
+            <img class="title-mini-mask" src="../assets/brand/spidey-mask-mini.svg" alt="" aria-hidden="true" />
+            <span class="pixel-text title-tracker">TRACKER</span>
           </div>
 
-          <!-- Spider Web Radar Widget (bottom-right) -->
-          <div class="web-radar" id="webRadar" aria-label="Web radar">
-            <svg class="radar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-              <!-- Web rings -->
-              <circle cx="60" cy="60" r="55" stroke="rgba(57,185,255,0.25)" stroke-width="1" fill="none"/>
-              <circle cx="60" cy="60" r="42" stroke="rgba(57,185,255,0.25)" stroke-width="1" fill="none"/>
-              <circle cx="60" cy="60" r="29" stroke="rgba(57,185,255,0.25)" stroke-width="1" fill="none"/>
-              <circle cx="60" cy="60" r="16" stroke="rgba(57,185,255,0.3)" stroke-width="1" fill="none"/>
-              <!-- Web spokes -->
-              <line x1="60" y1="5" x2="60" y2="115" stroke="rgba(57,185,255,0.2)" stroke-width="1"/>
-              <line x1="5" y1="60" x2="115" y2="60" stroke="rgba(57,185,255,0.2)" stroke-width="1"/>
-              <line x1="21" y1="21" x2="99" y2="99" stroke="rgba(57,185,255,0.2)" stroke-width="1"/>
-              <line x1="99" y1="21" x2="21" y2="99" stroke="rgba(57,185,255,0.2)" stroke-width="1"/>
-              <!-- Web diagonal connectors (make it look like a real spiderweb) -->
-              <path d="M60 5 L99 21 L115 60 L99 99 L60 115 L21 99 L5 60 L21 21 Z" stroke="rgba(57,185,255,0.15)" stroke-width="1" fill="none"/>
-              <path d="M60 18 L94 30 L102 60 L94 90 L60 102 L26 90 L18 60 L26 30 Z" stroke="rgba(57,185,255,0.15)" stroke-width="1" fill="none"/>
-              <path d="M60 31 L82 39 L90 60 L82 81 L60 89 L38 81 L30 60 L38 39 Z" stroke="rgba(57,185,255,0.12)" stroke-width="1" fill="none"/>
-              <!-- Radar sweep -->
-              <circle cx="60" cy="60" r="4" fill="rgba(57,185,255,0.7)"/>
-              <circle cx="60" cy="60" r="2" fill="#39b9ff"/>
-              <!-- Blip dots -->
-              <circle cx="78" cy="38" r="2.5" fill="#ef3d4e" opacity="0.8"/>
-              <circle cx="44" cy="55" r="2" fill="#b8f26a" opacity="0.8"/>
-              <circle cx="82" cy="72" r="2" fill="#f7b955" opacity="0.8"/>
-              <!-- Globe icon center -->
-              <text x="60" y="118" text-anchor="middle" fill="rgba(57,185,255,0.5)" font-size="7" font-family="monospace">◎</text>
-            </svg>
-            <div class="radar-sweep"></div>
-            <button class="radar-globe-btn" type="button" id="globalMap" aria-label="Global view">
-              <span>⊕</span>
+          <!-- Top Ruler Right -->
+          <div class="bezel-ruler top-ruler right-ruler" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+
+          <!-- Top Right White Spider Button -->
+          <button class="bezel-btn btn-spider-white" type="button" id="helpToggle" aria-label="Help & Information">
+            <img src="../assets/brand/spider-icon-white.svg" alt="Spider Info" />
+          </button>
+        </header>
+
+        <!-- ===== MAIN SCREEN INNER (Sidebar + Map Viewport) ===== -->
+        <div class="screen-viewport">
+
+          <!-- Left Bezel Controls -->
+          <aside class="left-bezel-rail" id="leftSidebar" aria-label="Signal Filters">
+            <button class="rail-pill-btn pill-green active" type="button" data-filter-map="confirmed" aria-label="Confirmed Green Signals" title="Confirmed Signals">
+              <img src="../assets/markers/marker-spider-green.svg" alt="" />
             </button>
+            <button class="rail-pill-btn pill-red" type="button" data-filter-map="rumored" aria-label="Rumored Red Signals" title="Rumored Signals">
+              <img src="../assets/markers/marker-spider-red.svg" alt="" />
+            </button>
+            <button class="rail-pill-btn pill-all" type="button" data-filter-map="all" aria-label="Show All Signals" title="All Signals">
+              <span class="pixel-star">★</span>
+            </button>
+
+            <!-- Vertical Ruler Ticks -->
+            <div class="vertical-ruler" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </aside>
+
+          <!-- Map Stage -->
+          <section class="map-viewport" id="mapStage" aria-labelledby="mapTitle">
+            <h1 id="mapTitle" class="sr-only">Spidey Tracker Global Network</h1>
+
+            <!-- Google Maps Embed -->
+            <div class="map-frame-box" id="mapContainer">
+              <iframe
+                id="googleMap"
+                class="google-map-embed"
+                title="Spidey Tracker World Map"
+                src="https://maps.google.com/maps?q=10,20&z=2&output=embed&t=m&hl=id&maptype=roadmap"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+              <!-- Teal/Navy Pixel Grid Scanline Tint -->
+              <div class="map-navy-overlay" aria-hidden="true"></div>
+            </div>
+
+            <!-- Global Map Markers Overlay -->
+            <div class="map-markers" id="mapMarkers" aria-label="Spidey Sightings Map Markers"></div>
+
+            <!-- Marker Info Tooltip -->
+            <div class="pixel-tooltip" id="markerTooltip" role="status" hidden></div>
+
+            <!-- Zoom & View Controls -->
+            <div class="pixel-map-controls" aria-label="Map Zoom & Position">
+              <button class="map-ctrl-pixel" type="button" id="zoomIn" aria-label="Zoom In">+</button>
+              <button class="map-ctrl-pixel" type="button" id="zoomOut" aria-label="Zoom Out">−</button>
+              <button class="map-ctrl-pixel" type="button" id="mapLocate" aria-label="Locate Latest Signal">◎</button>
+              <button class="map-ctrl-pixel" type="button" id="mapReset" aria-label="Reset Map">⌖</button>
+            </div>
+
+            <!-- Spider Web Radar Widget (Bottom Right of Map) -->
+            <div class="spider-web-radar" id="webRadar" aria-label="Spider Web Navigation Radar">
+              <svg class="radar-web-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <!-- Concentric Web Rings -->
+                <circle cx="60" cy="60" r="54" stroke="#389ebc" stroke-width="1.5" stroke-dasharray="2,2" fill="none" opacity="0.6"/>
+                <circle cx="60" cy="60" r="41" stroke="#389ebc" stroke-width="1.2" stroke-dasharray="2,2" fill="none" opacity="0.6"/>
+                <circle cx="60" cy="60" r="28" stroke="#389ebc" stroke-width="1.2" stroke-dasharray="2,2" fill="none" opacity="0.6"/>
+                <circle cx="60" cy="60" r="15" stroke="#389ebc" stroke-width="1.2" fill="none" opacity="0.7"/>
+
+                <!-- Radial Web Spokes -->
+                <line x1="60" y1="6" x2="60" y2="114" stroke="#389ebc" stroke-width="1" opacity="0.5"/>
+                <line x1="6" y1="60" x2="114" y2="60" stroke="#389ebc" stroke-width="1" opacity="0.5"/>
+                <line x1="22" y1="22" x2="98" y2="98" stroke="#389ebc" stroke-width="1" opacity="0.4"/>
+                <line x1="98" y1="22" x2="22" y2="98" stroke="#389ebc" stroke-width="1" opacity="0.4"/>
+
+                <!-- Radar Sweep Beam -->
+                <path d="M60 60 L108 30 A54 54 0 0 0 60 6 Z" fill="url(#radarSweepGrad)" opacity="0.45"/>
+                <defs>
+                  <radialGradient id="radarSweepGrad" cx="60" cy="60" r="54" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#58c4d8" stop-opacity="0.8"/>
+                    <stop offset="100%" stop-color="#58c4d8" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+
+                <!-- Signal Blip Dots -->
+                <circle cx="82" cy="38" r="3" fill="#e63946"/>
+                <circle cx="42" cy="52" r="2.5" fill="#58b572"/>
+                <circle cx="86" cy="74" r="2.5" fill="#f4b842"/>
+
+                <!-- Center Crosshair / Hub -->
+                <circle cx="60" cy="60" r="3" fill="#ffffff"/>
+              </svg>
+              <div class="radar-rotating-sweep" aria-hidden="true"></div>
+              <button class="radar-center-btn" type="button" id="globalMap" aria-label="Global View" title="Global View">
+                <span>⊕</span>
+              </button>
+            </div>
+
+            <!-- Bottom Left Google & Legal Map watermark placeholders -->
+            <div class="map-watermark-left" aria-hidden="true">Google</div>
+            <div class="map-watermark-right" aria-hidden="true">Pintasan keyboard | Data peta ©2026 | Persyaratan</div>
+          </section>
+        </div>
+
+        <!-- ===== BOTTOM BEZEL TICKER & CONTROLS ===== -->
+        <div class="bottom-bezel">
+          <!-- Pixel Spider-Man Chibi Mascot (Bottom Left) -->
+          <div class="chibi-spidey-anchor" aria-hidden="true">
+            <img class="chibi-spidey-img" src="../assets/brand/spidey-chibi.svg" alt="" />
           </div>
 
-          <!-- Spidey figure (bottom-left) -->
-          <div class="spidey-figure" aria-hidden="true">
-            <svg viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg" fill="none">
-              <!-- body -->
-              <ellipse cx="25" cy="38" rx="12" ry="16" fill="#c41e3a"/>
-              <!-- head -->
-              <circle cx="25" cy="20" r="11" fill="#c41e3a"/>
-              <!-- eyes -->
-              <ellipse cx="21" cy="18" rx="5" ry="4" fill="white" transform="rotate(-15 21 18)"/>
-              <ellipse cx="29" cy="18" rx="5" ry="4" fill="white" transform="rotate(15 29 18)"/>
-              <!-- web lines on body -->
-              <path d="M13 38 Q25 30 37 38" stroke="#800020" stroke-width="1" fill="none"/>
-              <path d="M13 44 Q25 36 37 44" stroke="#800020" stroke-width="1" fill="none"/>
-              <line x1="25" y1="22" x2="25" y2="54" stroke="#800020" stroke-width="1"/>
-              <!-- legs -->
-              <path d="M13 36 L2 26 M13 40 L0 38 M13 44 L2 52" stroke="#c41e3a" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M37 36 L48 26 M37 40 L50 38 M37 44 L48 52" stroke="#c41e3a" stroke-width="2.5" stroke-linecap="round"/>
-              <!-- web string -->
-              <line x1="25" y1="9" x2="25" y2="0" stroke="white" stroke-width="1" opacity="0.7"/>
-            </svg>
-          </div>
-
-        </section>
-      </div>
-
-      <!-- ===== BOTTOM TICKER BAR ===== -->
-      <div class="ticker-bar" id="tickerBar">
-        <div class="ticker-left">
-          <button class="ticker-btn ticker-x-btn" type="button" id="tickerXBtn" data-panel="report">
-            <span class="x-icon">𝕏</span>
-            PIDEY SIGHTINGS ON X
-          </button>
-          <div class="ticker-divider"></div>
-          <button class="ticker-btn ticker-share-btn" type="button" id="tickerShareBtn" data-panel="report">
-            SHARE YOUR SPID!
-          </button>
-        </div>
-        <div class="ticker-right">
-          <label class="ticker-toggle-label" for="tickerToggle">
-            <input type="checkbox" id="tickerToggle" class="ticker-toggle-input" />
-            <span class="ticker-toggle-track">
-              <span class="ticker-toggle-thumb"></span>
-            </span>
-          </label>
-        </div>
-      </div>
-
-      <!-- ===== BOTTOM FOOTER ===== -->
-      <footer class="site-footer" id="siteFooter">
-        <div class="footer-left">
-          <button class="watch-trailer-btn" type="button" id="watchTrailerBtn" data-video-title="Spider-Man: Beyond the Spider-Verse">
+          <!-- Watch Trailer Pixel Badge Button -->
+          <button class="pixel-btn-trailer" type="button" id="watchTrailerBtn">
             WATCH TRAILER
           </button>
+
+          <!-- Centered Ticker Marquee Box -->
+          <div class="ticker-box-pill" id="tickerBar">
+            <div class="ticker-marquee-track">
+              <span class="pixel-ticker-text">
+                SPIDEY SIGHTINGS ON X &nbsp;=&nbsp; SHARE YOUR SPIDEY SIGHTINGS ON X &nbsp;=&nbsp; SPIDEY SIGHTINGS ON X &nbsp;=&nbsp; SHARE YOUR SPIDEY SIGHTINGS ON X &nbsp;=&nbsp;
+              </span>
+            </div>
+            <!-- Green Speaker / Share Pill Button -->
+            <button class="ticker-action-pill" type="button" id="tickerAudioBtn" aria-label="Toggle Sound / Feed">
+              <span class="pixel-speaker-icon">🔊</span>
+            </button>
+          </div>
         </div>
-        <div class="footer-center">
-          <div class="footer-brand">
-            <div class="spider-man-logo">
-              <span class="logo-marvel">MARVEL</span>
-              <div class="logo-title">
-                <span>SPIDER-MAN</span>
-                <span class="logo-subtitle">BEYOND THE SPIDER-VERSE</span>
-              </div>
-              <span class="logo-now-playing">NOW PLAYING</span>
+
+      </div><!-- /arcade-chassis -->
+
+      <!-- ===== FOOTER BRANDING (Below Bezel on Blue Background) ===== -->
+      <footer class="arcade-footer">
+        <div class="footer-center-branding">
+          <!-- Spider-Man Movie Logo -->
+          <div class="spidey-movie-logo">
+            <span class="logo-marvel-badge">MARVEL</span>
+            <div class="logo-main-text">SPIDER-MAN</div>
+            <div class="logo-subtitle-text">BRAND NEW DAY</div>
+            <div class="logo-now-playing-box">NOW PLAYING</div>
+          </div>
+
+          <!-- Samsung Galaxy Branding -->
+          <div class="samsung-branding-box">
+            <span class="powered-by-label">Powered by</span>
+            <div class="samsung-galaxy-logo">
+              <span>SAMSUNG</span>
+              <strong>Galaxy</strong>
             </div>
           </div>
-          <div class="footer-powered">
-            <span class="powered-by-text">Powered by</span>
-            <span class="samsung-logo">SAMSUNG<br/><strong>Galaxy</strong></span>
-          </div>
         </div>
-        <div class="footer-right">
-          <nav class="footer-links" aria-label="Footer navigation">
-            <a href="#" class="footer-link">PRIVACY POLICY</a>
-            <span class="footer-sep">•</span>
-            <a href="#" class="footer-link">TERMS OF USE</a>
-            <span class="footer-sep">•</span>
-            <a href="#" class="footer-link">COOKIE CONSENT TOOL</a>
-            <span class="footer-sep">•</span>
-            <a href="#" class="footer-link">CREDITS</a>
-          </nav>
-          <p class="footer-copy">© ™ 2026 MARVEL. ©2024 SPSE AND SNE ENTERTAINMENT LLC</p>
+
+        <!-- Legal Links & Copyright -->
+        <div class="footer-legal-row">
+          <a href="#" class="legal-link">PRIVACY POLICY</a>
+          <span class="legal-bullet">•</span>
+          <a href="#" class="legal-link">TERMS OF USE</a>
+          <span class="legal-bullet">•</span>
+          <a href="#" class="legal-link">COOKIE CONSENT TOOL</a>
+          <span class="legal-bullet">•</span>
+          <a href="#" class="legal-link">CREDITS</a>
+          <span class="legal-bullet">•</span>
+          <span class="copyright-notice">© & ™ 2026 MARVEL. ©2026 CPII AND TSG ENTERTAINMENT LLC</span>
         </div>
       </footer>
+    </div><!-- /screen-wrapper -->
 
-      <!-- Terminal/Console button (bottom-right) -->
-      <button class="terminal-btn" type="button" id="terminalBtn" aria-label="Open console / terminal">
-        <span>&gt;_</span>
-      </button>
-
-    </div><!-- /app-shell -->
-
-    <!-- ===== SLIDE-IN PANEL ===== -->
+    <!-- ===== SLIDE-IN INFO PANEL ===== -->
     <div class="panel-backdrop" id="panelBackdrop" hidden></div>
     <aside class="info-panel" id="infoPanel" aria-label="Panel informasi" aria-hidden="true" hidden>
       <div class="panel-header">
@@ -238,70 +232,81 @@
       </div>
       <div class="panel-toolbar">
         <span id="panelHint">Latest signals, sorted by time.</span>
-        <span class="panel-count" id="panelCount">03 ITEMS</span>
+        <span class="panel-count" id="panelCount">26 ITEMS</span>
       </div>
       <div class="panel-content" id="panelContent">
+        <!-- Activity Log -->
         <section class="panel-view" data-view="activity-log">
           <div class="panel-intro">
-            <p>Daftar berjalan dari semua signal yang berhasil dikumpulkan jaringan.</p>
+            <p>Daftar berjalan dari semua sinyal yang berhasil dikumpulkan jaringan.</p>
+            <label class="search-field" for="activitySearch">
+              <span aria-hidden="true">/</span>
+              <input id="activitySearch" type="search" placeholder="Cari sinyal, kota, atau negara..." autocomplete="off" />
+            </label>
             <div class="filter-row" role="group" aria-label="Filter activity log">
-              <button class="filter-chip active" type="button" data-log-filter="all">All <span>03</span></button>
-              <button class="filter-chip" type="button" data-log-filter="confirmed">Confirmed <span>01</span></button>
-              <button class="filter-chip" type="button" data-log-filter="rumored">Rumored <span>01</span></button>
-              <button class="filter-chip" type="button" data-log-filter="event">Event <span>01</span></button>
+              <button class="filter-chip active" type="button" data-log-filter="all">All <span>26</span></button>
+              <button class="filter-chip" type="button" data-log-filter="confirmed">Confirmed <span>14</span></button>
+              <button class="filter-chip" type="button" data-log-filter="rumored">Rumored <span>02</span></button>
+              <button class="filter-chip" type="button" data-log-filter="event">Event <span>10</span></button>
             </div>
           </div>
           <div class="log-list" id="logList"></div>
         </section>
 
+        <!-- Report Sightings -->
         <section class="panel-view" data-view="report" hidden>
           <div class="panel-intro callout-intro">
             <span class="callout-number">01</span>
-            <div><p>Melihat sesuatu? Kirim laporan singkat agar tim field dapat memeriksanya.</p><span class="muted">Jangan sertakan data pribadi atau lokasi sensitif.</span></div>
+            <div><p>Melihat Spider-Man? Kirim laporan singkat agar tim tracker dapat memverifikasinya.</p></div>
           </div>
-          <label class="field-label" for="reportText">Template laporan</label>
+          <label class="field-label" for="reportText">Template Laporan</label>
           <textarea class="report-textarea" id="reportText" rows="6">Signal spotted: [lokasi] — [waktu]
-What I saw: [deskripsi singkat]
-#SpideyTracker</textarea>
-          <div class="report-tips"><span>TIP</span><p>Sebutkan kota, waktu lokal, dan ciri visual.</p></div>
+What I saw: [deskripsi visual]
+#SpideyTracker #SpiderMan</textarea>
+          <div class="report-tips"><span>TIP</span><p>Sebutkan kota, landmark terdekat, dan arah gerakan.</p></div>
           <a class="button button-primary button-full" id="reportLink" href="https://twitter.com/intent/tweet?text=Signal%20spotted%3A%20%5Blokasi%5D%20%E2%80%94%20%5Bwaktu%5D%20%23SpideyTracker" target="_blank" rel="noopener noreferrer">Post on X <span aria-hidden="true">↗</span></a>
         </section>
 
+        <!-- Web Watch -->
         <section class="panel-view" data-view="web-watch" hidden>
-          <div class="panel-intro"><p>Arsip field tentang pihak-pihak yang berhasil diidentifikasi.</p></div>
+          <div class="panel-intro"><p>Arsip pihak-pihak berkekuatan super yang sedang dipantau.</p></div>
           <div class="web-watch-grid" id="webWatchGrid"></div>
         </section>
 
+        <!-- Videos -->
         <section class="panel-view" data-view="videos" hidden>
-          <div class="panel-intro"><p>Pesan, trailer, dan rekaman pendek dari jaringan pemantauan.</p></div>
-          <button class="video-card featured-video" type="button" data-video-title="Message from the field">
-            <img src="../assets/placeholders/intro-poster.svg" alt="Poster video placeholder: Track the signal" />
-            <span class="video-overlay"><span class="play-button">▶</span><span><strong>MESSAGE FROM THE FIELD</strong><small>02:18 · HD</small></span></span>
+          <div class="panel-intro"><p>Cuplikan lapangan, briefing, dan rekaman radar.</p></div>
+          <button class="video-card featured-video" type="button" data-video-title="Spider-Man: Brand New Day Official Trailer">
+            <img src="../assets/placeholders/intro-poster.svg" alt="Video poster" />
+            <span class="video-overlay"><span class="play-button">▶</span><span><strong>BRAND NEW DAY // TEASER</strong><small>02:18 · HD</small></span></span>
           </button>
           <div class="video-list">
-            <button class="video-row" type="button" data-video-title="Signal briefing 01"><span class="mini-thumb blue">01</span><span><strong>Signal briefing 01</strong><small>Field note · 00:42</small></span><span aria-hidden="true">▶</span></button>
-            <button class="video-row" type="button" data-video-title="City trace replay"><span class="mini-thumb red">02</span><span><strong>City trace replay</strong><small>Map capture · 01:09</small></span><span aria-hidden="true">▶</span></button>
+            <button class="video-row" type="button" data-video-title="Field Briefing 01"><span class="mini-thumb blue">01</span><span><strong>Field Briefing 01</strong><small>Grid Note · 00:42</small></span><span aria-hidden="true">▶</span></button>
+            <button class="video-row" type="button" data-video-title="Global Trace Replay"><span class="mini-thumb red">02</span><span><strong>Global Trace Replay</strong><small>Map Capture · 01:09</small></span><span aria-hidden="true">▶</span></button>
           </div>
         </section>
 
+        <!-- Events -->
         <section class="panel-view" data-view="events" hidden>
-          <div class="panel-intro"><p>Event dan pengalaman lapangan yang dapat kamu kunjungi berikutnya.</p></div>
+          <div class="panel-intro"><p>Acara publik dan pop-up interaktif yang akan datang.</p></div>
           <div class="event-list" id="eventList"></div>
         </section>
 
+        <!-- Help -->
         <section class="panel-view" data-view="help" hidden>
-          <div class="help-hero"><span class="help-orbit">◎</span><div><p class="eyebrow">QUICK BRIEFING</p><h3>Welcome to the grid.</h3></div></div>
-          <p class="help-copy">Gunakan peta untuk melacak signal di seluruh dunia. Pilih marker untuk membuka detail, atau gunakan panel untuk menjelajah berdasarkan kategori.</p>
+          <div class="help-hero"><span class="help-orbit">◎</span><div><p class="eyebrow">ORIENTATION</p><h3>Welcome to Spidey Tracker.</h3></div></div>
+          <p class="help-copy">Gunakan peta interaktif untuk melihat sinyal kemunculan Spider-Man secara real-time di seluruh dunia.</p>
           <div class="help-legend">
-            <div class="help-legend-row"><img src="../assets/markers/marker-confirmed.svg" alt="" /><div><strong>Confirmed sighting</strong><p>Penampakan yang memiliki sumber terverifikasi.</p></div></div>
-            <div class="help-legend-row"><img src="../assets/markers/marker-rumored.svg" alt="" /><div><strong>Rumored sighting</strong><p>Laporan komunitas yang masih menunggu pemeriksaan.</p></div></div>
-            <div class="help-legend-row"><img src="../assets/markers/marker-event.svg" alt="" /><div><strong>Event</strong><p>Aktivitas publik yang terjadwal di lokasi tertentu.</p></div></div>
+            <div class="help-legend-row"><img src="../assets/markers/marker-spider-green.svg" alt="" /><div><strong>Confirmed Sighting</strong><p>Penampakan terverifikasi tim pengawas.</p></div></div>
+            <div class="help-legend-row"><img src="../assets/markers/marker-spider-red.svg" alt="" /><div><strong>Rumored Signal</strong><p>Laporan masyarakat dalam proses investigasi.</p></div></div>
+            <div class="help-legend-row"><img src="../assets/markers/marker-star.svg" alt="" /><div><strong>Special Grid / Event</strong><p>Pusat aktivitas atau acara spesial.</p></div></div>
           </div>
-          <button class="button button-ghost button-full" type="button" data-panel="map">Back to map <span aria-hidden="true">↗</span></button>
+          <button class="button button-ghost button-full" type="button" data-panel="map">Kembali ke Peta <span aria-hidden="true">↗</span></button>
         </section>
 
+        <!-- Downloads -->
         <section class="panel-view" data-view="downloads" hidden>
-          <div class="panel-intro"><p>Signal pack untuk lockscreen, sticker, dan emoji.</p></div>
+          <div class="panel-intro"><p>Paket wallpaper pixel, stiker, dan ikon untuk gawaimu.</p></div>
           <div class="download-tabs" role="tablist">
             <button class="download-tab active" type="button" data-download-tab="wallpapers" role="tab" aria-selected="true">Wallpapers</button>
             <button class="download-tab" type="button" data-download-tab="stickers" role="tab" aria-selected="false">Stickers</button>
@@ -310,12 +315,28 @@ What I saw: [deskripsi singkat]
           <div class="download-grid" id="downloadGrid"></div>
         </section>
 
+        <!-- Detail View -->
         <section class="panel-view" data-view="detail" hidden>
-          <button class="back-link" type="button" id="backToLog">← Back to activity log</button>
+          <button class="back-link" type="button" id="backToLog">← Kembali ke Activity Log</button>
           <div id="detailContent"></div>
         </section>
       </div>
     </aside>
+
+    <!-- ===== INTRO BRIEFING OVERLAY ===== -->
+    <div class="intro-overlay" id="introOverlay" hidden>
+      <div class="intro-scanlines" aria-hidden="true"></div>
+      <div class="intro-card" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+        <p class="eyebrow">FIELD NETWORK // INITIALIZING</p>
+        <h2 id="introTitle">Track the signal.</h2>
+        <p>Jelajahi peta global untuk mengikuti penampakan, rumor, dan event Spider-Man di seluruh dunia.</p>
+        <div class="intro-actions">
+          <button class="button button-primary" type="button" id="startTracking">Start tracking <span aria-hidden="true">-></span></button>
+          <button class="intro-skip" type="button" id="skipIntro">Skip briefing</button>
+        </div>
+        <div class="intro-status"><span class="status-pip" aria-hidden="true"></span> NETWORK READY <span>26 SIGNALS DETECTED</span></div>
+      </div>
+    </div>
 
     <!-- ===== TOAST ===== -->
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -324,12 +345,30 @@ What I saw: [deskripsi singkat]
     <div class="video-modal" id="videoModal" hidden>
       <div class="video-modal-card" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle">
         <button class="close-button" id="closeVideo" type="button" aria-label="Tutup video">×</button>
-        <img src="../assets/placeholders/intro-poster.svg" alt="Poster video placeholder" />
-        <div><p class="eyebrow">VIDEO CHANNEL</p><h2 id="videoModalTitle">Message from the field</h2><p class="muted">Video placeholder siap diganti dengan footage final.</p></div>
+        <img src="../assets/placeholders/intro-poster.svg" alt="Poster video" />
+        <div>
+          <p class="eyebrow">VIDEO CHANNEL</p>
+          <h2 id="videoModalTitle">Spider-Man: Brand New Day</h2>
+          <p class="muted">Official trailer preview footage.</p>
+        </div>
         <button class="button button-primary button-full" type="button" id="fakePlay">Play video <span aria-hidden="true">▶</span></button>
       </div>
     </div>
 
-    <script src="./app.js" defer></script>
+    <!-- ===== ASSET MODAL ===== -->
+    <div class="asset-modal" id="assetModal" hidden>
+      <div class="asset-modal-card" role="dialog" aria-modal="true" aria-labelledby="assetModalTitle">
+        <button class="close-button" id="closeAsset" type="button" aria-label="Tutup preview">×</button>
+        <img id="assetModalImage" src="" alt="" />
+        <div>
+          <p class="eyebrow">DOWNLOAD PREVIEW</p>
+          <h2 id="assetModalTitle">Signal asset</h2>
+          <p class="muted" id="assetModalMeta"></p>
+        </div>
+        <a class="button button-primary button-full" id="assetModalDownload" href="" download>Download asset <span aria-hidden="true">-></span></a>
+      </div>
+    </div>
+
+    <script type="module" src="./app.js"></script>
   </body>
 </html>

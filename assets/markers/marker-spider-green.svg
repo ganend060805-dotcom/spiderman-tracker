@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" shape-rendering="crispEdges">
+  <!-- Outer black pixel border -->
+  <rect x="8" y="2" width="16" height="2" fill="#000"/>
+  <rect x="4" y="4" width="4" height="2" fill="#000"/>
+  <rect x="24" y="4" width="4" height="2" fill="#000"/>
+  <rect x="2" y="6" width="2" height="4" fill="#000"/>
+  <rect x="28" y="6" width="2" height="4" fill="#000"/>
+  <rect x="0" y="10" width="2" height="12" fill="#000"/>
+  <rect x="30" y="10" width="2" height="12" fill="#000"/>
+  <rect x="2" y="22" width="2" height="4" fill="#000"/>
+  <rect x="28" y="22" width="2" height="4" fill="#000"/>
+  <rect x="4" y="26" width="4" height="2" fill="#000"/>
+  <rect x="24" y="26" width="4" height="2" fill="#000"/>
+  <rect x="8" y="28" width="16" height="2" fill="#000"/>
+
+  <!-- Green background fill -->
+  <rect x="8" y="4" width="16" height="2" fill="#88d89e"/>
+  <rect x="4" y="6" width="24" height="4" fill="#72c98a"/>
+  <rect x="2" y="10" width="28" height="12" fill="#58b572"/>
+  <rect x="4" y="22" width="24" height="4" fill="#44985b"/>
+  <rect x="8" y="26" width="16" height="2" fill="#327c47"/>
+
+  <!-- Inner highlight -->
+  <rect x="8" y="4" width="16" height="1" fill="#bcf5cc"/>
+
+  <!-- Black pixel Spider 🕷 inside -->
+  <!-- Head -->
+  <rect x="14" y="8" width="4" height="3" fill="#000"/>
+  <!-- Body -->
+  <rect x="13" y="12" width="6" height="8" fill="#000"/>
+  <!-- Left legs -->
+  <rect x="8" y="7" width="2" height="2" fill="#000"/>
+  <rect x="10" y="9" width="4" height="2" fill="#000"/>
+  <rect x="7" y="12" width="6" height="2" fill="#000"/>
+  <rect x="7" y="16" width="6" height="2" fill="#000"/>
+  <rect x="9" y="19" width="4" height="2" fill="#000"/>
+  <rect x="7" y="21" width="2" height="4" fill="#000"/>
+  <!-- Right legs -->
+  <rect x="22" y="7" width="2" height="2" fill="#000"/>
+  <rect x="18" y="9" width="4" height="2" fill="#000"/>
+  <rect x="19" y="12" width="6" height="2" fill="#000"/>
+  <rect x="19" y="16" width="6" height="2" fill="#000"/>
+  <rect x="19" y="19" width="4" height="2" fill="#000"/>
+  <rect x="23" y="21" width="2" height="4" fill="#000"/>
+</svg>

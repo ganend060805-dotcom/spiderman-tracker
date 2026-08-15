@@ -1,0 +1,153 @@
+/* =============================================
+   SPIDEY TRACKER — Footer Branding & Legal
+   ============================================= */
+
+.arcade-footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px 14px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Center Branding Row */
+.footer-center-branding {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+/* Spider-Man Movie Logo in Pixel / Retro Style */
+.spidey-movie-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2px;
+}
+
+.logo-marvel-badge {
+  display: inline-block;
+  padding: 1px 4px;
+  background: #e63946;
+  color: #fff;
+  font-family: var(--font-pixel);
+  font-size: 5.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border: 1px solid #000;
+  text-shadow: none;
+}
+
+.logo-main-text {
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  font-weight: 900;
+  color: #e63946;
+  letter-spacing: 1px;
+  text-shadow:
+    2px 2px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    0 0 10px rgba(230, 57, 70, 0.6);
+  line-height: 1.1;
+}
+
+.logo-subtitle-text {
+  font-family: var(--font-pixel);
+  font-size: 6.5px;
+  color: #f4b842;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.logo-now-playing-box {
+  display: inline-block;
+  margin-top: 2px;
+  padding: 2px 6px;
+  background: #ffffff;
+  color: #000000;
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  border: 1px solid #000;
+  box-shadow: 1px 1px 0 #000;
+}
+
+/* Samsung Galaxy Branding */
+.samsung-branding-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.powered-by-label {
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  color: #a4c8e8;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.samsung-galaxy-logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.samsung-galaxy-logo span {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.samsung-galaxy-logo strong {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 0 #000;
+}
+
+/* Legal Row */
+.footer-legal-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  letter-spacing: 0.5px;
+  color: #72a5d8;
+  text-shadow: 1px 1px 0 #000;
+  text-align: center;
+}
+
+.legal-link {
+  color: #8bbce8;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.legal-link:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.legal-bullet {
+  color: #4a7aa8;
+}
+
+.copyright-notice {
+  color: #6593c2;
+  margin-left: 4px;
+}

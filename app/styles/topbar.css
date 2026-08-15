@@ -1,0 +1,102 @@
+/* =============================================
+   SPIDEY TRACKER — Top Bezel Header
+   ============================================= */
+
+.top-bezel {
+  height: 52px;
+  flex: 0 0 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  position: relative;
+  background: var(--bezel-cyan-mid);
+}
+
+/* Bezel Buttons (Square pixel buttons with thick borders) */
+.bezel-btn {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  position: relative;
+  transition: transform 0.1s, filter 0.1s;
+  z-index: 5;
+}
+.bezel-btn:hover {
+  transform: scale(1.06);
+  filter: brightness(1.1);
+}
+.bezel-btn:active {
+  transform: scale(0.96);
+}
+.bezel-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Top Ruler Ticks */
+.bezel-ruler {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0 16px;
+  height: 12px;
+  opacity: 0.35;
+}
+.bezel-ruler span {
+  display: block;
+  width: 2px;
+  height: 10px;
+  background: #000;
+}
+.bezel-ruler span:nth-child(4n) {
+  height: 14px;
+  background: #134654;
+}
+
+/* Center Title Badge [ SPIDEY (mask) TRACKER ] */
+.center-title-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: #103442;
+  border: 3px solid #000;
+  border-radius: 8px;
+  box-shadow:
+    inset 2px 2px 0 #1b5368,
+    inset -2px -2px 0 #071922,
+    2px 2px 0 rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  position: relative;
+}
+
+.pixel-text {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: #72d9ed;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  text-transform: uppercase;
+}
+
+.title-spidey {
+  color: #a2e8f5;
+}
+
+.title-tracker {
+  color: #a2e8f5;
+}
+
+.title-mini-mask {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  filter: drop-shadow(1px 1px 0 #000);
+}

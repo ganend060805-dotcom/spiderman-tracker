@@ -1,0 +1,46 @@
+/* =============================================
+   SPIDEY TRACKER — Retro Pixel Variables & Tokens
+   ============================================= */
+
+:root {
+  /* Royal / Deep Blue Outer Background */
+  --bg-deep-blue: #003791;
+  --bg-dark-blue: #001d54;
+  --bg-blue-gradient: linear-gradient(180deg, #094eb8 0%, #00338a 45%, #001f5c 100%);
+
+  /* Arcade Chassis / Bezel Cyan-Teal Colors */
+  --bezel-cyan-light: #52bfd8;
+  --bezel-cyan-mid: #2c8da6;
+  --bezel-cyan-dark: #195d70;
+  --bezel-cyan-border: #134654;
+  --bezel-black-border: #000000;
+
+  /* Map Canvas Navy */
+  --map-navy-bg: #041024;
+  --map-navy-water: #071936;
+  --map-navy-tint: rgba(4, 18, 38, 0.48);
+
+  /* Marker Colors */
+  --star-cyan: #58c4d8;
+  --spider-green: #58b572;
+  --spider-red: #e63946;
+  --spider-white: #ffffff;
+  --trailer-orange: #f4b842;
+  --trailer-orange-dark: #d49522;
+
+  /* Text Colors */
+  --pixel-white: #ffffff;
+  --pixel-cyan: #58c4d8;
+  --pixel-dim: #7da5c2;
+  --pixel-dark: #071529;
+
+  /* Pixel Fonts */
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-pixelify: 'Pixelify Sans', 'Press Start 2P', cursive;
+  --font-silk: 'Silkscreen', 'Press Start 2P', monospace;
+  --font-mono: 'VT323', Consolas, monospace;
+
+  /* Dimensions */
+  --chassis-max-w: 1440px;
+  --bezel-border-width: 14px;
+}

@@ -1,0 +1,145 @@
+/* =============================================
+   SPIDEY TRACKER — Bottom Bezel Ticker & Actions
+   ============================================= */
+
+.bottom-bezel {
+  height: 52px;
+  flex: 0 0 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  position: relative;
+  background: var(--bezel-cyan-mid);
+}
+
+/* ============================================
+   CHIBI SPIDEY MASCOT (Climbing Bottom Left Corner)
+   ============================================ */
+.chibi-spidey-anchor {
+  position: absolute;
+  left: 6px;
+  bottom: 12px;
+  width: 44px;
+  height: 56px;
+  z-index: 30;
+  pointer-events: none;
+  filter: drop-shadow(2px 2px 0 #000);
+  animation: chibi-bob 2.4s ease-in-out infinite;
+}
+
+.chibi-spidey-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@keyframes chibi-bob {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+}
+
+/* ============================================
+   WATCH TRAILER BADGE BUTTON (Bottom Left)
+   ============================================ */
+.pixel-btn-trailer {
+  position: absolute;
+  left: 8px;
+  bottom: -4px;
+  z-index: 35;
+  padding: 4px 10px;
+  background: var(--trailer-orange);
+  border: 2px solid #000;
+  border-radius: 4px;
+  box-shadow: 2px 2px 0 #000;
+  color: #000;
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: transform 0.1s, background 0.1s;
+}
+.pixel-btn-trailer:hover {
+  background: #ffcc55;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 #000;
+}
+.pixel-btn-trailer:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #000;
+}
+
+/* ============================================
+   CENTERED MARQUEE TICKER BOX
+   ============================================ */
+.ticker-box-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(580px, calc(100% - 160px));
+  height: 32px;
+  background: #103442;
+  border: 3px solid #000;
+  border-radius: 6px;
+  box-shadow:
+    inset 2px 2px 0 #1b5368,
+    inset -2px -2px 0 #071922,
+    2px 2px 0 rgba(0, 0, 0, 0.4);
+  padding: 0 4px 0 14px;
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+}
+
+.ticker-marquee-track {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pixel-ticker-text {
+  display: inline-block;
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: #72d9ed;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0 #000;
+  animation: marquee-scroll 18s linear infinite;
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Green Speaker Pill Button */
+.ticker-action-pill {
+  width: 32px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #58b572;
+  border: 2px solid #000;
+  border-radius: 4px;
+  box-shadow: 1px 1px 0 #000;
+  margin-left: 8px;
+  transition: transform 0.1s, filter 0.1s;
+}
+.ticker-action-pill:hover {
+  filter: brightness(1.15);
+  transform: scale(1.05);
+}
+.ticker-action-pill:active {
+  transform: scale(0.95);
+}
+
+.pixel-speaker-icon {
+  font-size: 11px;
+  line-height: 1;
+}

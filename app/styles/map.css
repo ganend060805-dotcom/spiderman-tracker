@@ -1,0 +1,262 @@
+/* =============================================
+   SPIDEY TRACKER — Map Viewport, Markers & Radar
+   ============================================= */
+
+.map-viewport {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: var(--map-navy-bg);
+}
+
+.map-frame-box {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.google-map-embed {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  filter: saturate(0.55) brightness(0.68) hue-rotate(195deg) contrast(1.15);
+}
+
+/* Deep Navy overlay for pixel scanline effect */
+.map-navy-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent 0, transparent 3px, rgba(4, 16, 36, 0.25) 4px),
+    radial-gradient(ellipse at 50% 50%, rgba(4, 20, 48, 0.2) 0%, rgba(4, 16, 36, 0.7) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ============================================
+   PIXEL MAP MARKERS
+   ============================================ */
+.map-markers {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.map-marker {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease, filter 0.15s ease;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.map-marker:hover,
+.map-marker:focus-visible {
+  transform: translate(-50%, -50%) scale(1.35);
+  filter: drop-shadow(0 0 6px rgba(88, 196, 216, 0.9));
+  z-index: 20;
+}
+
+.map-marker.selected {
+  transform: translate(-50%, -50%) scale(1.4);
+  filter: drop-shadow(0 0 8px rgba(230, 57, 70, 0.9));
+  z-index: 25;
+}
+
+.map-marker img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.marker-pulse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #58c4d8;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: pixel-pulse 2s infinite steps(4);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.map-marker.confirmed .marker-pulse { border-color: #e63946; }
+.map-marker.event .marker-pulse { border-color: #58c4d8; }
+.map-marker.rumored .marker-pulse { border-color: #ffffff; }
+
+@keyframes pixel-pulse {
+  0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.8; }
+  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.3; }
+  100% { transform: translate(-50%, -50%) scale(1.8); opacity: 0; }
+}
+
+/* ============================================
+   PIXEL TOOLTIP
+   ============================================ */
+.pixel-tooltip {
+  position: absolute;
+  z-index: 30;
+  min-width: 160px;
+  max-width: 220px;
+  padding: 6px 8px;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+  border: 2px solid #000;
+  background: #113645;
+  box-shadow: 2px 2px 0 #000;
+  border-left: 3px solid #e63946;
+}
+.pixel-tooltip strong,
+.pixel-tooltip small {
+  display: block;
+}
+.pixel-tooltip strong {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: #fff;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pixel-tooltip small {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  color: #58c4d8;
+  margin-top: 4px;
+}
+
+/* ============================================
+   MAP CONTROLS
+   ============================================ */
+.pixel-map-controls {
+  position: absolute;
+  right: 10px;
+  top: 14px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.map-ctrl-pixel {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #113645;
+  border: 2px solid #000;
+  color: #fff;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  box-shadow: 2px 2px 0 #000;
+  transition: transform 0.1s, background 0.1s;
+}
+.map-ctrl-pixel:hover {
+  background: #1b5368;
+  color: #58c4d8;
+  transform: translate(-1px, -1px);
+}
+.map-ctrl-pixel:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #000;
+}
+
+/* ============================================
+   SPIDER WEB RADAR WIDGET (Bottom Right of Map)
+   ============================================ */
+.spider-web-radar {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 90px;
+  height: 90px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 26, 48, 0.85);
+  border: 2px solid #000;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7), 0 0 6px rgba(88, 196, 216, 0.4);
+}
+
+.radar-web-svg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+
+.radar-rotating-sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(88, 196, 216, 0.25) 30deg,
+    transparent 60deg
+  );
+  animation: radar-sweep-spin 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes radar-sweep-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.radar-center-btn {
+  position: relative;
+  z-index: 5;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #58c4d8;
+  background: #041024;
+  border-radius: 50%;
+  color: #58c4d8;
+  font-size: 11px;
+  transition: transform 0.1s, background 0.1s;
+}
+.radar-center-btn:hover {
+  background: #1b5368;
+  transform: scale(1.1);
+}
+
+/* Watermarks */
+.map-watermark-left {
+  position: absolute;
+  bottom: 6px;
+  left: 10px;
+  z-index: 5;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+
+.map-watermark-right {
+  position: absolute;
+  bottom: 6px;
+  right: 114px;
+  z-index: 5;
+  font-family: Arial, sans-serif;
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+}

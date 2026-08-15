@@ -1,0 +1,169 @@
+/* =============================================
+   SPIDEY TRACKER — Pixel Modals & Overlays
+   ============================================= */
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 99;
+  max-width: min(360px, calc(100vw - 24px));
+  padding: 8px 12px;
+  border: 2px solid #000;
+  border-left: 4px solid #58b572;
+  color: #fff;
+  background: #113645;
+  box-shadow: 3px 3px 0 #000;
+  font-family: var(--font-pixel);
+  font-size: 7.5px;
+  transform: translate(-50%, 180%);
+  transition: transform 0.2s steps(4);
+}
+.toast.show { transform: translate(-50%, 0); }
+
+/* Video Modal */
+.video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(3, 10, 24, 0.85);
+}
+.video-modal-card {
+  position: relative;
+  width: min(500px, 100%);
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+  border: 3px solid #000;
+  background: #113645;
+  box-shadow: 4px 4px 0 #000;
+}
+.video-modal-card > .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+.video-modal-card > img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 2px solid #000;
+}
+.video-modal-card h2 {
+  margin: 0;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+.video-modal-card p { margin: 0; font-size: 7px; color: #7da5c2; }
+.video-modal-card .eyebrow { margin-bottom: 3px; }
+
+/* Asset Preview Modal */
+.asset-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 75;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(3, 10, 24, 0.85);
+}
+.asset-modal-card {
+  position: relative;
+  width: min(400px, 100%);
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+  border: 3px solid #000;
+  background: #113645;
+  box-shadow: 4px 4px 0 #000;
+}
+.asset-modal-card > .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+.asset-modal-card > img {
+  width: 100%;
+  max-height: 50vh;
+  object-fit: contain;
+  background: #081a22;
+  border: 2px solid #000;
+}
+.asset-modal-card h2 {
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+/* Intro Overlay */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: radial-gradient(circle at 50% 50%, rgba(17, 54, 69, 0.85), rgba(3, 10, 24, 0.96) 80%);
+}
+.intro-scanlines {
+  position: absolute;
+  inset: 0;
+  opacity: 0.25;
+  background: repeating-linear-gradient(0deg, transparent 0 4px, rgba(88, 196, 216, 0.15) 5px 6px);
+  pointer-events: none;
+}
+.intro-card {
+  position: relative;
+  width: min(480px, 100%);
+  padding: 30px 24px;
+  border: 3px solid #000;
+  background: #113645;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.9), 4px 4px 0 #000;
+}
+.intro-card h2 {
+  margin: 0;
+  font-size: clamp(16px, 4vw, 24px);
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000;
+}
+.intro-card > p:not(.eyebrow) {
+  max-width: 380px;
+  margin: 12px 0 0;
+  color: #a4c8e8;
+  font-size: 8px;
+  line-height: 1.6;
+}
+.intro-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 20px;
+}
+.intro-skip {
+  border: 0;
+  color: #7da5c2;
+  background: transparent;
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  text-transform: uppercase;
+}
+.intro-skip:hover { color: #fff; }
+.intro-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 24px;
+  color: #58b572;
+  font-size: 7px;
+}
+.intro-status span:last-child {
+  margin-left: auto;
+  color: #7da5c2;
+}

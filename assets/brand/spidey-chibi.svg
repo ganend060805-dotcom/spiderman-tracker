@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 52" width="40" height="52" shape-rendering="crispEdges">
+  <!-- Black outline around character -->
+  <!-- Head outline -->
+  <rect x="12" y="2" width="16" height="2" fill="#000"/>
+  <rect x="8" y="4" width="4" height="2" fill="#000"/>
+  <rect x="28" y="4" width="4" height="2" fill="#000"/>
+  <rect x="6" y="6" width="2" height="4" fill="#000"/>
+  <rect x="32" y="6" width="2" height="4" fill="#000"/>
+  <rect x="4" y="10" width="2" height="12" fill="#000"/>
+  <rect x="34" y="10" width="2" height="12" fill="#000"/>
+  <rect x="6" y="22" width="2" height="4" fill="#000"/>
+  <rect x="32" y="22" width="2" height="4" fill="#000"/>
+  <rect x="8" y="26" width="6" height="2" fill="#000"/>
+  <rect x="26" y="26" width="6" height="2" fill="#000"/>
+
+  <!-- Head red fill -->
+  <rect x="12" y="4" width="16" height="2" fill="#e63946"/>
+  <rect x="8" y="6" width="24" height="4" fill="#e63946"/>
+  <rect x="6" y="10" width="28" height="12" fill="#d90429"/>
+  <rect x="8" y="22" width="24" height="4" fill="#bd0020"/>
+
+  <!-- Head web lines -->
+  <rect x="19" y="4" width="2" height="22" fill="#000" opacity="0.4"/>
+  <rect x="8" y="14" width="24" height="2" fill="#000" opacity="0.3"/>
+
+  <!-- Spidey Eyes (Angled white lenses with black rims) -->
+  <!-- Left Eye Rim -->
+  <rect x="8" y="11" width="10" height="9" fill="#000"/>
+  <!-- Left Eye White -->
+  <rect x="10" y="12" width="6" height="6" fill="#ffffff"/>
+  <rect x="9" y="13" width="7" height="4" fill="#ffffff"/>
+  <rect x="12" y="13" width="3" height="3" fill="#e2f3f8"/>
+
+  <!-- Right Eye Rim -->
+  <rect x="22" y="11" width="10" height="9" fill="#000"/>
+  <!-- Right Eye White -->
+  <rect x="24" y="12" width="6" height="6" fill="#ffffff"/>
+  <rect x="24" y="13" width="7" height="4" fill="#ffffff"/>
+  <rect x="25" y="13" width="3" height="3" fill="#e2f3f8"/>
+
+  <!-- Body / Torso -->
+  <!-- Torso Outline -->
+  <rect x="10" y="28" width="20" height="2" fill="#000"/>
+  <rect x="8" y="30" width="2" height="10" fill="#000"/>
+  <rect x="30" y="30" width="2" height="10" fill="#000"/>
+
+  <!-- Torso Red Center -->
+  <rect x="14" y="28" width="12" height="10" fill="#d90429"/>
+  <!-- Torso Blue Sides -->
+  <rect x="10" y="30" width="4" height="8" fill="#1d3557"/>
+  <rect x="26" y="30" width="4" height="8" fill="#1d3557"/>
+
+  <!-- Chest Spider Logo -->
+  <rect x="19" y="32" width="2" height="3" fill="#000"/>
+  <rect x="18" y="33" width="4" height="1" fill="#000"/>
+
+  <!-- Arms / Hands -->
+  <!-- Left Arm -->
+  <rect x="4" y="28" width="4" height="2" fill="#000"/>
+  <rect x="2" y="30" width="2" height="8" fill="#000"/>
+  <rect x="4" y="38" width="4" height="2" fill="#000"/>
+  <rect x="4" y="30" width="4" height="4" fill="#d90429"/>
+  <rect x="4" y="34" width="4" height="4" fill="#1d3557"/>
+
+  <!-- Right Arm -->
+  <rect x="32" y="28" width="4" height="2" fill="#000"/>
+  <rect x="36" y="30" width="2" height="8" fill="#000"/>
+  <rect x="32" y="38" width="4" height="2" fill="#000"/>
+  <rect x="32" y="30" width="4" height="4" fill="#d90429"/>
+  <rect x="32" y="34" width="4" height="4" fill="#1d3557"/>
+
+  <!-- Legs & Boots -->
+  <!-- Blue pants -->
+  <rect x="12" y="38" width="7" height="6" fill="#1d3557"/>
+  <rect x="21" y="38" width="7" height="6" fill="#1d3557"/>
+  <rect x="19" y="38" width="2" height="4" fill="#000"/>
+
+  <!-- Red Boots -->
+  <rect x="10" y="44" width="8" height="6" fill="#d90429"/>
+  <rect x="22" y="44" width="8" height="6" fill="#d90429"/>
+
+  <!-- Bottom Outline -->
+  <rect x="8" y="50" width="11" height="2" fill="#000"/>
+  <rect x="21" y="50" width="11" height="2" fill="#000"/>
+  <rect x="8" y="44" width="2" height="6" fill="#000"/>
+  <rect x="30" y="44" width="2" height="6" fill="#000"/>
+</svg>

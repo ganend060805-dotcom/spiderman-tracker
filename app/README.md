@@ -17,15 +17,18 @@ Shell juga memiliki fallback data inline, sehingga struktur UI tetap dapat dipre
 ## Yang sudah tersedia
 
 - Map-first shell dengan fallback map SVG.
+- Intro briefing yang bisa di-skip dan disimpan per sesi browser.
 - Responsive navigation rail / bottom navigation.
 - Hash navigation untuk setiap panel.
 - Activity Log dengan filter dan detail marker.
+- Search Activity Log berdasarkan judul, kota, negara, atau sumber.
 - Report Sightings dengan caption builder dan external share intent.
 - Web Watch cards dan detail dossier.
 - Video modal placeholder.
 - Events list dan detail event.
 - Help/legend panel.
-- Downloads tabs dan link download ke SVG placeholder.
+- Downloads tabs, preview modal, dan link download ke SVG placeholder.
+- Tooltip marker, marker selection state, live map center, dan zoom controls.
 - Keyboard Escape, focus-visible, reduced-motion, loading fallback data.
 
 ## Jalur pengembangan berikutnya

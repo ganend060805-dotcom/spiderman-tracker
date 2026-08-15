@@ -1,0 +1,102 @@
+/* =============================================
+   SPIDEY TRACKER — Responsive Media Queries
+   ============================================= */
+
+@media (max-width: 1024px) {
+  .arcade-chassis {
+    height: auto;
+    min-height: 580px;
+  }
+  .map-viewport {
+    min-height: 480px;
+  }
+  .footer-center-branding {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 6px 6px 12px;
+  }
+  .arcade-chassis {
+    border-radius: 12px;
+    border-width: 3px;
+  }
+  .top-bezel {
+    height: 46px;
+    padding: 4px 8px;
+  }
+  .bezel-btn {
+    width: 32px;
+    height: 32px;
+  }
+  .bezel-ruler {
+    display: none;
+  }
+  .pixel-text {
+    font-size: 9px;
+  }
+  .left-bezel-rail {
+    width: 40px;
+    padding: 8px 4px;
+    gap: 6px;
+  }
+  .rail-pill-btn {
+    width: 30px;
+    height: 30px;
+  }
+  .rail-pill-btn img {
+    width: 20px;
+    height: 20px;
+  }
+  .bottom-bezel {
+    height: 48px;
+    padding: 4px 8px;
+  }
+  .chibi-spidey-anchor {
+    width: 34px;
+    height: 44px;
+  }
+  .pixel-btn-trailer {
+    font-size: 6px;
+    padding: 3px 6px;
+  }
+  .ticker-box-pill {
+    width: calc(100% - 100px);
+    margin-left: auto;
+  }
+  .footer-center-branding {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .spider-web-radar {
+    width: 70px;
+    height: 70px;
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .center-title-badge {
+    padding: 4px 8px;
+    gap: 4px;
+  }
+  .pixel-text {
+    font-size: 7.5px;
+  }
+  .title-mini-mask {
+    width: 16px;
+    height: 16px;
+  }
+  .pixel-btn-trailer {
+    display: none;
+  }
+  .ticker-box-pill {
+    width: 100%;
+  }
+  .footer-legal-row {
+    font-size: 5.5px;
+  }
+}
