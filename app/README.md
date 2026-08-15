@@ -1,59 +1,85 @@
-# App Shell Prototype
+# Spidey Tracker App
 
-Shell aplikasi statis untuk Spidey Tracker Replica dengan adapter API/CMS.
+Panduan singkat untuk menjalankan shell aplikasi, map Leaflet, GPS Radar, dan koneksi Directus.
 
-## Cara menjalankan
+## Jalankan aplikasi
 
-Dari folder `E:/pemrograman/spidey`, jalankan static server apa pun yang melayani root folder, lalu buka `app/index.html` melalui server tersebut. Contoh:
-
-```text
+```powershell
+cd E:\pemrograman\spidey
 python -m http.server 4173
 ```
 
-Kemudian buka `http://localhost:4173/app/`.
+Kemudian buka:
 
-Penting: jalankan server dari `E:/pemrograman/spidey`, bukan dari folder `app`. Jika dibuka di `http://localhost:4173/`, asset seperti logo dan marker akan tampil sebagai ikon rusak karena folder `assets/` dan `data/` berada satu tingkat di atas `app/`.
+[http://localhost:4173/app/](http://localhost:4173/app/)
 
-Jangan membuka `app/index.html` dengan double-click (`file://`). Browser akan memblokir `fetch()` ke JSON lokal dan request CMS karena aturan CORS. Gunakan static server, VS Code Live Server, atau host web development lain.
+### Jika asset tampil rusak
 
-Jika sebelumnya server terlanjur berjalan dari folder `app`, hentikan server itu, pindah ke `E:/pemrograman/spidey`, jalankan ulang server pada port yang sama, lalu buka `http://localhost:4173/app/`.
+Server harus dijalankan dari `E:\pemrograman\spidey`, bukan dari `E:\pemrograman\spidey\app`. Folder `assets/` dan `data/` berada satu tingkat di atas `app/`.
 
-`app/config.js` mengatur endpoint Directus, collection, tile URL, dan attribution. `app/cms.js` memuat data dari Directus REST atau JSON development jika CMS belum diisi.
+Jangan membuka file dengan format `file://`. Browser dapat memblokir `fetch()` JSON lokal dan request CMS.
 
-### GPS radius scan
+## Kontrol utama
 
-Pada peta, panel `GPS RADAR` dapat digunakan untuk memilih radius 10–100 km. Tekan `START GPS SCAN`, izinkan akses lokasi browser, lalu aplikasi akan:
+| Kontrol | Fungsi |
+| --- | --- |
+| Rail kiri | Filter confirmed, rumored, atau semua signal |
+| `+` / `-` | Zoom map |
+| `GPS` | Memulai atau menghentikan GPS scan |
+| `RESET` | Kembali ke global signal grid |
+| GPS Radar slider | Memilih radius 10-100 km |
+| Klik marker | Membuka detail signal |
+| `Escape` | Menutup panel atau modal |
 
-- mengikuti perubahan posisi perangkat dengan `watchPosition`;
-- menggambar lingkaran radius pada peta Leaflet;
-- hanya menampilkan sinyal yang berada di dalam radius aktif;
-- memperbarui jumlah sinyal saat radius digeser atau posisi berubah.
+## GPS Radar
 
-GPS browser membutuhkan izin lokasi dan biasanya hanya berjalan pada `localhost` atau HTTPS. Tombol GPS di kontrol peta juga menjalankan dan menghentikan scan yang sama.
+1. Pilih radius antara 10 dan 100 km.
+2. Tekan `START GPS SCAN`.
+3. Izinkan lokasi pada browser.
+4. Peta menggambar lingkaran area dan mengikuti posisi perangkat.
+5. Signal terdekat akan diprioritaskan. Jika belum ada signal di radius tersebut, grid global tetap ditampilkan sebagai fallback.
 
-## Yang sudah tersedia
+GPS membutuhkan `localhost` atau HTTPS. Akurasi dapat berubah jika device berada di dalam ruangan atau permission lokasi dibatasi.
 
-- Map-first shell dengan Leaflet + OpenStreetMap dan fallback Google embed.
-- Intro briefing yang bisa di-skip dan disimpan per sesi browser.
-- Responsive navigation rail / bottom navigation.
-- Hash navigation untuk setiap panel.
-- Activity Log dengan filter dan detail marker.
-- Search Activity Log berdasarkan judul, kota, negara, atau sumber.
-- Report Sightings dengan caption builder dan external share intent.
-- Web Watch cards dan detail dossier.
-- Video modal placeholder.
-- Video cards dapat dirender dari collection CMS.
-- Events list dan detail event.
-- Help/legend panel.
-- Downloads tabs, preview modal, dan link download ke SVG placeholder.
-- Downloads dapat dirender dari collection CMS dengan `file_url` dan `preview_image`.
-- Tooltip marker, marker selection state, live map center, dan zoom controls.
-- Attribution OpenStreetMap tampil di map.
-- Keyboard Escape, focus-visible, reduced-motion, loading fallback data.
+## Konfigurasi CMS
 
-## Jalur pengembangan berikutnya
+Edit [config.js](config.js):
 
-1. Isi `api.baseUrl` di `app/config.js` dengan URL Directus.
-2. Buat collections sesuai [docs/api-cms.md](../docs/api-cms.md).
-3. Ganti tile URL OSM default dengan provider berlisensi jika traffic production besar.
-4. Ganti asset placeholder dengan aset final yang sudah melalui review lisensi.
+```js
+api: {
+  provider: "directus",
+  baseUrl: "https://cms.example.com",
+  publicToken: "YOUR_PUBLIC_TOKEN",
+  allowLocalFallback: true
+}
+```
+
+`cms.js` akan mencoba Directus terlebih dahulu. Jika `baseUrl` kosong atau request gagal dan `allowLocalFallback` aktif, aplikasi menggunakan JSON di folder `data/`.
+
+Collection yang digunakan:
+
+- `sightings`
+- `events`
+- `villains`
+- `videos`
+- `downloads`
+
+Schema lengkap tersedia di [../docs/api-cms.md](../docs/api-cms.md).
+
+## File penting
+
+```text
+index.html   shell layout, modal, intro, dan map controls
+app.js       state UI, Leaflet, GPS, event handler, dan rendering
+cms.js       Directus REST adapter dan normalizer
+config.js    endpoint API, collection, dan map tile
+styles/      stylesheet modular
+```
+
+## Troubleshooting cepat
+
+- **Logo/marker rusak:** server dijalankan dari folder yang salah; gunakan URL `/app/`.
+- **Map tidak tampil:** cek koneksi tile provider dan buka DevTools Network.
+- **GPS ditolak:** izinkan lokasi dan gunakan localhost atau HTTPS.
+- **Intro tidak muncul:** hapus localStorage key `spidey_intro_seen_v2` untuk mengulang briefing.
+- **CMS tidak terbaca:** cek `baseUrl`, CORS, public permission, dan nama collection.

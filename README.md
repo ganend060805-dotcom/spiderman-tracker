@@ -1,30 +1,116 @@
+# SPIDEY TRACKER
 
-# Spidey Tracker Replica — Product Blueprint
+> Interactive world-signal dashboard with a retro pixel control room, live map, GPS radar, and CMS-ready data layer.
 
-Blueprint produk untuk membuat pengalaman web tracker interaktif yang terinspirasi dari pola navigasi dan fitur situs referensi, tanpa menyalin kode, artwork, video, logo, atau materi berlisensi milik pihak lain.
+Spidey Tracker adalah prototipe dashboard eksplorasi peta yang terinspirasi dari nuansa tracker arcade dan sci-fi interface. Proyek ini dibuat sebagai implementasi independen: struktur, kode, aset placeholder, dan data lokal dapat dikembangkan tanpa bergantung pada materi berlisensi dari situs referensi.
 
-## Isi folder
+## Quick start
 
-- `docs/PRD.md` — product requirements document lengkap.
-- `docs/design.md` — arahan visual, layout, komponen, interaksi, dan spesifikasi aset.
-- `assets/` — aset SVG placeholder yang bisa diganti dengan artwork final.
-- `data/` — data contoh untuk sightings, events, dan villain/web-watch cards.
-- `app/` — shell aplikasi interaktif, Leaflet map, dan adapter Directus REST.
+Pastikan Python tersedia, lalu jalankan static server dari root project:
 
-## Sumber observasi
+```powershell
+cd E:\pemrograman\spidey
+python -m http.server 4173
+```
 
-Halaman referensi yang dianalisis: <https://spideytracker.net/intl/id/>.
+Buka [http://localhost:4173/app/](http://localhost:4173/app/).
 
-Analisis dilakukan pada 15 Agustus 2026. Struktur dokumen ini adalah rancangan independen untuk prototipe internal. Ganti seluruh logo, font berlisensi, footage, foto, dan copy sebelum dipublikasikan.
+> Jangan menjalankan server dari folder `app` dan jangan membuka `index.html` dengan double-click. Aplikasi perlu membaca file JSON melalui HTTP agar asset dan data lokal bekerja dengan benar.
 
-## Rekomendasi urutan implementasi
+## Apa yang bisa dilakukan
 
-1. Bangun shell aplikasi dan navigasi panel.
-2. Integrasikan peta dengan provider yang memiliki izin penggunaan.
-3. Masukkan data contoh dari `data/`, lalu sambungkan ke CMS/API.
-4. Ganti aset placeholder di `assets/` dengan aset final.
-5. Uji pengalaman desktop, tablet, mobile, keyboard, dan reduced motion.
+### Global signal map
 
-## API/CMS
+- Peta dunia interaktif berbasis Leaflet dan OpenStreetMap.
+- Marker untuk confirmed signal, rumored signal, dan event.
+- Tooltip, selection state, zoom, reset view, dan center-on-record.
+- Palet navy/teal dengan scanline dan penggaris pixel di sekitar map.
 
-Konfigurasi Directus dan provider tile berada di [app/config.js](E:/pemrograman/spidey/app/config.js). Detail collection, permission, dan payload ada di [docs/api-cms.md](E:/pemrograman/spidey/docs/api-cms.md).
+### GPS Radar
+
+- Scan radius interaktif dari 10 sampai 100 km.
+- Mengikuti perubahan lokasi melalui browser Geolocation API.
+- Menggambar lingkaran radius dan titik posisi pengguna.
+- Menyaring sinyal terdekat; jika radius kosong, marker global tetap ditampilkan sebagai fallback.
+- Menampilkan estimasi akurasi GPS dan jumlah sinyal di dalam radius.
+
+### Interactive control room
+
+- Intro briefing dengan radar animasi dan tab `SCAN`, `FILTER`, `REPORT`.
+- Navigation rail untuk filter sinyal dan membuka panel.
+- Activity Log dengan pencarian, filter, tooltip, dan detail record.
+- Report Sightings untuk membuat laporan lapangan.
+- Web Watch, Videos, Events, Help, dan Downloads.
+- Pixel mascot dengan animasi bob dan blinking eyes.
+- Keyboard-friendly modal flow dan dukungan reduced motion.
+
+## Struktur project
+
+```text
+spidey/
+├─ app/
+│  ├─ index.html       # application shell dan panel UI
+│  ├─ app.js           # state, interaksi, map, GPS, dan rendering
+│  ├─ cms.js           # adapter Directus + local JSON fallback
+│  ├─ config.js        # konfigurasi API, map tile, dan collection
+│  ├─ styles.css       # entry point stylesheet
+│  └─ styles/          # style modular: map, panel, ticker, modal, responsive
+├─ assets/
+│  ├─ brand/           # logo, mask, dan pixel mascot
+│  ├─ markers/         # marker map
+│  ├─ downloads/       # placeholder wallpaper/sticker/icon
+│  └─ placeholders/    # poster dan card fallback
+├─ data/               # JSON development data
+├─ docs/
+│  ├─ PRD.md           # product requirements
+│  ├─ design.md        # visual system dan interaction direction
+│  └─ api-cms.md       # schema Directus dan integrasi REST
+└─ README.md
+```
+
+## API dan CMS
+
+Secara default aplikasi menggunakan data JSON lokal agar dapat langsung dicoba. Untuk menghubungkan Directus, isi nilai berikut di [app/config.js](app/config.js):
+
+```js
+api: {
+  provider: "directus",
+  baseUrl: "https://cms.example.com",
+  publicToken: "YOUR_PUBLIC_TOKEN"
+}
+```
+
+Collection utama:
+
+| Collection | Kegunaan |
+| --- | --- |
+| `sightings` | laporan penampakan dan marker map |
+| `events` | event publik atau node aktivitas |
+| `villains` | dossier Web Watch |
+| `videos` | video briefing dan footage |
+| `downloads` | wallpaper, sticker, dan asset pack |
+
+Detail field, permission, dan payload tersedia di [docs/api-cms.md](docs/api-cms.md).
+
+## Catatan GPS
+
+GPS browser hanya dapat digunakan setelah user memberikan permission. Untuk development, gunakan `localhost`; untuk deployment, gunakan HTTPS. Perilaku GPS dapat berbeda berdasarkan browser, device, akurasi sensor, dan kondisi indoor/outdoor.
+
+## Catatan lisensi dan production
+
+- Tile provider harus mengikuti attribution dan terms of use masing-masing.
+- Ganti seluruh placeholder artwork, logo, footage, dan copy dengan aset yang sudah memiliki izin sebelum production.
+- Gunakan provider map berlisensi jika traffic production membutuhkan SLA atau kuota lebih tinggi.
+- Tambahkan autentikasi dan validasi server-side sebelum menerima laporan publik secara nyata.
+
+## Roadmap singkat
+
+1. Sambungkan Directus production dan validasi schema.
+2. Tambahkan auth untuk moderator laporan.
+3. Tambahkan clustering marker dan historical playback.
+4. Tambahkan telemetry GPS yang opt-in dan privacy-safe.
+5. Ganti placeholder dengan asset final dan lakukan audit responsive/accessibility.
+
+## Referensi desain
+
+Konsep UI dianalisis dari [Spidey Tracker](https://spideytracker.net/intl/id/) pada 15 Agustus 2026. Implementasi ini adalah blueprint independen untuk pembelajaran dan prototyping.
