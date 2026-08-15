@@ -1,0 +1,38 @@
+[
+  {
+    "id": "sight-001",
+    "type": "confirmed",
+    "title": "Jejak merah di jembatan kota",
+    "summary": "Siluet terlihat melintas saat matahari terbenam.",
+    "location": { "city": "Jakarta", "country": "Indonesia", "lat": -6.2088, "lng": 106.8456 },
+    "timezone": "Asia/Jakarta",
+    "occurredAt": "2026-08-14T18:30:00+07:00",
+    "source": { "label": "Field report", "url": "https://example.com/report/sight-001" },
+    "media": [{ "kind": "image", "src": "/assets/placeholders/sighting-card.svg", "alt": "Placeholder sighting" }],
+    "status": "published"
+  },
+  {
+    "id": "sight-002",
+    "type": "rumored",
+    "title": "Sinyal aneh di atas gedung tua",
+    "summary": "Beberapa saksi mendengar suara kabel dan melihat bayangan bergerak.",
+    "location": { "city": "Bandung", "country": "Indonesia", "lat": -6.9175, "lng": 107.6191 },
+    "timezone": "Asia/Jakarta",
+    "occurredAt": "2026-08-13T22:10:00+07:00",
+    "source": { "label": "Community watch", "url": "https://example.com/report/sight-002" },
+    "media": [{ "kind": "image", "src": "/assets/placeholders/sighting-card.svg", "alt": "Placeholder rumored sighting" }],
+    "status": "published"
+  },
+  {
+    "id": "sight-003",
+    "type": "event",
+    "title": "Night Watch Pop-up",
+    "summary": "Experience interaktif, photo spot, dan mini screening.",
+    "location": { "city": "Surabaya", "country": "Indonesia", "lat": -7.2575, "lng": 112.7521 },
+    "timezone": "Asia/Jakarta",
+    "occurredAt": "2026-09-12T16:00:00+07:00",
+    "source": { "label": "Official event listing", "url": "https://example.com/events/night-watch" },
+    "media": [{ "kind": "image", "src": "/assets/placeholders/event-card.svg", "alt": "Placeholder event" }],
+    "status": "published"
+  }
+]

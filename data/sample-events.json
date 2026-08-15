@@ -1,0 +1,32 @@
+[
+  {
+    "id": "event-001",
+    "title": "Night Watch Pop-up",
+    "description": "Experience interaktif dengan photo spot dan mini screening.",
+    "venue": "Rooftop Hall",
+    "city": "Jakarta",
+    "country": "Indonesia",
+    "timezone": "Asia/Jakarta",
+    "startsAt": "2026-09-12T16:00:00+07:00",
+    "endsAt": "2026-09-12T22:00:00+07:00",
+    "status": "upcoming",
+    "coordinates": { "lat": -6.1754, "lng": 106.8272 },
+    "ticketUrl": "https://example.com/tickets/night-watch",
+    "heroImage": "/assets/placeholders/event-card.svg"
+  },
+  {
+    "id": "event-002",
+    "title": "Signal Lab Weekend",
+    "description": "Workshop kreatif untuk memecahkan kode dan menemukan jejak tersembunyi.",
+    "venue": "Creative Block 09",
+    "city": "Yogyakarta",
+    "country": "Indonesia",
+    "timezone": "Asia/Jakarta",
+    "startsAt": "2026-10-03T10:00:00+07:00",
+    "endsAt": "2026-10-04T18:00:00+07:00",
+    "status": "upcoming",
+    "coordinates": { "lat": -7.7956, "lng": 110.3695 },
+    "ticketUrl": "https://example.com/tickets/signal-lab",
+    "heroImage": "/assets/placeholders/event-card.svg"
+  }
+]

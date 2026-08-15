@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Signal eye emoji placeholder</title>
+  <desc id="desc">Red and blue stylized signal eye placeholder.</desc>
+  <circle cx="256" cy="256" r="220" fill="#101522" stroke="#EF3D4E" stroke-width="24"/>
+  <path d="M88 256c75-114 261-114 336 0-75 114-261 114-336 0Z" fill="#F4F7FB"/>
+  <ellipse cx="256" cy="256" rx="50" ry="82" fill="#39B9FF"/><circle cx="256" cy="256" r="22" fill="#080B12"/>
+  <text x="110" y="468" fill="#B8F26A" font-family="Consolas, monospace" font-size="22" letter-spacing="3">EMOJI PLACEHOLDER</text>
+</svg>

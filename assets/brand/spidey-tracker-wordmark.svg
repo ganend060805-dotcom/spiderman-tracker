@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 100" role="img" aria-labelledby="title desc">
+  <title id="title">Spidey Tracker wordmark placeholder</title>
+  <desc id="desc">Placeholder wordmark for the internal prototype.</desc>
+  <rect width="440" height="100" rx="18" fill="#101522"/>
+  <text x="28" y="58" fill="#F4F7FB" font-family="Arial Narrow, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="6">SPIDEY</text>
+  <text x="250" y="58" fill="#EF3D4E" font-family="Arial Narrow, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="4">TRACKER</text>
+  <path d="M30 74h380" stroke="#39B9FF" stroke-width="2" opacity=".6"/>
+  <text x="30" y="88" fill="#AEB9C8" font-family="Consolas, monospace" font-size="9" letter-spacing="2">FIELD NETWORK // PROTOTYPE</text>
+</svg>

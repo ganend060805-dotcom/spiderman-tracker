@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">Web grid sticker placeholder</title>
+  <desc id="desc">Transparent-style sticker placeholder with a web grid.</desc>
+  <path d="M400 60v680M60 400h680M160 160l480 480M640 160 160 640" stroke="#39B9FF" stroke-width="26" stroke-linecap="round"/>
+  <circle cx="400" cy="400" r="190" fill="#101522" stroke="#EF3D4E" stroke-width="26"/>
+  <circle cx="400" cy="400" r="70" fill="#B8F26A"/>
+  <text x="168" y="770" fill="#F4F7FB" font-family="Consolas, monospace" font-size="24" letter-spacing="4">STICKER PLACEHOLDER</text>
+</svg>

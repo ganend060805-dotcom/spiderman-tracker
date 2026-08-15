@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" role="img" aria-labelledby="title desc">
+  <title id="title">Signal wallpaper placeholder</title>
+  <desc id="desc">Vertical dark wallpaper with red and blue web signal.</desc>
+  <rect width="1080" height="1920" fill="#080B12"/>
+  <g fill="none" stroke-linecap="round"><circle cx="540" cy="980" r="290" stroke="#EF3D4E" stroke-width="12"/><circle cx="540" cy="980" r="180" stroke="#39B9FF" stroke-width="8"/><path d="M540 470v1020M30 980h1020M180 620l720 720M900 620 180 1340" stroke="#39B9FF" stroke-opacity=".42" stroke-width="5"/></g>
+  <text x="80" y="150" fill="#F4F7FB" font-family="Arial Narrow, Arial, sans-serif" font-size="56" letter-spacing="8">SIGNAL / 01</text>
+  <text x="80" y="1770" fill="#B8F26A" font-family="Consolas, monospace" font-size="22" letter-spacing="4">WALLPAPER PLACEHOLDER</text>
+</svg>

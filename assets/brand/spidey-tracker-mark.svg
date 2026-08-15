@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
+  <title id="title">Signal web mark placeholder</title>
+  <desc id="desc">Abstract blue and red spider-web inspired signal icon.</desc>
+  <rect width="96" height="96" rx="22" fill="#101522"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M48 13v70M13 48h70M24 24l48 48M72 24 24 72" stroke="#39B9FF" stroke-width="3" opacity=".85"/>
+    <path d="M48 24c13 0 24 11 24 24S61 72 48 72 24 61 24 48s11-24 24-24Z" stroke="#EF3D4E" stroke-width="4"/>
+    <path d="M48 35c7 0 13 6 13 13s-6 13-13 13-13-6-13-13 6-13 13-13Z" stroke="#F4F7FB" stroke-width="3"/>
+  </g>
+  <circle cx="48" cy="48" r="5" fill="#B8F26A"/>
+</svg>

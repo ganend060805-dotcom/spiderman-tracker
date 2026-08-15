@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 1400" role="img" aria-labelledby="title desc">
+  <title id="title">Dark map canvas placeholder</title>
+  <desc id="desc">Abstract world map fallback with grid, route lines, and location signals.</desc>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#1b2b46"/><stop offset="1" stop-color="#080B12"/></radialGradient>
+    <pattern id="grid" width="90" height="90" patternUnits="userSpaceOnUse"><path d="M90 0H0V90" fill="none" stroke="#6E99C6" stroke-opacity=".13" stroke-width="2"/></pattern>
+  </defs>
+  <rect width="2400" height="1400" fill="url(#bg)"/>
+  <rect width="2400" height="1400" fill="url(#grid)"/>
+  <path d="M120 910c280-250 420-220 640-130s370 46 510-110 250-180 370-85 330 120 620-150" fill="none" stroke="#39B9FF" stroke-opacity=".28" stroke-width="5" stroke-dasharray="20 24"/>
+  <path d="M310 210c280 90 420 10 620 180s390 250 650 150 420-80 660 130" fill="none" stroke="#EF3D4E" stroke-opacity=".25" stroke-width="4"/>
+  <g fill="#39B9FF" opacity=".9"><circle cx="460" cy="790" r="9"/><circle cx="1100" cy="670" r="9"/><circle cx="1670" cy="500" r="9"/></g>
+  <g fill="#EF3D4E" opacity=".9"><circle cx="720" cy="360" r="8"/><circle cx="1430" cy="980" r="8"/><circle cx="2050" cy="720" r="8"/></g>
+  <text x="80" y="1280" fill="#AEB9C8" font-family="Consolas, monospace" font-size="24" letter-spacing="6">MAP FALLBACK // REPLACE WITH LICENSED MAP PROVIDER</text>
+</svg>

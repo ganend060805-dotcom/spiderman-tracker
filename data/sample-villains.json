@@ -1,0 +1,32 @@
+[
+  {
+    "id": "villain-001",
+    "name": "The Coil",
+    "threatLevel": "high",
+    "firstSeen": "2026-07-04",
+    "summary": "Pengguna kabel magnetik yang mengacaukan jaringan kota.",
+    "abilities": ["Magnetic tether", "Vertical traversal"],
+    "portrait": "/assets/placeholders/villain-card.svg",
+    "relatedSightingIds": ["sight-001"]
+  },
+  {
+    "id": "villain-002",
+    "name": "Glass Mantis",
+    "threatLevel": "medium",
+    "firstSeen": "2026-07-19",
+    "summary": "Sosok lincah dengan armor transparan yang sulit dilacak kamera.",
+    "abilities": ["Refraction cloak", "Precision blades"],
+    "portrait": "/assets/placeholders/villain-card.svg",
+    "relatedSightingIds": ["sight-002"]
+  },
+  {
+    "id": "villain-003",
+    "name": "Unknown Signal",
+    "threatLevel": "unknown",
+    "firstSeen": "2026-08-01",
+    "summary": "Rumor tentang operator misterius yang meninggalkan pola frekuensi.",
+    "abilities": ["Signal spoofing", "Unknown"],
+    "portrait": "/assets/placeholders/villain-card.svg",
+    "relatedSightingIds": []
+  }
+]

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Sighting media placeholder</title>
+  <desc id="desc">Placeholder card showing a city bridge and a signal trace.</desc>
+  <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0B1630"/><stop offset="1" stop-color="#5B172A"/></linearGradient></defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <path d="M0 620h1200v180H0z" fill="#101522"/><path d="M0 650h1200" stroke="#39B9FF" stroke-opacity=".5" stroke-width="8"/>
+  <path d="M130 650 480 270l110 380M1070 650 720 270 610 650" fill="none" stroke="#AEB9C8" stroke-opacity=".42" stroke-width="10"/>
+  <path d="M390 480c120-180 250-180 380 0" fill="none" stroke="#EF3D4E" stroke-width="12" stroke-dasharray="18 16"/>
+  <text x="60" y="100" fill="#F4F7FB" font-family="Arial Narrow, Arial, sans-serif" font-size="48" letter-spacing="6">SIGHTING MEDIA</text>
+  <text x="60" y="150" fill="#B8F26A" font-family="Consolas, monospace" font-size="20" letter-spacing="4">ORIGINAL ART PLACEHOLDER</text>
+</svg>

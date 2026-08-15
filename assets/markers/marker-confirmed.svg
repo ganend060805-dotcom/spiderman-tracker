@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 112" role="img" aria-label="Confirmed sighting marker placeholder">
+  <path d="M48 5C25 5 8 22 8 45c0 29 40 62 40 62s40-33 40-62C88 22 71 5 48 5Z" fill="#EF3D4E" stroke="#F4F7FB" stroke-width="4"/>
+  <circle cx="48" cy="45" r="21" fill="#101522" stroke="#F4F7FB" stroke-width="3"/>
+  <path d="M48 31v28M34 45h28" stroke="#F4F7FB" stroke-width="5" stroke-linecap="round"/>
+</svg>

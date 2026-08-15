@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 112" role="img" aria-label="Rumored sighting marker placeholder">
+  <path d="M48 5C25 5 8 22 8 45c0 29 40 62 40 62s40-33 40-62C88 22 71 5 48 5Z" fill="#F7B955" stroke="#F4F7FB" stroke-width="4"/>
+  <circle cx="48" cy="45" r="21" fill="#101522" stroke="#F4F7FB" stroke-width="3"/>
+  <path d="M40 39c1-7 14-9 18-2 4 7-5 9-9 13v4M49 61h.1" stroke="#F4F7FB" stroke-width="5" stroke-linecap="round"/>
+</svg>

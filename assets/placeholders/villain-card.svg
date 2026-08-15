@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Villain portrait placeholder</title>
+  <desc id="desc">Abstract dossier portrait placeholder with a masked silhouette.</desc>
+  <defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#182133"/><stop offset="1" stop-color="#5d1023"/></linearGradient></defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <path d="M180 760c40-230 110-340 220-340s180 110 220 340" fill="#080B12"/>
+  <path d="M260 440c0-140 55-240 140-240s140 100 140 240l-70 100H330Z" fill="#101522" stroke="#EF3D4E" stroke-width="8"/>
+  <path d="M310 410h75M415 410h75" stroke="#39B9FF" stroke-width="16" stroke-linecap="round"/>
+  <path d="M190 850h420" stroke="#B8F26A" stroke-width="5"/>
+  <text x="52" y="90" fill="#F4F7FB" font-family="Arial Narrow, Arial, sans-serif" font-size="42" letter-spacing="6">WEB WATCH</text>
+  <text x="52" y="140" fill="#AEB9C8" font-family="Consolas, monospace" font-size="18" letter-spacing="3">DOSSIER PORTRAIT // PLACEHOLDER</text>
+</svg>
