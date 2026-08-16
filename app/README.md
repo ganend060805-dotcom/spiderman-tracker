@@ -6,6 +6,7 @@ Panduan singkat untuk menjalankan shell aplikasi, map Leaflet, GPS Radar, dan ko
 
 ```powershell
 cd E:\pemrograman\spidey
+pip install -r backend/requirements.txt
 python backend/server.py
 ```
 
@@ -21,7 +22,7 @@ Jangan membuka file dengan format `file://`. Browser dapat memblokir `fetch()` J
 
 server.py juga menyediakan API presence realtime. Jika dijalankan melalui static server biasa, aplikasi tetap mencoba fallback antar-tab pada origin yang sama.
 
-Schema PostgreSQL untuk deployment production tersedia di [../database/presence-schema.sql](../database/presence-schema.sql). Browser tidak boleh mengakses database secara langsung; gunakan backend dengan DATABASE_URL privat.
+Schema MySQL untuk deployment production tersedia di [../database/presence-schema.sql](../database/presence-schema.sql). Jalankan melalui phpMyAdmin, lalu isi environment DB_* berdasarkan ../backend/env.example.
 
 `legacy/` berisi modul modular lama yang dipertahankan sebagai referensi; shell aktif saat ini menggunakan `app.js`, `cms.js`, dan `config.js`.
 
@@ -89,4 +90,4 @@ styles/      stylesheet modular
 - **GPS ditolak:** izinkan lokasi dan gunakan localhost atau HTTPS.
 - **Intro tidak muncul:** hapus localStorage key `spidey_intro_seen_v2` untuk mengulang briefing.
 - **CMS tidak terbaca:** cek `baseUrl`, CORS, public permission, dan nama collection.
-- **Presence tidak muncul lintas device:** jalankan python backend/server.py dari root project, pastikan port dapat diakses, dan gunakan HTTPS saat deployment.
+- **Presence tidak muncul lintas device:** pastikan migration MySQL sudah dijalankan, environment DB_* benar, lalu jalankan python backend/server.py dari root project.

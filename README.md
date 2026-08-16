@@ -1,4 +1,4 @@
-# SPIDEY TRACKER
+﻿# SPIDEY TRACKER
 
 > Interactive world-signal dashboard with a retro pixel control room, live map, GPS radar, and CMS-ready data layer.
 
@@ -10,6 +10,7 @@ Untuk mengaktifkan tracking operator lintas tab/device dan notifikasi realtime, 
 
 ```powershell
 cd E:\pemrograman\spidey
+pip install -r backend/requirements.txt
 python backend/server.py
 ```
 
@@ -48,28 +49,28 @@ Jangan membuka index.html dengan double-click. Aplikasi perlu membaca file JSON 
 
 ## Struktur project
 
-Folder tambahan: `backend/` berisi server presence, sedangkan `database/` berisi schema PostgreSQL production.
+Folder tambahan: `backend/` berisi server presence dan konektor MySQL, sedangkan `database/` berisi schema MySQL production.
 
 ```text
 spidey/
-├─ app/
-│  ├─ index.html       # application shell dan panel UI
-│  ├─ app.js           # state, interaksi, map, GPS, dan rendering
-│  ├─ cms.js           # adapter Directus + local JSON fallback
-│  ├─ config.js        # konfigurasi API, map tile, dan collection
-│  ├─ styles.css       # entry point stylesheet
-│  └─ styles/          # style modular: map, panel, ticker, modal, responsive
-├─ assets/
-│  ├─ brand/           # logo, mask, dan pixel mascot
-│  ├─ markers/         # marker map
-│  ├─ downloads/       # placeholder wallpaper/sticker/icon
-│  └─ placeholders/    # poster dan card fallback
-├─ data/               # JSON development data
-├─ docs/
-│  ├─ PRD.md           # product requirements
-│  ├─ design.md        # visual system dan interaction direction
-│  └─ api-cms.md       # schema Directus dan integrasi REST
-└─ README.md
+â”œâ”€ app/
+â”‚  â”œâ”€ index.html       # application shell dan panel UI
+â”‚  â”œâ”€ app.js           # state, interaksi, map, GPS, dan rendering
+â”‚  â”œâ”€ cms.js           # adapter Directus + local JSON fallback
+â”‚  â”œâ”€ config.js        # konfigurasi API, map tile, dan collection
+â”‚  â”œâ”€ styles.css       # entry point stylesheet
+â”‚  â””â”€ styles/          # style modular: map, panel, ticker, modal, responsive
+â”œâ”€ assets/
+â”‚  â”œâ”€ brand/           # logo, mask, dan pixel mascot
+â”‚  â”œâ”€ markers/         # marker map
+â”‚  â”œâ”€ downloads/       # placeholder wallpaper/sticker/icon
+â”‚  â””â”€ placeholders/    # poster dan card fallback
+â”œâ”€ data/               # JSON development data
+â”œâ”€ docs/
+â”‚  â”œâ”€ PRD.md           # product requirements
+â”‚  â”œâ”€ design.md        # visual system dan interaction direction
+â”‚  â””â”€ api-cms.md       # schema Directus dan integrasi REST
+â””â”€ README.md
 ```
 
 ## API dan CMS
@@ -105,10 +106,16 @@ GPS browser hanya dapat digunakan setelah user memberikan permission. Untuk deve
 - Masukkan username saat pertama kali membuka aplikasi.
 - Izinkan lokasi browser untuk menampilkan mark operator di peta.
 - Operator lain yang masuk akan memunculkan notifikasi NEW VARIANT APPEARANCE.
-- Server MVP menyimpan presence di memory, sehingga daftar online akan kosong setelah server restart.
+- Presence online dan riwayat appearance sekarang disimpan di MySQL. Backend membersihkan sesi timeout setiap 15 detik.
 - Untuk deployment lintas-device, jalankan python backend/server.py di server HTTPS dan arahkan presence.baseUrl di app/config.js bila API berada di origin berbeda.
-- Struktur PostgreSQL production tersedia di [database/presence-schema.sql](database/presence-schema.sql).
-- Jalankan expire_stale_presence setiap 30–60 detik untuk menandai operator yang berhenti mengirim heartbeat sebagai offline.
+- Struktur MySQL production tersedia di [database/presence-schema.sql](database/presence-schema.sql).
+
+### MySQL setup
+
+1. Jalankan database/presence-schema.sql melalui phpMyAdmin.
+2. Install connector Python dengan pip install -r backend/requirements.txt.
+3. Isi environment DB_* berdasarkan backend/env.example.
+4. Jalankan python backend/server.py dari root project.
 
 ## Catatan lisensi dan production
 
