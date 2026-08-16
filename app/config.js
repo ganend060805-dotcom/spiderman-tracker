@@ -23,6 +23,13 @@ window.SPIDEY_CONFIG = {
       downloads: "../data/sample-downloads.json"
     }
   },
+  presence: {
+    // Empty means same-origin. The bundled presence server exposes these routes at /api/presence.
+    baseUrl: "",
+    heartbeatMs: 20000,
+    timeoutMs: 65000,
+    localFallback: true
+  },
   map: {
     provider: "leaflet-osm",
     tileUrl: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",

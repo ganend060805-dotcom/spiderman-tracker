@@ -171,7 +171,8 @@
     CUSTOM_SIGHTINGS: "spidey_custom_sightings",
     SOUND_ENABLED: "spidey_sound_enabled",
     INTRO_SEEN: "spidey_intro_seen_v2",
-    TERMINAL_HISTORY: "spidey_terminal_history"
+    TERMINAL_HISTORY: "spidey_terminal_history",
+    PRESENCE_SESSION: "spidey_presence_session"
   };
 
   class StorageManager {
@@ -411,6 +412,18 @@
     gpsCircle: null,
     gpsMarker: null,
     gpsHasCentered: false,
+    presenceUsers: new Map(),
+    presenceLeafletMarkers: new Map(),
+    presenceDomMarkers: new Map(),
+    presenceSessionId: null,
+    presenceUsername: null,
+    presenceLocationShared: false,
+    presenceLocationWatchId: null,
+    presenceHeartbeatId: null,
+    presenceEventSource: null,
+    presenceChannel: null,
+    presenceMode: "offline",
+    presenceJoined: false,
     dataSource: "legacy-bootstrap"
   };
 
@@ -451,6 +464,347 @@
     toast.classList.add("show");
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toast.classList.remove("show"), 2500);
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>'"]/g, (character) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
+    }[character]));
+  }
+
+  /* ---------- LIVE PRESENCE NETWORK ---------- */
+  function presenceConfig() {
+    return {
+      baseUrl: String(window.SPIDEY_CONFIG?.presence?.baseUrl || "").replace(/\/$/, ""),
+      heartbeatMs: Math.max(10000, Number(window.SPIDEY_CONFIG?.presence?.heartbeatMs) || 20000),
+      timeoutMs: Math.max(30000, Number(window.SPIDEY_CONFIG?.presence?.timeoutMs) || 65000),
+      localFallback: window.SPIDEY_CONFIG?.presence?.localFallback !== false
+    };
+  }
+
+  function presenceEndpoint(path) {
+    return `${presenceConfig().baseUrl}/api/presence${path}`;
+  }
+
+  function newPresenceSessionId() {
+    if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+    return `presence-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  }
+
+  function readPresenceSession() {
+    try {
+      const raw = sessionStorage.getItem(STORAGE_KEYS.PRESENCE_SESSION);
+      return raw ? JSON.parse(raw) : null;
+    } catch (_) { return null; }
+  }
+
+  function savePresenceSession(session) {
+    try { sessionStorage.setItem(STORAGE_KEYS.PRESENCE_SESSION, JSON.stringify(session)); } catch (_) {}
+  }
+
+  function normalizePresenceUser(user) {
+    if (!user?.sessionId || !user?.username) return null;
+    const lat = Number(user.latitude ?? user.lat);
+    const lng = Number(user.longitude ?? user.lng);
+    return {
+      sessionId: String(user.sessionId),
+      username: String(user.username).trim().slice(0, 24),
+      latitude: Number.isFinite(lat) ? lat : null,
+      longitude: Number.isFinite(lng) ? lng : null,
+      lastSeen: Number(user.lastSeen || user.last_seen || Date.now()),
+      isSelf: String(user.sessionId) === appState.presenceSessionId,
+      isNew: Boolean(user.isNew)
+    };
+  }
+
+  function presencePayload() {
+    return {
+      sessionId: appState.presenceSessionId,
+      username: appState.presenceUsername,
+      latitude: appState.presenceLocationShared ? appState.gpsPosition?.lat ?? null : null,
+      longitude: appState.presenceLocationShared ? appState.gpsPosition?.lng ?? null : null,
+      lastSeen: Date.now()
+    };
+  }
+
+  function updatePresenceCount() {
+    const count = $("#presenceListCount");
+    if (count) count.textContent = `${appState.presenceUsers.size} OPERATORS ONLINE`;
+  }
+
+  function announcePresence(user) {
+    if (!user || user.sessionId === appState.presenceSessionId) return;
+    sound.playRadarPing();
+    showToast(`NEW VARIANT APPEARANCE // ${user.username} masuk jaringan.`);
+    appState.presenceUsers.get(user.sessionId) && (appState.presenceUsers.get(user.sessionId).isNew = true);
+    renderPresenceMarkers();
+    window.setTimeout(() => {
+      const current = appState.presenceUsers.get(user.sessionId);
+      if (current) { current.isNew = false; renderPresenceMarkers(); }
+    }, 2400);
+  }
+
+  function upsertPresenceUser(user, announce = false) {
+    const normalized = normalizePresenceUser(user);
+    if (!normalized) return;
+    const existed = appState.presenceUsers.has(normalized.sessionId);
+    appState.presenceUsers.set(normalized.sessionId, normalized);
+    updatePresenceCount();
+    renderPresenceMarkers();
+    if (announce && !existed) announcePresence(normalized);
+  }
+
+  function removePresenceUser(sessionId) {
+    if (!sessionId) return;
+    appState.presenceUsers.delete(String(sessionId));
+    updatePresenceCount();
+    renderPresenceMarkers();
+  }
+
+  function broadcastPresence(event) {
+    try { appState.presenceChannel?.postMessage(event); } catch (_) {}
+    try {
+      localStorage.setItem("spidey_presence_event", JSON.stringify({ ...event, nonce: Math.random() }));
+    } catch (_) {}
+  }
+
+  function handlePresenceEvent(event) {
+    if (!event || event.sessionId === appState.presenceSessionId) return;
+    if (event.type === "left") removePresenceUser(event.sessionId);
+    if (event.type === "joined") upsertPresenceUser(event.user, true);
+    if (event.type === "heartbeat") upsertPresenceUser(event.user, false);
+  }
+
+  function readLocalPresenceRoster() {
+    try {
+      const raw = localStorage.getItem("spidey_presence_roster");
+      const roster = raw ? JSON.parse(raw) : {};
+      const now = Date.now();
+      Object.values(roster).forEach((user) => {
+        if (now - Number(user.lastSeen || 0) <= presenceConfig().timeoutMs) upsertPresenceUser(user, false);
+      });
+    } catch (_) {}
+  }
+
+  function writeLocalPresenceRoster() {
+    try {
+      const raw = localStorage.getItem("spidey_presence_roster");
+      const roster = raw ? JSON.parse(raw) : {};
+      const now = Date.now();
+      Object.keys(roster).forEach((key) => {
+        if (now - Number(roster[key].lastSeen || 0) > presenceConfig().timeoutMs) delete roster[key];
+      });
+      const current = presencePayload();
+      roster[current.sessionId] = current;
+      localStorage.setItem("spidey_presence_roster", JSON.stringify(roster));
+    } catch (_) {}
+  }
+
+  function isLocalUsernameTaken(username, sessionId) {
+    try {
+      const raw = localStorage.getItem("spidey_presence_roster");
+      const roster = raw ? JSON.parse(raw) : {};
+      const now = Date.now();
+      return Object.values(roster).some((user) =>
+        user.sessionId !== sessionId &&
+        now - Number(user.lastSeen || 0) <= presenceConfig().timeoutMs &&
+        String(user.username).toLowerCase() === String(username).toLowerCase()
+      );
+    } catch (_) { return false; }
+  }
+
+  function applyPresenceLocation(position) {
+    appState.gpsPosition = { lat: position.coords.latitude, lng: position.coords.longitude };
+    appState.gpsAccuracy = Number(position.coords.accuracy) || null;
+    if (appState.map) drawGpsArea(false);
+    const current = appState.presenceUsers.get(appState.presenceSessionId);
+    if (current) {
+      current.latitude = appState.gpsPosition.lat;
+      current.longitude = appState.gpsPosition.lng;
+      current.lastSeen = Date.now();
+    }
+    renderPresenceMarkers();
+    sendPresenceHeartbeat();
+  }
+
+  function startPresenceLocation() {
+    if (!appState.presenceLocationShared || !("geolocation" in navigator)) {
+      showToast("Lokasi tidak dibagikan. Kamu tetap online tanpa mark lokasi.");
+      return;
+    }
+    if (appState.presenceLocationWatchId !== null) navigator.geolocation.clearWatch(appState.presenceLocationWatchId);
+    appState.presenceLocationWatchId = navigator.geolocation.watchPosition(
+      applyPresenceLocation,
+      () => showToast("Izin lokasi belum tersedia. Kamu tetap terdaftar tanpa mark lokasi."),
+      { enableHighAccuracy: true, maximumAge: 15000, timeout: 15000 }
+    );
+  }
+
+  async function presenceRequest(path, method, body) {
+    const response = await fetch(presenceEndpoint(path), {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: body ? JSON.stringify(body) : undefined,
+      credentials: "same-origin"
+    });
+    if (!response.ok) {
+      const error = new Error(`Presence API ${response.status}`);
+      error.status = response.status;
+      throw error;
+    }
+    return response.json();
+  }
+
+  function connectPresenceStream() {
+    if (!window.EventSource) return;
+    appState.presenceEventSource?.close();
+    const streamUrl = `${presenceEndpoint(`/stream?sessionId=${encodeURIComponent(appState.presenceSessionId)}`)}`;
+    const source = new EventSource(streamUrl);
+    source.onmessage = (message) => {
+      try { handlePresenceEvent(JSON.parse(message.data)); } catch (_) {}
+    };
+    source.onerror = () => {
+      source.close();
+      if (appState.presenceJoined) window.setTimeout(connectPresenceStream, 4000);
+    };
+    appState.presenceEventSource = source;
+  }
+
+  async function sendPresenceHeartbeat() {
+    if (!appState.presenceJoined) return;
+    const payload = presencePayload();
+    if (appState.presenceMode === "server") {
+      try {
+        const result = await presenceRequest("/heartbeat", "POST", payload);
+        (result.users || []).forEach((user) => upsertPresenceUser(user, false));
+        return;
+      } catch (_) {
+        appState.presenceMode = "local";
+        showToast("Realtime server terputus. Beralih ke mode lokal.");
+      }
+    }
+    writeLocalPresenceRoster();
+    upsertPresenceUser(payload, false);
+    broadcastPresence({ type: "heartbeat", user: payload, sessionId: payload.sessionId });
+  }
+
+  async function joinPresence(username, shareLocation, existingSession = null) {
+    const cleanUsername = String(username || "").trim();
+    if (!/^[A-Za-z0-9_ -]{3,24}$/.test(cleanUsername)) {
+      showToast("Username harus 3–24 karakter: huruf, angka, spasi, - atau _.");
+      return false;
+    }
+    appState.presenceUsername = cleanUsername;
+    appState.presenceSessionId = existingSession?.sessionId || newPresenceSessionId();
+    appState.presenceLocationShared = Boolean(shareLocation);
+    const payload = presencePayload();
+    let serverJoined = false;
+    try {
+      const result = await presenceRequest("/join", "POST", payload);
+      appState.presenceMode = "server";
+      serverJoined = true;
+      (result.users || []).forEach((user) => upsertPresenceUser(user, false));
+      connectPresenceStream();
+    } catch (error) {
+      if (error?.status === 409) {
+        showToast("Username sedang dipakai operator lain. Pilih username berbeda.");
+        return false;
+      }
+      if (!presenceConfig().localFallback) {
+        showToast("Live network belum tersedia. Coba lagi nanti.");
+        return false;
+      }
+      appState.presenceMode = "local";
+      if (isLocalUsernameTaken(cleanUsername, appState.presenceSessionId)) {
+        showToast("Username sedang dipakai operator lain. Pilih username berbeda.");
+        return false;
+      }
+      readLocalPresenceRoster();
+      writeLocalPresenceRoster();
+      broadcastPresence({ type: "joined", user: payload, sessionId: payload.sessionId });
+    }
+    upsertPresenceUser(payload, false);
+    appState.presenceJoined = true;
+    savePresenceSession({ sessionId: appState.presenceSessionId, username: cleanUsername, shareLocation: appState.presenceLocationShared });
+    if (appState.presenceHeartbeatId) clearInterval(appState.presenceHeartbeatId);
+    appState.presenceHeartbeatId = window.setInterval(sendPresenceHeartbeat, presenceConfig().heartbeatMs);
+    startPresenceLocation();
+    $("#presenceJoinOverlay")?.setAttribute("hidden", "true");
+    showToast(serverJoined ? `Operator ${cleanUsername} terhubung ke live network.` : `Operator ${cleanUsername} masuk mode local network.`);
+    renderPresenceMarkers();
+    return true;
+  }
+
+  function renderPresenceMarkers() {
+    updatePresenceCount();
+    if (appState.map && window.L) {
+      appState.presenceLeafletMarkers.forEach((marker) => marker.remove());
+      appState.presenceLeafletMarkers.clear();
+      appState.presenceUsers.forEach((user) => {
+        if (!Number.isFinite(user.latitude) || !Number.isFinite(user.longitude)) return;
+        const className = `spidey-presence-marker${user.isSelf ? " presence-marker-self" : ""}${user.isNew ? " presence-marker-new" : ""}`;
+        const icon = window.L.divIcon({
+          className,
+          html: '<span class="presence-marker-pulse"></span><span class="presence-marker-dot"></span>',
+          iconSize: [38, 44],
+          iconAnchor: [19, 40],
+          tooltipAnchor: [0, -36]
+        });
+        const marker = window.L.marker([user.latitude, user.longitude], { icon, zIndexOffset: user.isSelf ? 700 : 650 }).addTo(appState.map);
+        marker.bindTooltip(`<strong>${escapeHtml(user.username)}</strong><small>${user.isSelf ? "YOUR SIGNAL" : "LIVE OPERATOR"}</small>`, { direction: "top", offset: [0, -8], className: "spidey-leaflet-tooltip" });
+        appState.presenceLeafletMarkers.set(user.sessionId, marker);
+      });
+      return;
+    }
+    const wrapper = $("#mapMarkers");
+    if (!wrapper) return;
+    appState.presenceDomMarkers.forEach((marker) => marker.remove());
+    appState.presenceDomMarkers.clear();
+    appState.presenceUsers.forEach((user) => {
+      if (!Number.isFinite(user.latitude) || !Number.isFinite(user.longitude)) return;
+      const marker = document.createElement("button");
+      marker.type = "button";
+      marker.className = `map-marker presence-dom-marker${user.isSelf ? " presence-marker-self" : ""}${user.isNew ? " presence-marker-new" : ""}`;
+      marker.dataset.presenceId = user.sessionId;
+      marker.style.left = `${Math.max(2, Math.min(98, (Number(user.longitude) + 180) / 360 * 100))}%`;
+      marker.style.top = `${Math.max(2, Math.min(98, (90 - Number(user.latitude)) / 180 * 100))}%`;
+      marker.setAttribute("aria-label", `Live operator: ${user.username}`);
+      marker.innerHTML = '<span class="marker-pulse"></span><span class="presence-marker-dot"></span>';
+      wrapper.appendChild(marker);
+      appState.presenceDomMarkers.set(user.sessionId, marker);
+    });
+  }
+
+  function setupPresence() {
+    try {
+      if (window.BroadcastChannel) {
+        appState.presenceChannel = new BroadcastChannel("spidey-presence");
+        appState.presenceChannel.onmessage = (event) => handlePresenceEvent(event.data);
+      }
+      window.addEventListener("storage", (event) => {
+        if (event.key === "spidey_presence_event" && event.newValue) {
+          try { handlePresenceEvent(JSON.parse(event.newValue)); } catch (_) {}
+        }
+        if (event.key === "spidey_presence_roster") readLocalPresenceRoster();
+      });
+    } catch (_) {}
+
+    const overlay = $("#presenceJoinOverlay");
+    const form = $("#presenceJoinForm");
+    const usernameInput = $("#presenceUsername");
+    const locationInput = $("#presenceShareLocation");
+    if (!overlay || !form) return;
+    const saved = readPresenceSession();
+    if (saved?.username && saved?.sessionId) {
+      joinPresence(saved.username, saved.shareLocation !== false, saved);
+      return;
+    }
+    overlay.hidden = false;
+    window.setTimeout(() => usernameInput?.focus(), 80);
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      joinPresence(usernameInput?.value, locationInput?.checked);
+    });
   }
 
   /* ---------- 6. MAP & MARKER RENDERING ---------- */
@@ -679,6 +1033,7 @@
         });
         appState.leafletMarkers.set(item.id, marker);
       });
+      renderPresenceMarkers();
       return;
     }
 
@@ -691,6 +1046,7 @@
       '" aria-label="', statusLabel(item.type), ': ', item.title, '"><span class="marker-pulse" aria-hidden="true"></span><img src="',
       markerAsset(item.markerStyle, item.type), '" alt="" /></button>'
     ].join("")).join("");
+    renderPresenceMarkers();
   }
 
 
@@ -1437,6 +1793,13 @@
       return;
     }
 
+    const presenceButton = event.target.closest("[data-presence-id]");
+    if (presenceButton) {
+      const user = appState.presenceUsers.get(presenceButton.dataset.presenceId);
+      if (user) showToast(user.username + " // " + (user.isSelf ? "YOUR SIGNAL" : "LIVE OPERATOR"));
+      return;
+    }
+
     // Villain dossier cards
     const villainButton = event.target.closest("[data-villain-id]");
     if (villainButton) {
@@ -1717,6 +2080,7 @@
     renderMarkers();
     $$(".rail-pill-btn, .sidebar-marker-btn").forEach((btn) => btn.classList.toggle("active", btn.dataset.filterMap === "all"));
     renderActivity();
+    setupPresence();
 
     // Deep-link from hash
     const hashPanel = window.location.hash.replace("#", "");

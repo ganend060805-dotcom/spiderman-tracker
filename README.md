@@ -6,16 +6,18 @@ Spidey Tracker adalah prototipe dashboard eksplorasi peta yang terinspirasi dari
 
 ## Quick start
 
-Pastikan Python tersedia, lalu jalankan static server dari root project:
+Untuk mengaktifkan tracking operator lintas tab/device dan notifikasi realtime, gunakan server Python bawaan:
 
 ```powershell
 cd E:\pemrograman\spidey
-python -m http.server 4173
+python backend/server.py
 ```
 
 Buka [http://localhost:4173/app/](http://localhost:4173/app/).
 
-> Jangan menjalankan server dari folder `app` dan jangan membuka `index.html` dengan double-click. Aplikasi perlu membaca file JSON melalui HTTP agar asset dan data lokal bekerja dengan benar.
+Jika hanya ingin melihat UI tanpa backend presence, python -m http.server 4173 tetap dapat digunakan. Aplikasi akan otomatis memakai fallback lokal antar-tab pada origin yang sama.
+
+Jangan membuka index.html dengan double-click. Aplikasi perlu membaca file JSON melalui HTTP agar asset, data lokal, dan presence bekerja dengan benar.
 
 ## Apa yang bisa dilakukan
 
@@ -45,6 +47,8 @@ Buka [http://localhost:4173/app/](http://localhost:4173/app/).
 - Keyboard-friendly modal flow dan dukungan reduced motion.
 
 ## Struktur project
+
+Folder tambahan: `backend/` berisi server presence, sedangkan `database/` berisi schema PostgreSQL production.
 
 ```text
 spidey/
@@ -95,6 +99,16 @@ Detail field, permission, dan payload tersedia di [docs/api-cms.md](docs/api-cms
 ## Catatan GPS
 
 GPS browser hanya dapat digunakan setelah user memberikan permission. Untuk development, gunakan `localhost`; untuk deployment, gunakan HTTPS. Perilaku GPS dapat berbeda berdasarkan browser, device, akurasi sensor, dan kondisi indoor/outdoor.
+
+### Live operator presence
+
+- Masukkan username saat pertama kali membuka aplikasi.
+- Izinkan lokasi browser untuk menampilkan mark operator di peta.
+- Operator lain yang masuk akan memunculkan notifikasi NEW VARIANT APPEARANCE.
+- Server MVP menyimpan presence di memory, sehingga daftar online akan kosong setelah server restart.
+- Untuk deployment lintas-device, jalankan python backend/server.py di server HTTPS dan arahkan presence.baseUrl di app/config.js bila API berada di origin berbeda.
+- Struktur PostgreSQL production tersedia di [database/presence-schema.sql](database/presence-schema.sql).
+- Jalankan expire_stale_presence setiap 30–60 detik untuk menandai operator yang berhenti mengirim heartbeat sebagai offline.
 
 ## Catatan lisensi dan production
 

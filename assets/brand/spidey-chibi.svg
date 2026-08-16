@@ -22,10 +22,9 @@
 
     <!-- eye blink -->
     <g id="blink-lids">
-      <path d="M16 37h24v12h-5v4H22v-3h-6Z" fill="#e63946"/>
-      <path d="M48 37h24v13h-5v3H53v-4h-5Z" fill="#e63946"/>
-      <path d="M17 46h22M49 46h22" stroke="#080b14" stroke-width="2"/>
-      <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.9;.935;.97;1" dur="4.7s" repeatCount="indefinite"/>
+      <path d="M16 32h24v20H16Z" fill="#080b14"/>
+      <path d="M48 32h24v21H48Z" fill="#080b14"/>
+      <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.88;.91;.94;1" dur="4.8s" calcMode="discrete" repeatCount="indefinite"/>
     </g>
 
     <!-- mask shine and chin accent -->
