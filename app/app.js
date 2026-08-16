@@ -457,6 +457,18 @@
     return "../assets/markers/marker-spider-red.svg";
   }
 
+  function markerMarkup(markerStyle, type) {
+    const signalClass = "marker-signal " + (type || "confirmed");
+    return [
+      '<span class="sighting-marker-shell">',
+      '<span class="marker-beacon" aria-hidden="true"></span>',
+      '<span class="marker-orbit" aria-hidden="true"></span>',
+      '<span class="', signalClass, '" aria-hidden="true"></span>',
+      '<img src="', markerAsset(markerStyle, type), '" alt="" />',
+      '</span>'
+    ].join("");
+  }
+
   function showToast(message) {
     const toast = $("#toast");
     if (!toast) return;
@@ -752,6 +764,13 @@
         });
         const marker = window.L.marker([user.latitude, user.longitude], { icon, zIndexOffset: user.isSelf ? 700 : 650 }).addTo(appState.map);
         marker.bindTooltip(`<strong>${escapeHtml(user.username)}</strong><small>${user.isSelf ? "YOUR SIGNAL" : "LIVE OPERATOR"}</small>`, { direction: "top", offset: [0, -8], className: "spidey-leaflet-tooltip" });
+        marker.on("click", () => {
+          appState.presenceLeafletMarkers.forEach((entry) => entry.getElement()?.classList.remove("selected"));
+          marker.getElement()?.classList.add("selected");
+          appState.map?.flyTo([user.latitude, user.longitude], Math.max(appState.map.getZoom(), 7), { animate: true, duration: 0.4 });
+          sound.playRadarPing();
+          showToast(user.username + (user.isSelf ? " // posisi kamu terkunci." : " // sinyal operator terkunci."));
+        });
         appState.presenceLeafletMarkers.set(user.sessionId, marker);
       });
       return;
@@ -1018,17 +1037,18 @@
         const lng = Number(item.location?.lng);
         if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
         const icon = window.L.divIcon({
-          className: "spidey-leaflet-marker " + item.type + (scoped.fallback && !isInsideGpsRadius(item) ? " gps-outside-radius" : ""),
-          html: '<img src="' + markerAsset(item.markerStyle, item.type) + '" alt="" />',
-          iconSize: [34, 42],
-          iconAnchor: [17, 36],
-          tooltipAnchor: [0, -34]
+          className: "spidey-leaflet-marker " + item.type + " marker-" + (item.markerStyle || item.type) + (scoped.fallback && !isInsideGpsRadius(item) ? " gps-outside-radius" : ""),
+          html: markerMarkup(item.markerStyle, item.type),
+          iconSize: [48, 64],
+          iconAnchor: [24, 58],
+          tooltipAnchor: [0, -52]
         });
-        const marker = window.L.marker([lat, lng], { icon }).addTo(appState.map);
+        const marker = window.L.marker([lat, lng], { icon, riseOnHover: true, keyboard: true }).addTo(appState.map);
         marker.bindTooltip("<strong>" + item.title + "</strong><small>" + statusLabel(item.type) + " // " + item.city + "</small>", { direction: "top", offset: [0, -6], className: "spidey-leaflet-tooltip" });
         marker.on("click", () => {
           appState.leafletMarkers.forEach((entry) => entry.getElement()?.classList.remove("selected"));
           marker.getElement()?.classList.add("selected");
+          appState.map?.flyTo([lat, lng], Math.max(appState.map.getZoom(), 5), { animate: true, duration: 0.45 });
           openSightingDetail(item.id);
         });
         appState.leafletMarkers.set(item.id, marker);
@@ -1043,8 +1063,7 @@
       '" data-title="', item.title, '" data-type="', statusLabel(item.type), '" data-location="', item.city || "Unknown",
       '" data-lat="', item.location?.lat || 0, '" data-lng="', item.location?.lng || 0,
       '" style="left:', item.coordinates?.left || "50%", ";top:", item.coordinates?.top || "50%",
-      '" aria-label="', statusLabel(item.type), ': ', item.title, '"><span class="marker-pulse" aria-hidden="true"></span><img src="',
-      markerAsset(item.markerStyle, item.type), '" alt="" /></button>'
+      '" aria-label="', statusLabel(item.type), ': ', item.title, '">', markerMarkup(item.markerStyle, item.type), '</button>'
     ].join("")).join("");
     renderPresenceMarkers();
   }

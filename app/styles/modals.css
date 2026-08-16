@@ -20,7 +20,30 @@
   transform: translate(-50%, 180%);
   transition: transform 0.2s steps(4);
 }
-.toast.show { transform: translate(-50%, 0); }
+.toast.show {
+  transform: translate(-50%, 0);
+  animation: toast-alert .35s steps(4);
+}
+.toast::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 8px;
+  border: 1px solid #03111f;
+  border-radius: 50%;
+  background: #58b572;
+  box-shadow: 0 0 8px #58b572;
+  animation: toast-pip 1s steps(2) infinite;
+}
+@keyframes toast-alert {
+  0% { transform: translate(-50%, 180%) skewX(-8deg); }
+  70% { transform: translate(-50%, -4px) skewX(2deg); }
+  100% { transform: translate(-50%, 0); }
+}
+@keyframes toast-pip {
+  50% { opacity: .25; }
+}
 
 /* Live presence join and user markers */
 .presence-join-overlay {
@@ -38,6 +61,11 @@
   border: 3px solid #000;
   background: linear-gradient(145deg, #12485e, #082433 72%);
   box-shadow: 4px 4px 0 #000, 0 0 28px rgba(0, 0, 0, .85);
+  animation: presence-card-arrive .45s cubic-bezier(.2, .9, .2, 1) both;
+}
+@keyframes presence-card-arrive {
+  0% { opacity: 0; transform: translateY(24px) scale(.94); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 .presence-join-card h2 {
   margin-top: 10px;
@@ -140,6 +168,20 @@
   box-shadow: 2px 2px 0 #000;
   font-size: 7px;
   pointer-events: none;
+}
+.presence-list-count::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #58b572;
+  box-shadow: 0 0 7px #58b572;
+  animation: presence-count-pulse 1.2s steps(2) infinite;
+}
+@keyframes presence-count-pulse {
+  50% { opacity: .28; }
 }
 
 /* Video Embed */
