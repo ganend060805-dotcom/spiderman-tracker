@@ -1,9 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 64" role="img" aria-label="Event marker">
-  <defs><linearGradient id="eventFill" x1="9" y1="4" x2="39" y2="56" gradientUnits="userSpaceOnUse"><stop stop-color="#a4f2ff"/><stop offset=".5" stop-color="#46c4dc"/><stop offset="1" stop-color="#176f91"/></linearGradient></defs>
-  <path d="M24 3C12 3 5 11 5 23c0 15 19 37 19 37s19-22 19-37C43 11 36 3 24 3Z" fill="#020814"/>
-  <path d="M24 6C14 6 8 13 8 23c0 11 12 28 16 33 4-5 16-22 16-33C40 13 34 6 24 6Z" fill="url(#eventFill)"/>
-  <circle cx="24" cy="23" r="12" fill="#08263e" stroke="#d4fbff" stroke-width="2"/>
-  <path d="m24 12 2.8 7.5 7.7.3-6 4.8 2 7.4-6.5-4.4-6.5 4.4 2-7.4-6-4.8 7.7-.3z" fill="#fff" stroke="#1f8eae" stroke-width="1.1"/>
-  <circle cx="24" cy="23" r="10" fill="none" stroke="#6ee0ef" stroke-dasharray="1.5 2.2" stroke-width="1"/>
-  <path d="M18 36h12l-6 8z" fill="#10516c" opacity=".75"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36" shape-rendering="crispEdges">
+  <!-- Outer Black Pixel/Hexagon Outline -->
+  <polygon points="11,2 25,2 34,11 34,25 25,34 11,34 2,25 2,11" fill="#000000" stroke="#000000" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Cyan/Blue Inner Badge Fill -->
+  <polygon points="11,4 25,4 32,11 32,25 25,32 11,32 4,25 4,11" fill="#58c4d8"/>
+  <!-- Top-left Highlight -->
+  <polygon points="11,4 25,4 30,9 12,9 6,15 4,11" fill="#a4f2ff" opacity="0.6"/>
+  <!-- Center Dark Star -->
+  <path d="M18 7.5 L20.8 13.5 L27.5 14.2 L22.4 18.8 L23.8 25.5 L18 22.1 L12.2 25.5 L13.6 18.8 L8.5 14.2 L15.2 13.5 Z" fill="#061a29"/>
 </svg>

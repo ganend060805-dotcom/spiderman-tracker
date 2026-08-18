@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600;700&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=5" />
   </head>
   <body>
     <!-- Top-Right Floating Terminal Tag -->
@@ -65,13 +65,47 @@
           <!-- Left Bezel Controls -->
           <aside class="left-bezel-rail" id="leftSidebar" aria-label="Signal Filters">
             <button class="rail-pill-btn pill-green active" type="button" data-filter-map="confirmed" aria-label="Confirmed Green Signals" title="Confirmed Signals">
-              <img src="../assets/markers/marker-spider-green.svg" alt="" />
+              <svg viewBox="0 0 36 36" width="26" height="26">
+                <circle cx="18" cy="18" r="16" fill="#000000"/>
+                <circle cx="18" cy="18" r="13.5" fill="#58b572"/>
+                <g fill="#071b12">
+                  <ellipse cx="18" cy="19" rx="3.2" ry="4.5"/>
+                  <ellipse cx="18" cy="12.8" rx="2" ry="1.8"/>
+                  <path d="M 16 13 Q 10 10 10 7" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M 15 16 Q 8 15 7 12" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M 15 19 Q 8 21 8 25" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M 16 21 Q 10 26 12 29" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M 20 13 Q 26 10 26 7" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M 21 16 Q 28 15 29 12" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M 21 19 Q 28 21 28 25" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M 20 21 Q 26 26 24 29" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                </g>
+              </svg>
             </button>
             <button class="rail-pill-btn pill-red" type="button" data-filter-map="rumored" aria-label="Rumored Red Signals" title="Rumored Signals">
-              <img src="../assets/markers/marker-spider-red.svg" alt="" />
+              <svg viewBox="0 0 36 36" width="26" height="26">
+                <circle cx="18" cy="18" r="16" fill="#000000"/>
+                <circle cx="18" cy="18" r="13.5" fill="#e63946"/>
+                <g fill="#1a0407">
+                  <ellipse cx="18" cy="19" rx="3.2" ry="4.5"/>
+                  <ellipse cx="18" cy="12.8" rx="2" ry="1.8"/>
+                  <path d="M 16 13 Q 10 10 10 7" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M 15 16 Q 8 15 7 12" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M 15 19 Q 8 21 8 25" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M 16 21 Q 10 26 12 29" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M 20 13 Q 26 10 26 7" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M 21 16 Q 28 15 29 12" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M 21 19 Q 28 21 28 25" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M 20 21 Q 26 26 24 29" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                </g>
+              </svg>
             </button>
             <button class="rail-pill-btn pill-all" type="button" data-filter-map="all" aria-label="Show All Signals" title="All Signals">
-              <span class="pixel-star">★</span>
+              <svg viewBox="0 0 36 36" width="26" height="26">
+                <polygon points="11,2 25,2 34,11 34,25 25,34 11,34 2,25 2,11" fill="#000000"/>
+                <polygon points="11,4 25,4 32,11 32,25 25,32 11,32 4,25 4,11" fill="#58c4d8"/>
+                <path d="M18 7.5 L20.8 13.5 L27.5 14.2 L22.4 18.8 L23.8 25.5 L18 22.1 L12.2 25.5 L13.6 18.8 L8.5 14.2 L15.2 13.5 Z" fill="#061a29"/>
+              </svg>
             </button>
 
             <!-- Vertical Ruler Ticks -->
@@ -96,6 +130,19 @@
             <div class="map-ruler map-ruler-bottom" aria-hidden="true"></div>
             <div class="map-ruler map-ruler-left" aria-hidden="true"></div>
             <div class="map-ruler map-ruler-right" aria-hidden="true"></div>
+
+            <!-- Top Center Sighting Notification Banner / Counter -->
+            <div class="top-sighting-counter-banner" id="sightingBanner" role="region" aria-label="Sightings Counter">
+              <div class="counter-clock-pill" id="counterClockPill" title="Radar Sighting Clock">
+                <span class="clock-digits" id="clockLeft">00 00</span>
+                <img class="clock-spidey-icon" src="../assets/brand/spidey-mask-mini.svg" alt="" aria-hidden="true" />
+                <span class="clock-digits" id="clockRight">00 00</span>
+              </div>
+              <button class="sighting-spotted-badge" id="sightingSpottedBtn" type="button" aria-label="132 New Sightings Spotted" title="Click to view all spotted sightings">
+                <span class="spotted-count" id="spottedCountText">132 NEW SIGHTINGS</span>
+                <span class="spotted-label">SPOTTED</span>
+              </button>
+            </div>
 
             <!-- Global Map Markers Overlay -->
             <div class="map-markers" id="mapMarkers" aria-label="Spidey Sightings Map Markers"></div>
@@ -169,16 +216,21 @@
 
         <!-- ===== BOTTOM BEZEL TICKER & CONTROLS ===== -->
         <div class="bottom-bezel">
-          <!-- Pixel Spider-Man Chibi Mascot (Bottom Left) -->
-          <div class="chibi-spidey-anchor" aria-hidden="true">
-            <img class="chibi-spidey-img" src="../assets/brand/spidey-chibi.svg" alt="" />
+          <!-- Pixel Spider-Man Chibi Mascot & Watch Trailer Button (Bottom Left) -->
+          <div class="bottom-left-group">
+            <div class="chibi-spidey-anchor" aria-hidden="true">
+              <img class="chibi-spidey-img" src="../assets/brand/spidey-chibi.svg" alt="" />
+            </div>
+            <button class="watch-trailer-btn" id="watchTrailerBtn" type="button" aria-label="Watch Trailer" title="Watch Official Spider-Man Trailer">
+              <span>WATCH TRAILER</span>
+            </button>
           </div>
 
           <!-- Centered Ticker Marquee Box -->
           <div class="ticker-box-pill" id="tickerBar">
             <button class="ticker-marquee-track" type="button" aria-label="Bagikan Sinyal ke Media Sosial" title="Klik untuk Salin Link / Share">
               <span class="pixel-ticker-text">
-                SPIDEY SIGHTINGS ON X &nbsp;=&nbsp; SHARE YOUR SPIDEY SIGHTINGS ON X &nbsp;=&nbsp; SPIDEY SIGHTINGS ON X &nbsp;=&nbsp; SHARE YOUR SPIDEY SIGHTINGS ON X &nbsp;=&nbsp;
+                'OUR SPIDEY SIGHTINGS ON X &nbsp;=&nbsp; SHARE YOUR &nbsp;&nbsp;&nbsp;&nbsp; 'OUR SPIDEY SIGHTINGS ON X &nbsp;=&nbsp; SHARE YOUR &nbsp;&nbsp;&nbsp;&nbsp; 'OUR SPIDEY SIGHTINGS ON X &nbsp;=&nbsp; SHARE YOUR &nbsp;&nbsp;&nbsp;&nbsp;
               </span>
             </button>
             <!-- Green Speaker / Sound Toggle Button -->
@@ -454,9 +506,9 @@ What I saw: Spider-Man berayun cepat ke arah utara!
       </div>
     </div>
 
-    <script src="./config.js"></script>
-    <script src="./cms.js"></script>
+    <script src="./config.js?v=5"></script>
+    <script src="./cms.js?v=5"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="./app.js"></script>
+    <script src="./app.js?v=5"></script>
   </body>
 </html>

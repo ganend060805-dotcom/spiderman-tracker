@@ -32,47 +32,154 @@
 .leaflet-map-canvas {
   width: 100%;
   height: 100%;
-  background: #08152f;
+  background: #021a36;
 }
 
 .leaflet-container {
   font-family: var(--font-ui);
-  background: #08152f;
+  background: #021a36;
 }
 
-/* Recolor the map tiles themselves so the base map stays blue while markers remain crisp. */
+/* Recolor the map tiles so landmasses pop in vibrant slate teal and ocean is deep navy */
 .leaflet-tile-pane .spidey-blue-tiles {
-  filter: grayscale(1) brightness(.68) contrast(1.34) sepia(1) hue-rotate(158deg) saturate(6.5);
+  filter: brightness(1.6) contrast(1.75) sepia(0.85) hue-rotate(182deg) saturate(3.8);
 }
 
 .leaflet-control-attribution {
-  margin: 0 4px 4px 0 !important;
-  padding: 2px 5px !important;
-  color: #b9d1e4 !important;
-  background: rgba(5, 13, 26, .86) !important;
-  font-size: 10px !important;
+  display: none !important;
 }
 
-.leaflet-control-attribution a {
-  color: #58c4d8 !important;
+/* ============================================
+   TOP SIGHTING COUNTER & NOTIFICATION BANNER
+   ============================================ */
+.top-sighting-counter-banner {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+  user-select: none;
+}
+
+/* 00 00 [spidey mask] 00 00 Pill */
+.counter-clock-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #fdf5e2;
+  border: 2.5px solid #000000;
+  border-bottom: 0;
+  border-radius: 6px 6px 0 0;
+  padding: 3px 14px 2px;
+  box-shadow: 2px 0 0 #000, -2px 0 0 #000;
+  position: relative;
+  z-index: 2;
+  min-width: 140px;
+}
+
+.clock-digits {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  font-weight: 700;
+  color: #111111;
+  letter-spacing: 1.5px;
+}
+
+.clock-spidey-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  margin: -10px -2px -2px -2px; /* Popping slightly above the pill */
+  filter: drop-shadow(1px 1px 0 #000);
+}
+
+/* 132 NEW SIGHTINGS SPOTTED Box */
+.sighting-spotted-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f8ad42;
+  border: 2.5px solid #000000;
+  border-radius: 4px;
+  padding: 6px 18px 5px;
+  box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.sighting-spotted-badge:hover {
+  transform: scale(1.04);
+  filter: brightness(1.1);
+}
+
+.sighting-spotted-badge:active {
+  transform: scale(0.97) translateY(1px);
+}
+
+.spotted-count {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: #1a0f02;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1.25;
+}
+
+.spotted-label {
+  font-family: var(--font-pixel);
+  font-size: 8.5px;
+  color: #1a0f02;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1.2;
+  margin-top: 1px;
 }
 
 .spidey-leaflet-marker {
   background: transparent;
   border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.spidey-leaflet-marker img {
-  width: 34px;
-  height: 42px;
-  object-fit: contain;
-  transition: transform .16s, filter .16s;
+.marker-badge-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
 }
 
-.spidey-leaflet-marker:hover img,
-.spidey-leaflet-marker.selected img {
-  transform: scale(1.16);
-  filter: drop-shadow(0 0 9px rgba(230, 57, 70, .9));
+.marker-badge-shell svg {
+  width: 30px;
+  height: 30px;
+  display: block;
+  filter: drop-shadow(1px 2px 0 rgba(0, 0, 0, 0.75));
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+
+.spidey-leaflet-marker:hover .marker-badge-shell svg,
+.spidey-leaflet-marker.selected .marker-badge-shell svg,
+.map-marker:hover .marker-badge-shell svg,
+.map-marker.selected .marker-badge-shell svg {
+  transform: scale(1.25);
+  filter: drop-shadow(0 0 8px rgba(88, 196, 216, 0.95)) drop-shadow(1px 2px 0 #000);
+}
+
+.presence-list-count,
+.gps-radius-panel,
+.pixel-map-controls {
+  display: none !important;
 }
 
 .spidey-leaflet-marker.gps-outside-radius,
@@ -123,8 +230,8 @@
   position: absolute;
   inset: 0;
   background:
-    repeating-linear-gradient(0deg, transparent 0, transparent 3px, rgba(74, 174, 210, 0.11) 4px),
-    linear-gradient(180deg, rgba(3, 39, 78, 0.08), rgba(2, 15, 42, 0.18));
+    repeating-linear-gradient(0deg, transparent 0, transparent 3px, rgba(88, 196, 216, 0.05) 4px),
+    linear-gradient(180deg, rgba(2, 20, 42, 0.04), rgba(2, 16, 36, 0.1));
   pointer-events: none;
   z-index: 2;
 }

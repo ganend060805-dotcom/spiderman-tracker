@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 112" role="img" aria-label="Event marker placeholder">
-  <path d="m48 5 13 27 30 4-22 21 6 30-27-15-27 15 6-30L5 36l30-4L48 5Z" fill="#39B9FF" stroke="#F4F7FB" stroke-width="4" stroke-linejoin="round"/>
-  <circle cx="48" cy="48" r="12" fill="#101522"/>
-  <path d="M48 40v16M40 48h16" stroke="#F4F7FB" stroke-width="4" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36" shape-rendering="crispEdges">
+  <polygon points="11,2 25,2 34,11 34,25 25,34 11,34 2,25 2,11" fill="#000000" stroke="#000000" stroke-width="2" stroke-linejoin="round"/>
+  <polygon points="11,4 25,4 32,11 32,25 25,32 11,32 4,25 4,11" fill="#58c4d8"/>
+  <polygon points="11,4 25,4 30,9 12,9 6,15 4,11" fill="#a4f2ff" opacity="0.6"/>
+  <path d="M18 7.5 L20.8 13.5 L27.5 14.2 L22.4 18.8 L23.8 25.5 L18 22.1 L12.2 25.5 L13.6 18.8 L8.5 14.2 L15.2 13.5 Z" fill="#061a29"/>
 </svg>

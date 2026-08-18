@@ -458,15 +458,18 @@
   }
 
   function markerMarkup(markerStyle, type) {
-    const signalClass = "marker-signal " + (type || "confirmed");
-    return [
-      '<span class="sighting-marker-shell">',
-      '<span class="marker-beacon" aria-hidden="true"></span>',
-      '<span class="marker-orbit" aria-hidden="true"></span>',
-      '<span class="', signalClass, '" aria-hidden="true"></span>',
-      '<img src="', markerAsset(markerStyle, type), '" alt="" />',
-      '</span>'
-    ].join("");
+    const style = String(markerStyle || type || "confirmed");
+    if (style === "star" || style === "event" || type === "event") {
+      return '<span class="sighting-marker-shell marker-badge-shell star"><svg viewBox="0 0 36 36" width="30" height="30"><polygon points="11,2 25,2 34,11 34,25 25,34 11,34 2,25 2,11" fill="#000000"/><polygon points="11,4 25,4 32,11 32,25 25,32 11,32 4,25 4,11" fill="#58c4d8"/><path d="M18 7.5 L20.8 13.5 L27.5 14.2 L22.4 18.8 L23.8 25.5 L18 22.1 L12.2 25.5 L13.6 18.8 L8.5 14.2 L15.2 13.5 Z" fill="#061a29"/></svg></span>';
+    }
+    if (style.includes("green") || style === "confirmed") {
+      return '<span class="sighting-marker-shell marker-badge-shell green"><svg viewBox="0 0 36 36" width="30" height="30"><circle cx="18" cy="18" r="16" fill="#000000"/><circle cx="18" cy="18" r="13.5" fill="#58b572"/><path d="M 6 18 A 12 12 0 0 1 30 18 A 12 10 0 0 0 6 18" fill="#8ee8a5" opacity="0.45"/><g fill="#071b12"><ellipse cx="18" cy="19" rx="3.2" ry="4.5"/><ellipse cx="18" cy="12.8" rx="2" ry="1.8"/><path d="M 16 13 Q 10 10 10 7" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 15 16 Q 8 15 7 12" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 15 19 Q 8 21 8 25" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 16 21 Q 10 26 12 29" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 20 13 Q 26 10 26 7" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 21 16 Q 28 15 29 12" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 21 19 Q 28 21 28 25" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 20 21 Q 26 26 24 29" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/></g></svg></span>';
+    }
+    if (style.includes("white") || style === "rumored") {
+      return '<span class="sighting-marker-shell marker-badge-shell white"><svg viewBox="0 0 36 36" width="30" height="30"><circle cx="18" cy="18" r="16" fill="#000000"/><circle cx="18" cy="18" r="13.5" fill="#edf2f7"/><path d="M 6 18 A 12 12 0 0 1 30 18 A 12 10 0 0 0 6 18" fill="#ffffff" opacity="0.8"/><g fill="#1a202c"><ellipse cx="18" cy="19" rx="3.2" ry="4.5"/><ellipse cx="18" cy="12.8" rx="2" ry="1.8"/><path d="M 16 13 Q 10 10 10 7" stroke="#1a202c" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 15 16 Q 8 15 7 12" stroke="#1a202c" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 15 19 Q 8 21 8 25" stroke="#1a202c" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 16 21 Q 10 26 12 29" stroke="#1a202c" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 20 13 Q 26 10 26 7" stroke="#1a202c" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 21 16 Q 28 15 29 12" stroke="#1a202c" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 21 19 Q 28 21 28 25" stroke="#1a202c" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 20 21 Q 26 26 24 29" stroke="#1a202c" stroke-width="1.6" fill="none" stroke-linecap="round"/></g></svg></span>';
+    }
+    // Default: Red Spider badge
+    return '<span class="sighting-marker-shell marker-badge-shell red"><svg viewBox="0 0 36 36" width="30" height="30"><circle cx="18" cy="18" r="16" fill="#000000"/><circle cx="18" cy="18" r="13.5" fill="#e63946"/><path d="M 6 18 A 12 12 0 0 1 30 18 A 12 10 0 0 0 6 18" fill="#ff8c96" opacity="0.45"/><g fill="#1a0407"><ellipse cx="18" cy="19" rx="3.2" ry="4.5"/><ellipse cx="18" cy="12.8" rx="2" ry="1.8"/><path d="M 16 13 Q 10 10 10 7" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 15 16 Q 8 15 7 12" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 15 19 Q 8 21 8 25" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 16 21 Q 10 26 12 29" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 20 13 Q 26 10 26 7" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 21 16 Q 28 15 29 12" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 21 19 Q 28 21 28 25" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M 20 21 Q 26 26 24 29" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/></g></svg></span>';
   }
 
   function showToast(message) {
@@ -1039,9 +1042,9 @@
         const icon = window.L.divIcon({
           className: "spidey-leaflet-marker " + item.type + " marker-" + (item.markerStyle || item.type) + (scoped.fallback && !isInsideGpsRadius(item) ? " gps-outside-radius" : ""),
           html: markerMarkup(item.markerStyle, item.type),
-          iconSize: [48, 64],
-          iconAnchor: [24, 58],
-          tooltipAnchor: [0, -52]
+          iconSize: [30, 30],
+          iconAnchor: [15, 15],
+          tooltipAnchor: [0, -18]
         });
         const marker = window.L.marker([lat, lng], { icon, riseOnHover: true, keyboard: true }).addTo(appState.map);
         marker.bindTooltip("<strong>" + item.title + "</strong><small>" + statusLabel(item.type) + " // " + item.city + "</small>", { direction: "top", offset: [0, -6], className: "spidey-leaflet-tooltip" });
@@ -1439,7 +1442,39 @@
     centerOnRecord(newReport.id);
   }
 
-  /* ---------- 8. MODALS (Video, Asset, Terminal, Intro) ---------- */
+  /* ---------- 8. MODALS & BANNERS (Sighting Banner, Video, Asset, Terminal, Intro) ---------- */
+  function setupSightingBanner() {
+    const spottedBtn = $("#sightingSpottedBtn");
+    const countText = $("#spottedCountText");
+    const clockLeft = $("#clockLeft");
+    const clockRight = $("#clockRight");
+
+    if (countText) countText.textContent = "132 NEW SIGHTINGS";
+    if (clockLeft) clockLeft.textContent = "00 00";
+    if (clockRight) clockRight.textContent = "00 00";
+
+    if (spottedBtn) {
+      spottedBtn.addEventListener("click", () => {
+        sound.playAlert();
+        showToast("132 NEW SIGHTINGS SPOTTED // Menampilkan riwayat sinyal terbaru.");
+        openPanel("activity-log");
+      });
+    }
+
+    const trailerBtn = $("#watchTrailerBtn");
+    if (trailerBtn) {
+      trailerBtn.addEventListener("click", () => {
+        sound.playSuccess();
+        const featured = $("#featuredVideo");
+        if (featured) {
+          featured.click();
+        } else {
+          openPanel("videos");
+        }
+      });
+    }
+  }
+
   function setupVideoModal() {
     const modal = $("#videoModal");
     const title = $("#videoModalTitle");
@@ -2069,7 +2104,8 @@
     $("#gpsRadiusToggle")?.addEventListener("click", () => locateUserPosition());
     updateGpsRadiusUI();
 
-    // Modals
+    // Modals & Banners
+    setupSightingBanner();
     setupVideoModal();
     setupAssetModal();
     setupIntro();

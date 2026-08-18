@@ -16,9 +16,9 @@
   --bezel-black-border: #000000;
 
   /* Map Canvas Navy */
-  --map-navy-bg: #041024;
-  --map-navy-water: #071936;
-  --map-navy-tint: rgba(4, 18, 38, 0.48);
+  --map-navy-bg: #021a36;
+  --map-navy-water: #021c38;
+  --map-navy-tint: rgba(2, 26, 54, 0.48);
 
   /* Marker Colors */
   --star-cyan: #58c4d8;

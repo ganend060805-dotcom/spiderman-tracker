@@ -1,37 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 96" width="88" height="96" shape-rendering="crispEdges">
-  <g id="spidey-head">
-    <!-- small hanging web -->
-    <path d="M70 0v9M66 3h8M67 6h6M68 9h4" stroke="#d8f5ff" stroke-width="2" fill="none"/>
-    <path d="M70 9v10" stroke="#58c4d8" stroke-width="1" stroke-dasharray="2 2"><animate attributeName="d" values="M70 9v10;M69 9l3 10;M70 9v10" dur="2s" repeatCount="indefinite"/></path>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" width="64" height="72" shape-rendering="crispEdges">
+  <!-- Black Silhouette Outline -->
+  <path d="M 22 2 H 42 V 6 H 48 V 12 H 52 V 28 H 48 V 34 H 44 V 38 H 50 V 50 H 46 V 62 H 42 V 68 H 36 V 60 H 28 V 68 H 22 V 62 H 18 V 50 H 14 V 38 H 20 V 34 H 16 V 28 H 12 V 12 H 16 V 6 H 22 Z" fill="#000000"/>
 
-    <!-- large stepped Spider-Man mask -->
-    <path d="M29 6h30v3h9v5h6v8h4v29h-4v8h-6v6h-9v4H29v-4h-9v-6h-6v-8h-4V22h4v-8h6V9h9Z" fill="#080b14"/>
-    <path d="M30 9h28v3h8v6h6v7h3v25h-4v8h-6v6h-9v3H30v-3h-8v-6h-6v-8h-4V25h4v-7h6v-6h8Z" fill="#e63946"/>
-    <path d="M30 9h28v3h8v6H22v-4h6v-3h2Z" fill="#ff6971"/>
+  <!-- Head Base (Red) -->
+  <rect x="22" y="6" width="20" height="24" fill="#e63946"/>
+  <rect x="16" y="10" width="32" height="16" fill="#e63946"/>
+  <rect x="20" y="4" width="24" height="4" fill="#e63946"/>
+  <rect x="18" y="24" width="28" height="6" fill="#c92a37"/>
 
-    <!-- pixel web pattern -->
-    <path d="M44 9v52M13 34h62M18 19l52 41M70 19 18 60M23 13c3 14 11 23 21 28M65 13c-3 14-11 23-21 28M19 51c9-6 17-9 25-9M69 51c-9-6-17-9-25-9" stroke="#711b31" stroke-width="2" fill="none" opacity=".85"/>
-    <path d="M26 16h36M20 24h48M17 33h54M17 43h54M20 52h48M26 60h36" stroke="#90263d" stroke-width="1" opacity=".65"/>
+  <!-- Head Highlight & Webbing Lines -->
+  <rect x="22" y="6" width="20" height="2" fill="#ff7582"/>
+  <line x1="32" y1="4" x2="32" y2="30" stroke="#8a1824" stroke-width="1.5"/>
+  <line x1="16" y1="18" x2="48" y2="18" stroke="#8a1824" stroke-width="1.5"/>
+  <path d="M 24 10 Q 32 14 40 10" stroke="#8a1824" stroke-width="1.2" fill="none"/>
+  <path d="M 20 22 Q 32 26 44 22" stroke="#8a1824" stroke-width="1.2" fill="none"/>
 
-    <!-- large white pixel eyes -->
-    <path d="M16 32h5v-4h15v4h4v17h-5v4H22v-3h-6Z" fill="#05070e"/>
-    <path d="M21 33h12v3h3v11h-4v3h-8v-3h-3Z" fill="#fff"/>
-    <path d="M48 32h4v-4h15v4h5v18h-5v3H53v-4h-5Z" fill="#05070e"/>
-    <path d="M53 33h12v3h3v11h-4v3h-8v-3h-3Z" fill="#fff"/>
-    <path d="M23 35h7v2h-7M55 35h7v2h-7" fill="#dcecff"/>
+  <!-- Big White Eyes with Thick Black Outline -->
+  <!-- Left Eye -->
+  <polygon points="18,12 28,14 27,24 19,21" fill="#000000"/>
+  <polygon points="19,13 27,15 26,22 20,20" fill="#ffffff"/>
+  <!-- Right Eye -->
+  <polygon points="46,12 36,14 37,24 45,21" fill="#000000"/>
+  <polygon points="45,13 37,15 38,22 44,20" fill="#ffffff"/>
 
-    <!-- eye blink -->
-    <g id="blink-lids">
-      <path d="M16 32h24v20H16Z" fill="#080b14"/>
-      <path d="M48 32h24v21H48Z" fill="#080b14"/>
-      <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.88;.91;.94;1" dur="4.8s" calcMode="discrete" repeatCount="indefinite"/>
-    </g>
+  <!-- Body / Torso -->
+  <!-- Red Chest Center -->
+  <rect x="26" y="32" width="12" height="16" fill="#e63946"/>
+  <!-- Tiny Black Spider Emblem -->
+  <rect x="31" y="36" width="2" height="4" fill="#000000"/>
+  <rect x="29" y="37" width="6" height="1" fill="#000000"/>
+  <rect x="29" y="39" width="6" height="1" fill="#000000"/>
 
-    <!-- mask shine and chin accent -->
-    <path d="M24 18h8v3h-5v4h-4v-4h1Z" fill="#ff9a9e" opacity=".8"/>
-    <path d="M31 62h26v4H31Z" fill="#b92137"/>
+  <!-- Blue Sides & Arms -->
+  <rect x="20" y="34" width="6" height="14" fill="#1b4992"/>
+  <rect x="38" y="34" width="6" height="14" fill="#1b4992"/>
+  <rect x="16" y="36" width="4" height="12" fill="#e63946"/>
+  <rect x="44" y="36" width="4" height="12" fill="#e63946"/>
+  <!-- Red Gloves/Hands -->
+  <rect x="14" y="44" width="6" height="6" fill="#e63946"/>
+  <rect x="44" y="44" width="6" height="6" fill="#e63946"/>
 
-    <!-- gentle floating animation -->
-    <animateTransform attributeName="transform" type="translate" values="0 0;0 -2;0 0;0 1;0 0" dur="3s" repeatCount="indefinite"/>
-  </g>
+  <!-- Belt / Waist -->
+  <rect x="24" y="48" width="16" height="3" fill="#e63946"/>
+
+  <!-- Blue Pants/Legs -->
+  <rect x="22" y="51" width="8" height="10" fill="#1b4992"/>
+  <rect x="34" y="51" width="8" height="10" fill="#1b4992"/>
+
+  <!-- Red Boots -->
+  <rect x="20" y="60" width="10" height="7" fill="#e63946"/>
+  <rect x="34" y="60" width="10" height="7" fill="#e63946"/>
+  <!-- Boot Soles -->
+  <rect x="19" y="65" width="11" height="2" fill="#000000"/>
+  <rect x="34" y="65" width="11" height="2" fill="#000000"/>
 </svg>
