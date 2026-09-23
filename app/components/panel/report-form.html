@@ -1,0 +1,33 @@
+<!-- Report Sightings Form View -->
+<section class="panel-view" data-view="report" hidden>
+  <div class="panel-intro callout-intro">
+    <span class="callout-number">01</span>
+    <div><p>Melihat Spider-Man? Kirim laporan live agar marker ditambahkan ke peta global secara real-time.</p></div>
+  </div>
+  <form id="reportForm" style="display:grid;gap:10px;">
+    <div>
+      <label class="field-label" for="reportCity">Kota / Lokasi Sinyal</label>
+      <input class="report-textarea" id="reportCity" type="text" placeholder="Contoh: Jakarta, Tokyo, London..." required style="height:32px;resize:none;" />
+    </div>
+    <div>
+      <label class="field-label" for="reportType">Kategori Sinyal</label>
+      <select class="report-textarea" id="reportType" style="height:32px;resize:none;color:#fff;background:#081a22;">
+        <option value="confirmed">Confirmed Sighting (Merah)</option>
+        <option value="rumored">Rumored Signal (Putih/Silver)</option>
+        <option value="event">Special Event / Node (Bintang Cyan)</option>
+      </select>
+    </div>
+    <div>
+      <label class="field-label" for="reportText">Deskripsi Kejadian</label>
+      <textarea class="report-textarea" id="reportText" rows="4" placeholder="Jelaskan apa yang kamu lihat..." required>Signal spotted: Gedung Pencakar Langit — baru saja
+What I saw: Spider-Man berayun cepat ke arah utara!
+#SpideyTracker #SpiderMan</textarea>
+    </div>
+    <div class="report-tips">
+      <span>TIP</span>
+      <p>Laporan langsung tersimpan di database lokal dan muncul sebagai marker baru di peta.</p>
+    </div>
+    <button class="button button-primary button-full" type="submit" id="submitReportBtn">Kirim Laporan Sinyal 🕷️</button>
+    <a class="button button-ghost button-full" id="reportLink" href="https://twitter.com/intent/tweet?text=Signal%20spotted%3A%20%23SpideyTracker" target="_blank" rel="noopener noreferrer">Post on X (Twitter) <span aria-hidden="true">↗</span></a>
+  </form>
+</section>

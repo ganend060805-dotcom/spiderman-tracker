@@ -92,6 +92,57 @@
   color: #58b572;
 }
 
+/* Sub-Navigation Tabs inside Panel */
+.panel-nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: #09202a;
+  border-bottom: 2px solid #000;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.panel-nav-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.panel-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 8px;
+  background: #113645;
+  color: #a4c8e8;
+  border: 1px solid #000;
+  border-radius: 4px;
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 1px 1px 0 #000;
+  transition: all 0.12s;
+}
+.panel-tab-btn span {
+  font-size: 10px;
+}
+.panel-tab-btn:hover {
+  background: #1d5268;
+  color: #fff;
+  transform: translateY(-1px);
+}
+.panel-tab-btn:active {
+  transform: translateY(1px);
+}
+.panel-tab-btn.active {
+  background: #58c4d8;
+  color: #071720;
+  font-weight: 700;
+  border-color: #fff;
+  box-shadow: 0 0 6px rgba(88, 196, 216, 0.6);
+}
+
 .panel-content {
   flex: 1;
   min-height: 0;

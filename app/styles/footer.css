@@ -118,6 +118,38 @@
   text-shadow: 1px 1px 0 #000;
 }
 
+/* Quick Navigation Row in Footer */
+.footer-nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: var(--font-pixel);
+  font-size: 6.5px;
+  letter-spacing: 0.5px;
+  color: #72a5d8;
+  text-shadow: 1px 1px 0 #000;
+  text-align: center;
+  margin-top: 2px;
+}
+
+.footer-nav-link {
+  background: transparent;
+  border: 0;
+  color: #58c4d8;
+  font-family: var(--font-pixel);
+  font-size: 6.5px;
+  cursor: pointer;
+  padding: 2px 4px;
+  transition: all 0.15s;
+}
+.footer-nav-link:hover {
+  color: #ffffff;
+  text-decoration: underline;
+  transform: translateY(-1px);
+}
+
 /* Legal Row */
 .footer-legal-row {
   display: flex;

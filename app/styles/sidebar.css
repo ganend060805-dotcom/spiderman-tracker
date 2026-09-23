@@ -3,45 +3,112 @@
    ============================================= */
 
 .left-bezel-rail {
-  width: 48px;
-  flex: 0 0 48px;
+  width: 56px;
+  flex: 0 0 56px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 14px 6px 12px;
-  background: #113645;
-  border-right: 3px solid #000;
+  gap: 12px;
+  padding: 12px 8px;
+  background: var(--bezel-cyan-dark);
+  border-right: 2px solid var(--bezel-black-border);
   z-index: 15;
   position: relative;
+  overflow-y: auto;
+  overflow-x: visible;
+  scrollbar-width: none;
+}
+.left-bezel-rail::-webkit-scrollbar {
+  display: none;
 }
 
-/* Pill Buttons on the left */
-.rail-pill-btn {
-  width: 36px;
-  height: 36px;
+/* Rail Navigation & Pill Buttons */
+.rail-nav-group {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.rail-filter-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.rail-btn,
+.rail-pill-btn {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  border: 2px solid #000;
-  box-shadow: 2px 2px 0 #000;
-  transition: transform 0.12s, filter 0.12s;
+  border: 1px solid var(--bezel-cyan-border);
+  background: #12485a;
+  color: #fff;
+  box-shadow: none;
+  transition: transform 0.12s, filter 0.12s, background 0.12s, border-color 0.12s;
   position: relative;
-}
-.rail-pill-btn:hover {
-  transform: scale(1.1);
-  filter: brightness(1.15);
-}
-.rail-pill-btn:active {
-  transform: scale(0.95);
-  box-shadow: 1px 1px 0 #000;
-}
-.rail-pill-btn.active {
-  border-color: #ffffff;
-  box-shadow: 0 0 8px rgba(88, 196, 216, 0.8), 2px 2px 0 #000;
+  cursor: pointer;
+  padding: 0;
 }
 
+.rail-btn .rail-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.rail-btn:hover,
+.rail-pill-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.12);
+  background: var(--bezel-cyan-mid);
+}
+
+.rail-btn:active,
+.rail-pill-btn:active {
+  transform: translateY(0);
+}
+
+.rail-btn.active {
+  border-color: var(--star-cyan);
+  background: #0d2b38;
+  box-shadow: inset 3px 0 0 var(--star-cyan), 0 0 8px rgba(88, 196, 216, 0.38);
+}
+
+/* Tooltip on Hover for Rail Buttons */
+.rail-btn[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #081a22;
+  color: #58c4d8;
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  padding: 5px 7px;
+  border: 1px solid var(--star-cyan);
+  border-radius: 5px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s, visibility 0.15s;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+}
+.rail-btn[data-tooltip]:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Specific Pill Backgrounds */
 .pill-green {
   background: #58b572;
 }
@@ -52,36 +119,25 @@
   background: #42afc4;
 }
 
-.rail-pill-btn img {
-  width: 26px;
-  height: 26px;
-  object-fit: contain;
+.rail-pill-btn.active {
+  border: 2px solid var(--pixel-white);
+  box-shadow: 0 0 0 2px rgba(88, 196, 216, 0.45);
 }
 
-.pixel-star {
-  font-size: 16px;
-  color: #000;
-  line-height: 1;
-}
-
-/* Vertical Ruler Ticks on the left rail */
-.vertical-ruler {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 100%;
-  margin-top: 8px;
-  opacity: 0.35;
-}
-.vertical-ruler span {
+.rail-pill-btn svg {
   display: block;
-  width: 10px;
-  height: 2px;
-  background: #000;
 }
-.vertical-ruler span:nth-child(3n) {
-  width: 16px;
-  background: #58c4d8;
+
+/* Rail Divider */
+.rail-divider {
+  width: 24px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.28);
+  flex: 0 0 1px;
+}
+
+.rail-btn:focus-visible,
+.rail-pill-btn:focus-visible {
+  outline: 2px solid var(--pixel-white);
+  outline-offset: 2px;
 }

@@ -1,0 +1,17 @@
+<!-- Activity Log View -->
+<section class="panel-view" data-view="activity-log">
+  <div class="panel-intro">
+    <p>Daftar berjalan dari semua sinyal yang berhasil dikumpulkan jaringan.</p>
+    <label class="search-field" for="activitySearch">
+      <span aria-hidden="true">/</span>
+      <input id="activitySearch" type="search" placeholder="Cari sinyal, kota, atau negara..." autocomplete="off" />
+    </label>
+    <div class="filter-row" role="group" aria-label="Filter activity log">
+      <button class="filter-chip active" type="button" data-log-filter="all">All</button>
+      <button class="filter-chip" type="button" data-log-filter="confirmed">Confirmed</button>
+      <button class="filter-chip" type="button" data-log-filter="rumored">Rumored</button>
+      <button class="filter-chip" type="button" data-log-filter="event">Event</button>
+    </div>
+  </div>
+  <div class="log-list" id="logList"></div>
+</section>

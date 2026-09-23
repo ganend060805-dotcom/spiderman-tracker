@@ -38,15 +38,21 @@
     font-size: 9px;
   }
   .left-bezel-rail {
-    width: 40px;
-    padding: 8px 4px;
-    gap: 6px;
+    width: 48px;
+    flex-basis: 48px;
+    padding: 8px 5px;
+    gap: 9px;
   }
+  .rail-btn,
   .rail-pill-btn {
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
   }
-  .rail-pill-btn img {
+  .rail-btn .rail-icon {
+    font-size: 15px;
+  }
+  .rail-pill-btn svg {
     width: 20px;
     height: 20px;
   }

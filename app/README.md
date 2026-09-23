@@ -76,8 +76,9 @@ Schema lengkap tersedia di [../docs/api-cms.md](../docs/api-cms.md).
 ## File penting
 
 ```text
-index.html   shell layout, modal, intro, dan map controls
-app.js       state UI, Leaflet, GPS, event handler, dan rendering
+index.html   shell layout ringkas yang memuat komponen secara modular
+components/  file-file bagian HTML konkret (topbar, sidebar, map, ticker, footer, panel, modals)
+app.js       state UI, loader komponen, Leaflet, GPS, event handler, dan rendering
 cms.js       Directus REST adapter dan normalizer
 config.js    endpoint API, collection, dan map tile
 styles/      stylesheet modular

@@ -1,0 +1,51 @@
+<!-- ===== SLIDE-IN INFO PANEL ===== -->
+<div class="panel-backdrop" id="panelBackdrop" hidden></div>
+<aside class="info-panel" id="infoPanel" aria-label="Panel informasi" aria-hidden="true" hidden>
+  <div class="panel-header">
+    <div>
+      <p class="eyebrow" id="panelEyebrow">FIELD NOTES</p>
+      <h2 id="panelTitle">Activity Log</h2>
+    </div>
+    <button class="close-button" id="closePanel" type="button" aria-label="Tutup panel">×</button>
+  </div>
+  <div class="panel-toolbar">
+    <span id="panelHint">Latest signals, sorted by time.</span>
+    <span class="panel-count" id="panelCount">26 ITEMS</span>
+  </div>
+
+  <!-- Quick View Navigation Tabs inside Panel -->
+  <nav class="panel-nav-tabs" role="tablist" aria-label="Panel Views">
+    <button class="panel-tab-btn active" type="button" data-panel="activity-log" title="Activity Log">
+      <span>📋</span> <small>LOG</small>
+    </button>
+    <button class="panel-tab-btn" type="button" data-panel="report" title="Report Sighting">
+      <span>✍️</span> <small>REPORT</small>
+    </button>
+    <button class="panel-tab-btn" type="button" data-panel="web-watch" title="Web Watch">
+      <span>🦹</span> <small>WATCH</small>
+    </button>
+    <button class="panel-tab-btn" type="button" data-panel="videos" title="Videos & Footage">
+      <span>🎬</span> <small>VIDEOS</small>
+    </button>
+    <button class="panel-tab-btn" type="button" data-panel="events" title="Events & Calendar">
+      <span>📅</span> <small>EVENTS</small>
+    </button>
+    <button class="panel-tab-btn" type="button" data-panel="downloads" title="Downloads">
+      <span>💾</span> <small>FILES</small>
+    </button>
+    <button class="panel-tab-btn" type="button" data-panel="help" title="Help & Legend">
+      <span>❓</span> <small>HELP</small>
+    </button>
+  </nav>
+
+  <div class="panel-content" id="panelContent">
+    <div data-include="components/panel/activity-log.html"></div>
+    <div data-include="components/panel/report-form.html"></div>
+    <div data-include="components/panel/web-watch.html"></div>
+    <div data-include="components/panel/videos.html"></div>
+    <div data-include="components/panel/events.html"></div>
+    <div data-include="components/panel/help.html"></div>
+    <div data-include="components/panel/downloads.html"></div>
+    <div data-include="components/panel/detail.html"></div>
+  </div>
+</aside>

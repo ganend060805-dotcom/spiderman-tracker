@@ -1,0 +1,77 @@
+<!-- Compact navigation and signal filters -->
+<aside class="left-bezel-rail" id="leftSidebar" aria-label="Navigation and signal filters">
+  <div class="rail-nav-group" role="group" aria-label="Quick Panels">
+    <button class="rail-btn active" type="button" data-panel="map" data-tooltip="Map View (⌖)" aria-label="Global Map View" title="Global Map">
+      <span class="rail-icon">🗺️</span>
+    </button>
+    <button class="rail-btn" type="button" data-panel="activity-log" data-tooltip="Activity Log (📋)" aria-label="Activity Log" title="Activity Log">
+      <span class="rail-icon">📋</span>
+    </button>
+    <button class="rail-btn" type="button" data-panel="report" data-tooltip="Report Sighting (✍️)" aria-label="Report Sighting" title="Report Sighting">
+      <span class="rail-icon">✍️</span>
+    </button>
+    <button class="rail-btn" type="button" data-panel="web-watch" data-tooltip="Web Watch Dossier (🦹)" aria-label="Web Watch" title="Web Watch">
+      <span class="rail-icon">🦹</span>
+    </button>
+    <button class="rail-btn" type="button" data-panel="videos" data-tooltip="Videos & Footage (🎬)" aria-label="Videos" title="Videos">
+      <span class="rail-icon">🎬</span>
+    </button>
+    <button class="rail-btn" type="button" data-panel="events" data-tooltip="Events Calendar (📅)" aria-label="Events" title="Events">
+      <span class="rail-icon">📅</span>
+    </button>
+    <button class="rail-btn" type="button" data-panel="downloads" data-tooltip="Wallpapers & Downloads (💾)" aria-label="Downloads" title="Downloads">
+      <span class="rail-icon">💾</span>
+    </button>
+    <button class="rail-btn" type="button" data-panel="help" data-tooltip="Help & Orientation (❓)" aria-label="Help" title="Help">
+      <span class="rail-icon">❓</span>
+    </button>
+  </div>
+
+  <div class="rail-divider" aria-hidden="true"></div>
+
+  <div class="rail-filter-group" role="group" aria-label="Signal filters">
+  <button class="rail-pill-btn pill-green" type="button" data-filter-map="confirmed" aria-label="Confirmed Green Signals" title="Filter: Confirmed Signals">
+    <svg viewBox="0 0 36 36" width="24" height="24">
+      <circle cx="18" cy="18" r="16" fill="#000000"/>
+      <circle cx="18" cy="18" r="13.5" fill="#58b572"/>
+      <g fill="#071b12">
+        <ellipse cx="18" cy="19" rx="3.2" ry="4.5"/>
+        <ellipse cx="18" cy="12.8" rx="2" ry="1.8"/>
+        <path d="M 16 13 Q 10 10 10 7" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 15 16 Q 8 15 7 12" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 15 19 Q 8 21 8 25" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 16 21 Q 10 26 12 29" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 20 13 Q 26 10 26 7" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 21 16 Q 28 15 29 12" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 21 19 Q 28 21 28 25" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 20 21 Q 26 26 24 29" stroke="#071b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      </g>
+    </svg>
+  </button>
+  <button class="rail-pill-btn pill-red" type="button" data-filter-map="rumored" aria-label="Rumored Red Signals" title="Filter: Rumored Signals">
+    <svg viewBox="0 0 36 36" width="24" height="24">
+      <circle cx="18" cy="18" r="16" fill="#000000"/>
+      <circle cx="18" cy="18" r="13.5" fill="#e63946"/>
+      <g fill="#1a0407">
+        <ellipse cx="18" cy="19" rx="3.2" ry="4.5"/>
+        <ellipse cx="18" cy="12.8" rx="2" ry="1.8"/>
+        <path d="M 16 13 Q 10 10 10 7" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 15 16 Q 8 15 7 12" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 15 19 Q 8 21 8 25" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 16 21 Q 10 26 12 29" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 20 13 Q 26 10 26 7" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 21 16 Q 28 15 29 12" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 21 19 Q 28 21 28 25" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 20 21 Q 26 26 24 29" stroke="#1a0407" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      </g>
+    </svg>
+  </button>
+  <button class="rail-pill-btn pill-all active" type="button" data-filter-map="all" aria-label="Show All Signals" title="Filter: All Signals">
+    <svg viewBox="0 0 36 36" width="24" height="24">
+      <polygon points="11,2 25,2 34,11 34,25 25,34 11,34 2,25 2,11" fill="#000000"/>
+      <polygon points="11,4 25,4 32,11 32,25 25,32 11,32 4,25 4,11" fill="#58c4d8"/>
+      <path d="M18 7.5 L20.8 13.5 L27.5 14.2 L22.4 18.8 L23.8 25.5 L18 22.1 L12.2 25.5 L13.6 18.8 L8.5 14.2 L15.2 13.5 Z" fill="#061a29"/>
+    </svg>
+  </button>
+  </div>
+</aside>

@@ -1146,10 +1146,26 @@
       view.hidden = view.dataset.view !== name;
     });
     updatePanelMeta(name);
+
+    // Sync sub-navigation tabs in panel drawer
+    $$(".panel-tab-btn").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.panel === name);
+    });
+
+    // Sync left rail active button
+    $$(".rail-btn").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.panel === name);
+    });
   }
 
   function openPanel(name, updateUrl = true) {
-    if (name === "map") return closePanel(false);
+    if (name === "map") {
+      closePanel(false);
+      $$(".rail-btn").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.panel === "map");
+      });
+      return;
+    }
     sound.playClick();
     appState.currentPanel = name;
     setPanelView(name);
@@ -1180,6 +1196,9 @@
     panel?.classList.remove("is-open");
     panel?.setAttribute("aria-hidden", "true");
     if (updateUrl) history.replaceState(null, "", window.location.pathname);
+    $$(".rail-btn").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.panel === "map");
+    });
     setTimeout(() => {
       if (!appState.currentPanel) {
         if (panel) panel.hidden = true;
@@ -1992,6 +2011,31 @@
     }
   }
 
+  /* ---------- 10.5 COMPONENT PARTIAL LOADER ---------- */
+  async function loadComponents() {
+    let passes = 5;
+    while (passes-- > 0) {
+      const includeElements = Array.from(document.querySelectorAll("[data-include]"));
+      if (includeElements.length === 0) break;
+      await Promise.all(
+        includeElements.map(async (el) => {
+          const file = el.getAttribute("data-include");
+          try {
+            const res = await fetch(file);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const html = await res.text();
+            const template = document.createElement("template");
+            template.innerHTML = html.trim();
+            el.replaceWith(template.content);
+          } catch (err) {
+            console.error(`Failed to load component: ${file}`, err);
+            el.removeAttribute("data-include");
+          }
+        })
+      );
+    }
+  }
+
   /* ---------- 11. INITIALIZATION ON DOM READY ---------- */
   function initApp() {
     // Sound setting
@@ -2152,9 +2196,14 @@
   }
 
   // Run on DOM ready
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initApp);
-  } else {
+  async function bootstrap() {
+    await loadComponents();
     initApp();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootstrap);
+  } else {
+    bootstrap();
   }
 })();

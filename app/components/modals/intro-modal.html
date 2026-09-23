@@ -1,0 +1,35 @@
+<!-- ===== INTRO BRIEFING OVERLAY ===== -->
+<div class="intro-overlay" id="introOverlay" hidden>
+  <div class="intro-scanlines" aria-hidden="true"></div>
+  <div class="intro-card" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+    <div class="intro-card-topline">
+      <span>FIELD NETWORK // INITIALIZING</span>
+      <span>01 / 03</span>
+    </div>
+    <div class="intro-hero">
+      <div class="intro-radar-orb" aria-hidden="true">
+        <span></span><i></i><b>◎</b>
+      </div>
+      <div>
+        <p class="eyebrow">WELCOME, OPERATOR</p>
+        <h2 id="introTitle">Find the signal.</h2>
+        <p class="intro-lead">Jelajahi jaringan Spidey dan temukan sinyal terdekat dalam satu gerakan.</p>
+      </div>
+    </div>
+    <div class="intro-step-tabs" role="tablist" aria-label="Tracker briefing">
+      <button class="intro-step is-active" type="button" data-intro-step="scan" role="tab" aria-selected="true"><strong>01</strong><span>SCAN</span></button>
+      <button class="intro-step" type="button" data-intro-step="filter" role="tab" aria-selected="false"><strong>02</strong><span>FILTER</span></button>
+      <button class="intro-step" type="button" data-intro-step="report" role="tab" aria-selected="false"><strong>03</strong><span>REPORT</span></button>
+    </div>
+    <div class="intro-detail">
+      <strong id="introDetailTitle">Scan the global grid</strong>
+      <p id="introDetailCopy">Gunakan peta untuk membaca marker, zoom, dan area radar secara langsung.</p>
+    </div>
+    <div class="intro-actions">
+      <button class="button button-primary" type="button" id="startTracking">Open tracker <span aria-hidden="true">→</span></button>
+      <button class="button button-ghost" type="button" id="introGps">Scan near me <span aria-hidden="true">◎</span></button>
+    </div>
+    <button class="intro-skip" type="button" id="skipIntro">Skip briefing and explore</button>
+    <div class="intro-status"><span class="status-pip" aria-hidden="true"></span> NETWORK READY <span>LIVE MAP ONLINE</span></div>
+  </div>
+</div>

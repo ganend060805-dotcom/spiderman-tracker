@@ -1,0 +1,22 @@
+<!-- ===== LIVE PRESENCE JOIN ===== -->
+<div class="presence-join-overlay" id="presenceJoinOverlay" hidden>
+  <div class="presence-join-card" role="dialog" aria-modal="true" aria-labelledby="presenceJoinTitle">
+    <div class="intro-card-topline">
+      <span>LIVE FIELD NETWORK // JOIN</span>
+      <span>IDENTITY REQUIRED</span>
+    </div>
+    <p class="eyebrow">OPERATOR CHECK-IN</p>
+    <h2 id="presenceJoinTitle">Enter the grid.</h2>
+    <p class="presence-join-copy">Masukkan username agar operator lain dapat melihat kamu muncul di jaringan.</p>
+    <form id="presenceJoinForm" class="presence-join-form">
+      <label class="field-label" for="presenceUsername">Username</label>
+      <input id="presenceUsername" class="presence-username-input" type="text" minlength="3" maxlength="24" pattern="[A-Za-z0-9_ -]+" autocomplete="nickname" placeholder="contoh: spider_operator" required />
+      <label class="presence-location-option" for="presenceShareLocation">
+        <input id="presenceShareLocation" type="checkbox" checked />
+        <span>Bagikan lokasi saya untuk menampilkan mark di peta</span>
+      </label>
+      <p class="presence-location-hint">Izin lokasi berasal dari browser dan dapat dihentikan kapan saja.</p>
+      <button class="button button-primary button-full" type="submit">JOIN NETWORK <span aria-hidden="true">→</span></button>
+    </form>
+  </div>
+</div>

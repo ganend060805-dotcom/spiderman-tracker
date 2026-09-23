@@ -1,0 +1,98 @@
+<!-- Map Stage -->
+<section class="map-viewport" id="mapStage" aria-labelledby="mapTitle">
+  <h1 id="mapTitle" class="sr-only">Spidey Tracker Global Network</h1>
+
+  <!-- Real-world Leaflet map with configurable tile provider -->
+  <div class="map-frame-box" id="mapContainer">
+    <div id="leafletMap" class="leaflet-map-canvas" role="application" aria-label="Spidey Tracker World Map"></div>
+    <iframe id="googleMap" class="google-map-embed" title="Map fallback" src="https://maps.google.com/maps?q=10,20&z=2&output=embed&t=m&hl=id&maptype=roadmap" hidden loading="lazy"></iframe>
+    <!-- Teal/Navy Pixel Grid Scanline Tint -->
+    <div class="map-navy-overlay" aria-hidden="true"></div>
+  </div>
+
+  <div class="map-ruler map-ruler-top" aria-hidden="true"></div>
+  <div class="map-ruler map-ruler-bottom" aria-hidden="true"></div>
+  <div class="map-ruler map-ruler-left" aria-hidden="true"></div>
+  <div class="map-ruler map-ruler-right" aria-hidden="true"></div>
+
+  <!-- Top Center Sighting Notification Banner / Counter -->
+  <div class="top-sighting-counter-banner" id="sightingBanner" role="region" aria-label="Sightings Counter">
+    <div class="counter-clock-pill" id="counterClockPill" title="Radar Sighting Clock">
+      <span class="clock-digits" id="clockLeft">00 00</span>
+      <img class="clock-spidey-icon" src="../assets/brand/spidey-mask-mini.svg" alt="" aria-hidden="true" />
+      <span class="clock-digits" id="clockRight">00 00</span>
+    </div>
+    <button class="sighting-spotted-badge" id="sightingSpottedBtn" type="button" aria-label="132 New Sightings Spotted" title="Click to view all spotted sightings">
+      <span class="spotted-count" id="spottedCountText">132 NEW SIGHTINGS</span>
+      <span class="spotted-label">SPOTTED</span>
+    </button>
+  </div>
+
+  <!-- Global Map Markers Overlay -->
+  <div class="map-markers" id="mapMarkers" aria-label="Spidey Sightings Map Markers"></div>
+  <div class="presence-list-count" id="presenceListCount" aria-live="polite">0 OPERATORS ONLINE</div>
+
+  <!-- Marker Info Tooltip -->
+  <div class="pixel-tooltip" id="markerTooltip" role="status" hidden></div>
+
+  <!-- Zoom & View Controls -->
+  <div class="pixel-map-controls" aria-label="Map Zoom & Position">
+    <button class="map-ctrl-pixel" type="button" id="zoomIn" aria-label="Zoom In" title="Zoom In">+</button>
+    <button class="map-ctrl-pixel" type="button" id="zoomOut" aria-label="Zoom Out" title="Zoom Out">−</button>
+    <button class="map-ctrl-pixel" type="button" id="mapLocate" aria-label="Locate User Position" title="My Location (GPS)">◎</button>
+    <button class="map-ctrl-pixel" type="button" id="mapReset" aria-label="Reset Map" title="Reset Global Map">⌖</button>
+  </div>
+
+  <div class="gps-radius-panel" id="gpsRadiusPanel" aria-label="GPS radius tracking">
+    <div class="gps-radius-heading">
+      <span>GPS RADAR</span>
+      <strong id="gpsRadiusValue">25 KM</strong>
+    </div>
+    <input id="gpsRadiusInput" type="range" min="10" max="100" step="5" value="25" aria-label="GPS tracking radius in kilometers" />
+    <div class="gps-radius-scale"><span>10 KM</span><span>100 KM</span></div>
+    <button class="gps-track-button" id="gpsRadiusToggle" type="button">START GPS SCAN</button>
+    <small id="gpsRadiusStatus">GPS belum aktif</small>
+  </div>
+
+  <!-- Spider Web Radar Widget (Bottom Right of Map) -->
+  <div class="spider-web-radar" id="webRadar" aria-label="Spider Web Navigation Radar">
+    <svg class="radar-web-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <!-- Concentric Web Rings -->
+      <circle cx="60" cy="60" r="54" stroke="#389ebc" stroke-width="1.5" stroke-dasharray="2,2" fill="none" opacity="0.6"/>
+      <circle cx="60" cy="60" r="41" stroke="#389ebc" stroke-width="1.2" stroke-dasharray="2,2" fill="none" opacity="0.6"/>
+      <circle cx="60" cy="60" r="28" stroke="#389ebc" stroke-width="1.2" stroke-dasharray="2,2" fill="none" opacity="0.6"/>
+      <circle cx="60" cy="60" r="15" stroke="#389ebc" stroke-width="1.2" fill="none" opacity="0.7"/>
+
+      <!-- Radial Web Spokes -->
+      <line x1="60" y1="6" x2="60" y2="114" stroke="#389ebc" stroke-width="1" opacity="0.5"/>
+      <line x1="6" y1="60" x2="114" y2="60" stroke="#389ebc" stroke-width="1" opacity="0.5"/>
+      <line x1="22" y1="22" x2="98" y2="98" stroke="#389ebc" stroke-width="1" opacity="0.4"/>
+      <line x1="98" y1="22" x2="22" y2="98" stroke="#389ebc" stroke-width="1" opacity="0.4"/>
+
+      <!-- Radar Sweep Beam -->
+      <path d="M60 60 L108 30 A54 54 0 0 0 60 6 Z" fill="url(#radarSweepGrad)" opacity="0.45"/>
+      <defs>
+        <radialGradient id="radarSweepGrad" cx="60" cy="60" r="54" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#58c4d8" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#58c4d8" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Signal Blip Dots -->
+      <circle class="radar-blip" cx="82" cy="38" r="3" fill="#e63946"/>
+      <circle class="radar-blip" cx="42" cy="52" r="2.5" fill="#58b572"/>
+      <circle class="radar-blip" cx="86" cy="74" r="2.5" fill="#f4b842"/>
+
+      <!-- Center Crosshair / Hub -->
+      <circle cx="60" cy="60" r="3" fill="#ffffff"/>
+    </svg>
+    <div class="radar-rotating-sweep" aria-hidden="true"></div>
+    <button class="radar-center-btn" type="button" id="globalMap" aria-label="Global View" title="Global View">
+      <span>⊕</span>
+    </button>
+  </div>
+
+  <!-- Bottom Left Google & Legal Map watermark placeholders -->
+  <div class="map-watermark-left" aria-hidden="true">Google</div>
+  <div class="map-watermark-right" aria-hidden="true">Pintasan keyboard | Data peta ©2026 | Persyaratan</div>
+</section>
